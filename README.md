@@ -9,47 +9,101 @@
   html, body { width: 100%; min-height: 100%; }
   body {
     font-family: 'Consolas', 'Courier New', monospace;
-    background: #050505; color: #c0c0c0; line-height: 1.9; padding: 0;
+    background: #050505; color: #c0c0c0; line-height: 1.9;
     background-image: 
       radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.05) 0%, transparent 40%),
       radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
   }
-  .top-bar {
-    position: sticky; top: 0; z-index: 1000;
-    background: rgba(8,8,8,0.98); border-bottom: 2px solid #00ff88;
-    padding: 15px 30px; display: flex; align-items: center; justify-content: space-between;
-    backdrop-filter: blur(15px); box-shadow: 0 5px 30px rgba(0,0,0,0.8);
-    flex-wrap: wrap; gap: 15px;
+
+  /* ЛЕВОЕ МЕНЮ */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 280px;
+    height: 100vh;
+    background: #080808;
+    border-right: 2px solid #00ff88;
+    padding: 25px 0;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 5px 0 30px rgba(0,0,0,0.8);
   }
-  .top-bar .logo {
-    color: #00ff88; font-weight: bold; font-size: 1.3em; letter-spacing: 3px;
+  .sidebar-logo {
+    padding: 0 25px 25px;
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 20px;
+  }
+  .sidebar-logo .name {
+    font-size: 1.5em;
+    font-weight: bold;
+    letter-spacing: 3px;
     background: linear-gradient(90deg, #00ff88, #00cc66);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    margin-bottom: 8px;
   }
-  .top-bar .classif {
-    background: #ff0000; color: #fff; padding: 5px 15px;
-    font-size: 0.75em; letter-spacing: 3px; font-weight: bold;
+  .sidebar-logo .classif {
+    display: inline-block;
+    background: #ff0000; color: #fff;
+    padding: 3px 10px;
+    font-size: 0.65em;
+    letter-spacing: 2px;
+    font-weight: bold;
     animation: blink 2s infinite;
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-  .top-nav {
-    position: sticky; top: 72px; z-index: 999;
-    background: rgba(10,10,10,0.98); padding: 12px 30px;
-    border-bottom: 1px solid #1a1a1a;
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-    font-size: 0.85em; backdrop-filter: blur(10px);
+
+  .sidebar-nav { padding: 0 15px; }
+  .sidebar-nav a {
+    display: block;
+    color: #00ff88;
+    text-decoration: none;
+    padding: 12px 18px;
+    margin: 4px 0;
+    border-radius: 6px;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    transition: 0.2s;
+    border-left: 3px solid transparent;
   }
-  .top-nav a {
-    color: #00ff88; text-decoration: none; padding: 6px 14px;
-    border-radius: 4px; transition: 0.2s; border: 1px solid transparent;
+  .sidebar-nav a:hover {
+    background: rgba(0,255,136,0.08);
+    border-left-color: #00ff88;
+    transform: translateX(4px);
   }
-  .top-nav a:hover { background: rgba(0,255,136,0.1); border-color: #00ff88; }
-  .container { width: 100%; max-width: 100%; padding: 40px 60px; }
+  .sidebar-nav a.active {
+    background: rgba(0,255,136,0.12);
+    border-left-color: #00ff88;
+  }
+
+  /* КОНТЕНТ */
+  .main-content {
+    margin-left: 280px;
+    padding: 50px 70px;
+    min-height: 100vh;
+  }
+
+  /* Мобильная версия */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px; left: 15px;
+    z-index: 1100;
+    background: #00ff88; color: #000;
+    border: none; padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold; cursor: pointer;
+    font-size: 1.2em;
+  }
   @media (max-width: 900px) {
-    .container { padding: 25px 20px; }
-    .top-bar, .top-nav { padding: 12px 15px; }
-    .top-nav { top: 100px; }
+    .sidebar { transform: translateX(-100%); transition: 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; padding: 70px 20px 30px; }
+    .menu-toggle { display: block; }
   }
+
+  /* Шапка */
   .header { text-align: center; padding-bottom: 40px; border-bottom: 3px solid #00ff88; margin-bottom: 50px; }
   .classification {
     display: inline-block; background: #ff0000; color: #fff;
@@ -64,12 +118,15 @@
   }
   .subtitle { color: #00ff88; font-size: clamp(0.9em, 2vw, 1.2em); letter-spacing: 3px; }
   .codename { color: #666; font-size: 0.9em; margin-top: 15px; letter-spacing: 2px; }
+
+  /* Заголовки */
   h2 {
     color: #00ff88; font-size: clamp(1.3em, 3vw, 1.9em);
     margin: 55px 0 25px; padding: 18px 0 18px 25px;
     border-left: 6px solid #00ff88;
     background: linear-gradient(90deg, rgba(0,255,136,0.12), transparent);
     letter-spacing: 2px; text-transform: uppercase;
+    scroll-margin-top: 20px;
   }
   h3 {
     color: #66ffaa; font-size: clamp(1.05em, 2.2vw, 1.35em);
@@ -77,23 +134,42 @@
     border-left: 4px solid #00cc66; letter-spacing: 1px;
   }
   h4 { color: #88ffbb; font-size: 1.1em; margin: 25px 0 12px; letter-spacing: 1px; }
+
   p { margin: 12px 0; color: #b0b0b0; }
   strong { color: #00ff88; }
+
   ul, ol { padding-left: 30px; margin: 18px 0; }
   li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; }
   li:hover { color: #e0e0e0; }
+
+  /* Таблицы */
   .data-table {
     width: 100%; border-collapse: collapse; margin: 25px 0;
-    background: #0f0f0f; border: 1px solid #1f1f1f; font-size: 0.9em;
+    background: #0a0a0a; border: 1px solid #1a1a1a; font-size: 0.9em;
   }
   .data-table th {
-    background: #0a2a1a; color: #00ff88; padding: 15px;
+    background: #0f1a12; color: #00ff88; padding: 15px;
     text-align: left; font-weight: bold; letter-spacing: 1px;
     border-bottom: 2px solid #00ff88; text-transform: uppercase; font-size: 0.85em;
   }
-  .data-table td { padding: 12px 15px; border-bottom: 1px solid #1a1a1a; color: #c0c0c0; vertical-align: top; }
-  .data-table tr:hover td { background: #121212; }
-  .table-wrap { overflow-x: auto; }
+  .data-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #1a1a1a;
+    color: #c0c0c0;
+    vertical-align: top;
+    background: #0a0a0a;
+  }
+  .data-table tr { background: #0a0a0a; }
+  .data-table tr:hover,
+  .data-table tr:hover td,
+  .data-table tr:hover th {
+    background: #0f0f0f;
+    color: #e0e0e0;
+  }
+  .data-table strong { color: #00ff88; }
+  .table-wrap { overflow-x: auto; background: #0a0a0a; }
+
+  /* Цветные коды */
   .code-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 25px; margin: 35px 0;
@@ -132,21 +208,22 @@
   .code-purple { border-color: #9013fe; background: linear-gradient(135deg, #0f0f0f, rgba(144,19,254,0.08)); }
   .code-purple::before { background: #9013fe; }
   .code-purple h4 { color: #9013fe; text-shadow: 0 0 15px rgba(144,19,254,0.5); }
-  .code-white { border-color: #ffffff; background: linear-gradient(135deg, #0f0f0f, rgba(255,255,255,0.1)); }
-  .code-white::before { background: #ffffff; }
-  .code-white h4 { color: #ffffff; text-shadow: 0 0 15px rgba(255,255,255,0.5); }
+  .code-white { border-color: #cccccc; background: linear-gradient(135deg, #0f0f0f, rgba(200,200,200,0.08)); }
+  .code-white::before { background: #cccccc; }
+  .code-white h4 { color: #dddddd; text-shadow: 0 0 15px rgba(200,200,200,0.4); }
   .code-gray { border-color: #888; background: linear-gradient(135deg, #0f0f0f, rgba(136,136,136,0.1)); }
   .code-gray::before { background: #888; }
   .code-gray h4 { color: #aaa; text-shadow: 0 0 15px rgba(150,150,150,0.5); }
-  .code-clean { border-color: #e0e0e0; background: linear-gradient(135deg, #0f0f0f, rgba(224,224,224,0.08)); }
+  .code-clean { border-color: #e0e0e0; background: linear-gradient(135deg, #0f0f0f, rgba(224,224,224,0.06)); }
   .code-clean::before { background: #e0e0e0; }
   .code-clean h4 { color: #e0e0e0; text-shadow: 0 0 15px rgba(224,224,224,0.5); }
   .code-superclean { border-color: #ff69b4; background: linear-gradient(135deg, #0f0f0f, rgba(255,105,180,0.08)); }
   .code-superclean::before { background: #ff69b4; }
   .code-superclean h4 { color: #ff69b4; text-shadow: 0 0 15px rgba(255,105,180,0.5); }
-  .code-silver { border-color: #c0c0c0; background: linear-gradient(135deg, #0f0f0f, rgba(192,192,192,0.1)); }
+  .code-silver { border-color: #c0c0c0; background: linear-gradient(135deg, #0f0f0f, rgba(192,192,192,0.08)); }
   .code-silver::before { background: #c0c0c0; }
   .code-silver h4 { color: #c0c0c0; text-shadow: 0 0 15px rgba(192,192,192,0.5); }
+
   .alert {
     padding: 20px 25px; border-radius: 8px; margin: 25px 0;
     border-left: 6px solid; font-size: 0.95em;
@@ -155,10 +232,12 @@
   .alert-warning { background: rgba(255, 170, 0, 0.08); border-color: #ffaa00; color: #ffcc66; }
   .alert-info { background: rgba(0, 255, 136, 0.05); border-color: #00ff88; color: #88ffbb; }
   .section { margin: 40px 0; padding: 30px; background: #0d0d0d; border-radius: 10px; border: 1px solid #1a1a1a; }
+
   .footer {
     text-align: center; margin-top: 70px; padding: 40px 20px;
     border-top: 2px solid #1a1a1a; color: #555;
     font-size: 0.85em; letter-spacing: 1px; background: #080808;
+    border-radius: 10px;
   }
   .discord {
     display: inline-block; background: #5865F2; color: white;
@@ -224,29 +303,35 @@
 </head>
 <body>
 
-  <div class="top-bar">
-    <div class="logo">MV.PROJECT</div>
-    <div class="classif">⚠ CLASSIFIED — LEVEL 5 ⚠</div>
-  </div>
+  <!-- Кнопка меню для телефона -->
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
 
-  <div class="top-nav">
-    <a href="#codes">🚨 КОДЫ</a>
-    <a href="#clearance">🔐 ДОПУСК</a>
-    <a href="#classes-personnel">👤 КЛАССЫ ПЕРСОНАЛА</a>
-    <a href="#mtf">🛡️ МОГ</a>
-    <a href="#protocols">📋 ПРОТОКОЛЫ</a>
-    <a href="#uniform">👔 ФОРМА</a>
-    <a href="#general">📜 ОБЩИЕ</a>
-    <a href="#rp">🎭 RP</a>
-    <a href="#classes">👥 КЛАССЫ</a>
-    <a href="#scp">🧬 SCP</a>
-    <a href="#scp914">⚙️ SCP-914</a>
-    <a href="#intercom">📢 ИНТЕРКОМ</a>
-    <a href="#bans">⏱️ БАНЫ</a>
-    <a href="#appeal">📩 АПЕЛЛЯЦИЯ</a>
-  </div>
+  <!-- ЛЕВОЕ МЕНЮ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="name">MV.PROJECT</span>
+      <span class="classif">⚠ LEVEL 5 ⚠</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#codes">🚨 КОДЫ</a>
+      <a href="#clearance">🔐 ДОПУСК</a>
+      <a href="#classes-personnel">👤 КЛАССЫ ПЕРСОНАЛА</a>
+      <a href="#mtf">🛡️ МОГ</a>
+      <a href="#protocols">📋 ПРОТОКОЛЫ</a>
+      <a href="#uniform">👔 ФОРМА</a>
+      <a href="#general">📜 ОБЩИЕ</a>
+      <a href="#rp">🎭 RP</a>
+      <a href="#classes">👥 КЛАССЫ</a>
+      <a href="#scp">🧬 SCP</a>
+      <a href="#scp914">⚙️ SCP-914</a>
+      <a href="#intercom">📢 ИНТЕРКОМ</a>
+      <a href="#bans">⏱️ БАНЫ</a>
+      <a href="#appeal">📩 АПЕЛЛЯЦИЯ</a>
+    </nav>
+  </aside>
 
-  <div class="container">
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <main class="main-content">
 
     <div class="header">
       <div class="classification">⚠ CLASSIFIED — LEVEL 5 CLEARANCE ⚠</div>
@@ -261,20 +346,18 @@
       <span class="critical">Незнание правил не освобождает от ответственности.</span>
     </div>
 
-    <!-- РАЗДЕЛ КОДЫ -->
+    <!-- КОДЫ -->
     <h2 id="codes">🚨 Раздел I. Цветовые коды угроз</h2>
     <p>Коды угроз — стандартная система оповещения Фонда. Персонал обязан знать их значение и правильно реагировать при объявлении.</p>
 
     <div class="code-grid">
-
       <div class="code-card code-green">
         <h4>🟢 КОД ЗЕЛЁНЫЙ</h4>
         <p><strong>Био-угроза / Заражение</strong></p>
-        <p>Обозначает любую опасность, связанную с био-угрозой, инфекцией или источником заражения (микроорганизмы, биологическое оружие, аномальные химические реакции).</p>
+        <p>Обозначает любую опасность, связанную с био-угрозой, инфекцией или источником заражения.</p>
         <p><strong>Указания:</strong> Избегайте контакта с источниками заражения. Не покидайте Зону. Будьте готовы к карантину.</p>
         <p><strong>МОГ:</strong> Бета-7 «Шляпные болванчики»</p>
       </div>
-
       <div class="code-card code-blue">
         <h4>🔵 КОД СИНИЙ</h4>
         <p><strong>Побег разумного объекта</strong></p>
@@ -282,7 +365,6 @@
         <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса»</p>
       </div>
-
       <div class="code-card code-superblue">
         <h4>🔷 КОД СУПЕРСИНИЙ</h4>
         <p><strong>Побег разумного объекта (высокий интеллект)</strong></p>
@@ -290,55 +372,48 @@
         <p><strong>Указания:</strong> План эвакуации как при СИНЕМ.</p>
         <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса»</p>
       </div>
-
       <div class="code-card code-yellow">
         <h4>🟡 КОД ЖЁЛТЫЙ</h4>
         <p><strong>Меметическая / когнитивная угроза</strong></p>
-        <p>Присутствие меметической, информационной или когнитивной угрозы, с которой персонал Зоны не справляется без посторонней помощи.</p>
-        <p><strong>Указания:</strong> Спокойно ожидайте спасательную команду. Избегайте перемещения и разговоров. Плотно закройте уши и глаза.</p>
+        <p>Присутствие меметической, информационной или когнитивной угрозы.</p>
+        <p><strong>Указания:</strong> Ожидайте спасательную команду. Избегайте перемещения и разговоров. Закройте уши и глаза.</p>
         <p><strong>МОГ:</strong> Эта-10 «Не вижу зла», Эта-11 «Дикие твари»</p>
       </div>
-
       <div class="code-card code-red">
         <h4>🔴 КОД КРАСНЫЙ</h4>
         <p><strong>Агрессивная настроенная сущность (АНС)</strong></p>
-        <p>Побег агрессивно настроенной сущности (например, SCP-2059), представляющей существенную опасность для Зоны и секретности Фонда.</p>
+        <p>Побег агрессивно настроенной сущности, представляющей существенную опасность для Зоны.</p>
         <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Ню-7 «Удар молота», Эта-5 «Бомбардиры Егеря», Гамма-5 «Ложный след»</p>
       </div>
-
       <div class="code-card code-black">
         <h4>⚫ КОД ЧЁРНЫЙ</h4>
         <p><strong>Нарушение содержания НЛУ</strong></p>
-        <p>Нарушение содержания Неликвидируемой Угрозы (например, SCP-096). НЛУ — угроза, ликвидация которой невозможна во время инцидента.</p>
-        <p><strong>Указания:</strong> Избегайте противостояния с НЛУ любой ценой. Не вступайте в огневой контакт, если это не поможет замедлить угрозу.</p>
+        <p>Нарушение содержания Неликвидируемой Угрозы (например, SCP-096).</p>
+        <p><strong>Указания:</strong> Избегайте противостояния с НЛУ любой ценой.</p>
         <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса», Сигма-23 «Требуется подкрепление»</p>
       </div>
-
       <div class="code-card code-white">
         <h4>⚪ КОД БЕЛЫЙ</h4>
         <p><strong>Вторжение сил захвата</strong></p>
-        <p>Вторжение высокоорганизованных сил захвата, противодействие которым силами охраны невозможно.</p>
-        <p><strong>Указания:</strong> Немедленная эвакуация. Изолируйте объекты, заблокируйте двери. Шифруйте данные. Ожидайте ММОГ.</p>
-        <p><strong>МОГ:</strong> Все ММОГ уровня батальона (например, Ню-7 «Удар молота»)</p>
+        <p>Вторжение высокоорганизованных сил захвата.</p>
+        <p><strong>Указания:</strong> Немедленная эвакуация. Изолируйте объекты, заблокируйте двери.</p>
+        <p><strong>МОГ:</strong> Все ММОГ уровня батальона</p>
       </div>
-
       <div class="code-card code-gray">
         <h4>🌫️ КОД СЕРЫЙ</h4>
         <p><strong>Внутренняя угроза</strong></p>
-        <p>Аналог КОДА БЕЛОГО, но угроза исходит изнутри Зоны (подставные члены персонала). Безопасность Зоны скомпрометирована.</p>
+        <p>Аналог БЕЛОГО, но угроза исходит изнутри Зоны.</p>
         <p><strong>Указания:</strong> План эвакуации как при БЕЛОМ.</p>
-        <p><strong>МОГ:</strong> Все ММОГ уровня батальона (например, Ню-7 «Удар молота»)</p>
+        <p><strong>МОГ:</strong> Все ММОГ уровня батальона</p>
       </div>
-
       <div class="code-card code-purple">
         <h4>🟣 КОД ПУРПУРНЫЙ</h4>
         <p><strong>Экстрамерная угроза</strong></p>
-        <p>Изоляция, связанная с экстрамерной угрозой: нарушения пространства, времени, причинности, нематериальные объекты, сущности, нарушающие законы физики.</p>
-        <p><strong>Указания:</strong> Стандартный план эвакуации (кроме случаев, если убежища не защищены). Будьте готовы к длительному ожиданию.</p>
-        <p><strong>МОГ:</strong> Дзета-9 «Кротокрысы», Лямбда-5 «Белые кролики», Мю-13 «Охотники за привидениями»</p>
+        <p>Нарушения пространства, времени, причинности, нематериальные объекты.</p>
+        <p><strong>Указания:</strong> Стандартный план эвакуации. Будьте готовы к ожиданию.</p>
+        <p><strong>МОГ:</strong> Дзета-9, Лямбда-5, Мю-13</p>
       </div>
-
       <div class="code-card code-clean">
         <h4>⬜ КОД ЧИСТЫЙ</h4>
         <p><strong>Неизвестная угроза</strong></p>
@@ -346,7 +421,6 @@
         <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
-
       <div class="code-card code-superclean">
         <h4>💗 КОД СУПЕРЧИСТЫЙ</h4>
         <p><strong>Неописуемая угроза</strong></p>
@@ -354,15 +428,13 @@
         <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
-
       <div class="code-card code-silver">
         <h4>🥈 КОД ХЛАДНОЕ СЕРЕБРО</h4>
         <p><strong>Фатальный сбой Фонда</strong></p>
-        <p>Событие, которое послужило или послужит причиной фатального нарушения функционирования Фонда.</p>
-        <p><strong>Указания:</strong> Следуйте указаниям охраны. Ожидайте ликвидацию вашего отдела.</p>
+        <p>Событие, послужившее причиной фатального нарушения функционирования Фонда.</p>
+        <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
-
     </div>
 
     <div class="alert alert-info">
@@ -377,12 +449,11 @@
 
     <hr class="divider">
 
-    <!-- РАЗДЕЛ ДОПУСК -->
+    <!-- ДОПУСК -->
     <h2 id="clearance">🔐 Раздел II. Уровни допуска персонала</h2>
     <p>Система допуска определяет, к каким зонам и информации имеет доступ сотрудник.</p>
 
     <div class="clearance-grid">
-
       <div class="clearance-card level-1">
         <h4>УРОВЕНЬ 1</h4>
         <p><strong>Неважный персонал</strong></p>
@@ -393,18 +464,16 @@
         </ul>
         <p style="margin-top:10px; color:#ff6666;">Доступ: только общественные зоны. Сопровождение обязательно.</p>
       </div>
-
       <div class="clearance-card level-2">
         <h4>УРОВЕНЬ 2</h4>
         <p><strong>Младший персонал</strong></p>
         <ul>
           <li>Капрал СБ</li>
-          <li>Младший НС (Научный Сотрудник)</li>
+          <li>Младший НС</li>
           <li>Инженер</li>
         </ul>
-        <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая зона, подсобные помещения. Работа под надзором.</p>
+        <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая зона, подсобные помещения.</p>
       </div>
-
       <div class="clearance-card level-3">
         <h4>УРОВЕНЬ 3</h4>
         <p><strong>Старший персонал</strong></p>
@@ -412,11 +481,10 @@
           <li>Сержант СБ</li>
           <li>Лейтенант СБ</li>
           <li>Старший НС</li>
-          <li>НС (Научный Сотрудник)</li>
+          <li>НС</li>
         </ul>
-        <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая и Тяжёлая зоны. Самостоятельная работа, проведение тестов.</p>
+        <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая и Тяжёлая зоны.</p>
       </div>
-
       <div class="clearance-card level-4">
         <h4>УРОВЕНЬ 4</h4>
         <p><strong>Командование</strong></p>
@@ -424,12 +492,11 @@
           <li>Директор Зоны</li>
           <li>Представитель КпЭ</li>
           <li>Агент ГАРШ-O4</li>
-          <li>ГНС (Главный Научный Сотрудник)</li>
-          <li>ГСБ (Глава Службы Безопасности)</li>
+          <li>ГНС</li>
+          <li>ГСБ</li>
         </ul>
-        <p style="margin-top:10px; color:#ff6666;">Доступ: все зоны комплекса. Командование операциями.</p>
+        <p style="margin-top:10px; color:#ff6666;">Доступ: все зоны комплекса.</p>
       </div>
-
       <div class="clearance-card level-5">
         <h4>УРОВЕНЬ 5</h4>
         <p><strong>Совет О5</strong></p>
@@ -440,19 +507,17 @@
           <li>Старший агент ГАРШ-O4</li>
           <li>Суд-O3</li>
         </ul>
-        <p style="margin-top:10px; color:#ff6666;">Доступ: полный доступ ко всем зонам и секретной информации.</p>
+        <p style="margin-top:10px; color:#ff6666;">Доступ: полный доступ ко всем зонам.</p>
       </div>
-
     </div>
 
     <hr class="divider">
 
     <!-- КЛАССЫ ПЕРСОНАЛА -->
     <h2 id="classes-personnel">👤 Раздел III. Классы персонала</h2>
-    <p>Классы присваиваются персоналу на основании плотности их контакта с потенциально опасными аномальными объектами, существами или явлениями.</p>
+    <p>Классы присваиваются персоналу на основании плотности их контакта с потенциально опасными аномальными объектами.</p>
 
     <div class="clearance-grid">
-
       <div class="clearance-card level-a">
         <h4>КЛАСС A</h4>
         <p><strong>Стратегически важный персонал</strong></p>
@@ -463,7 +528,6 @@
         <p><strong>Запрещено:</strong> Любой прямой доступ к аномальным объектам. Выход из защищённых областей.</p>
         <p><strong>Разрешено:</strong> Работа в защищённых областях. Немедленная эвакуация при ЧС.</p>
       </div>
-
       <div class="clearance-card level-b">
         <h4>КЛАСС B</h4>
         <p><strong>Важный персонал</strong></p>
@@ -475,7 +539,6 @@
         <p><strong>Запрещено:</strong> Доступ к аномалиям без карантина и блокировки ментального воздействия.</p>
         <p><strong>Разрешено:</strong> Доступ к карантинным аномалиям. Эвакуация при ЧС.</p>
       </div>
-
       <div class="clearance-card level-c">
         <h4>КЛАСС C</h4>
         <p><strong>Прямой доступ к аномалиям</strong></p>
@@ -485,9 +548,8 @@
           <li>Инженеры</li>
         </ul>
         <p><strong>Запрещено:</strong> Контакт с опасными аномалиями без защиты. Игнорирование карантина.</p>
-        <p><strong>Разрешено:</strong> Работа с безопасными аномалиями. Эвакуация при массовом нарушении содержания.</p>
+        <p><strong>Разрешено:</strong> Работа с безопасными аномалиями.</p>
       </div>
-
       <div class="clearance-card level-d">
         <h4>КЛАСС D</h4>
         <p><strong>Расходный персонал</strong></p>
@@ -498,7 +560,6 @@
         <p><strong>Запрещено:</strong> Контакт с сотрудниками класса A и B. Побег. Неподчинение.</p>
         <p><strong>Разрешено:</strong> Участие в тестах. Ограниченное передвижение с охраной.</p>
       </div>
-
       <div class="clearance-card level-e">
         <h4>КЛАСС E</h4>
         <p><strong>Временное обозначение</strong></p>
@@ -509,7 +570,6 @@
         <p><strong>Запрещено:</strong> Возвращение к обязанностям до полного обследования.</p>
         <p><strong>Разрешено:</strong> Карантин и наблюдение. Возврат к работе после допроса и осмотра.</p>
       </div>
-
     </div>
 
     <hr class="divider">
@@ -531,11 +591,11 @@
         <tr><td><strong>МОГ Лямбда-5</strong></td><td>«Белые кролики»</td><td>Экстрамерные, временные и пространственные угрозы.</td></tr>
         <tr><td><strong>МОГ Мю-13</strong></td><td>«Охотники за привидениями»</td><td>Нематериальные, призрачные, эктоплазматические сущности.</td></tr>
         <tr><td><strong>МОГ Альфа-1</strong></td><td>«Багряная десница»</td><td>Личная охрана Совета О5. Прибывает только в экстренных случаях.</td></tr>
-        <tr><td><strong>МОГ Альфа-9</strong></td><td>«Последняя надежда»</td><td>Сдерживание SCP и ликвидация неавторизованных групп. Резервная группа Фонда.</td></tr>
+        <tr><td><strong>МОГ Альфа-9</strong></td><td>«Последняя надежда»</td><td>Сдерживание SCP и ликвидация неавторизованных групп.</td></tr>
         <tr><td><strong>МОГ Альфа-40</strong></td><td>«Мятежники»</td><td>Ликвидация неавторизованных группировок внутри Зоны.</td></tr>
         <tr><td><strong>МОГ Гамма-13</strong></td><td>«Законники Азимова»</td><td>Уничтожение неавторизованных групп. Работа с ИИ-аномалиями.</td></tr>
         <tr><td><strong>МОГ Лямбда-12</strong></td><td>«Санстанция»</td><td>Паразитные организмы и биологические системы.</td></tr>
-        <tr><td><strong>МОГ Мю-3</strong></td><td>«Богатые Аукционеры»</td><td>Ликвидация неавторизованных групп. Финансовые аномалии.</td></tr>
+        <tr><td><strong>МОГ Мю-3</strong></td><td>«Богатые Аукционеры»</td><td>Ликвидация неавторизованных групп.</td></tr>
         <tr><td><strong>МОГ Мю-4</strong></td><td>«Отладчики»</td><td>Устранение неполадок в системах комплекса.</td></tr>
         <tr><td><strong>МОГ Омега-1</strong></td><td>«Левая рука закона»</td><td>Внутренние разбирательства, охота на предателей Фонда.</td></tr>
         <tr><td><strong>МОГ Сигма-66</strong></td><td>«Шестнадцать тонн»</td><td>Тяжёлое вооружение, уничтожение неавторизованных.</td></tr>
@@ -550,8 +610,8 @@
         <tr><th>Группа</th><th>Позывной</th><th>Специализация</th></tr>
         <tr><td><strong>ОБР «Курс»</strong></td><td>Тактическая группа</td><td>Сдерживание SCP, разведка, разбирательства.</td></tr>
         <tr><td><strong>ТГ «Птицы»</strong></td><td>Тактическая группа</td><td>Сдерживание SCP-106, сопровождение.</td></tr>
-        <tr><td><strong>ТГ «Резонанс»</strong></td><td>Тактическая группа</td><td>Ликвидация угроз, сдерживание SCP, разбирательства.</td></tr>
-        <tr><td><strong>ТГ «Пожарники»</strong></td><td>Инженерная ТГ</td><td>Устранение неполадок, пожаров, техническая поддержка.</td></tr>
+        <tr><td><strong>ТГ «Резонанс»</strong></td><td>Тактическая группа</td><td>Ликвидация угроз, сдерживание SCP.</td></tr>
+        <tr><td><strong>ТГ «Пожарники»</strong></td><td>Инженерная ТГ</td><td>Устранение неполадок, пожаров, техподдержка.</td></tr>
         <tr><td><strong>Санитарная ТГ</strong></td><td>Медицинская группа</td><td>Медицинская помощь пострадавшим.</td></tr>
       </table>
     </div>
@@ -626,19 +686,19 @@
     <div class="table-wrap">
       <table class="data-table">
         <tr><th>Код</th><th>Цвет</th><th>Значение</th></tr>
-        <tr><td><strong>Чёрный</strong></td><td><span style="color:#000; background:#333; padding:2px 8px;">#000000</span></td><td>Полная изоляция комплекса.</td></tr>
-        <tr><td><strong>Серый</strong></td><td><span style="color:#727472;">#727472</span></td><td>Внутренняя угроза.</td></tr>
-        <tr><td><strong>Белый</strong></td><td><span style="color:#fff;">#FFFFFF</span></td><td>Внешнее вторжение.</td></tr>
-        <tr><td><strong>Суперсиний</strong></td><td><span style="color:#00003f;">#00003F</span></td><td>Побег разумного SCP (высокий интеллект).</td></tr>
-        <tr><td><strong>Синий</strong></td><td><span style="color:#1f70b7;">#1F70B7</span></td><td>Побег разумного SCP.</td></tr>
-        <tr><td><strong>Красный</strong></td><td><span style="color:#cc0000;">#CC0000</span></td><td>Агрессивная сущность.</td></tr>
-        <tr><td><strong>Зелёный</strong></td><td><span style="color:#114818;">#114818</span></td><td>Био-угроза.</td></tr>
-        <tr><td><strong>Пурпурный</strong></td><td><span style="color:#5d02a1;">#5D02A1</span></td><td>Экстрамерная угроза.</td></tr>
-        <tr><td><strong>Жёлтый</strong></td><td><span style="color:#ffbf00;">#FFBF00</span></td><td>Меметическая угроза.</td></tr>
-        <tr><td><strong>Чистый</strong></td><td><span style="color:#00FFFF;">#00FFFF</span></td><td>Неизвестная угроза.</td></tr>
-        <tr><td><strong>Суперчистый</strong></td><td><span style="color:#1bdcd0;">#1BDCD0</span></td><td>Неописуемая угроза.</td></tr>
-        <tr><td><strong>Хладное серебро</strong></td><td><span style="color:#0b2c34;">#0B2C34</span></td><td>Фатальный сбой Фонда.</td></tr>
-        <tr><td><strong>Розовый</strong></td><td><span style="color:#f48b9e;">#F48B9E</span></td><td>Дополнительный код.</td></tr>
+        <tr><td><strong>Чёрный</strong></td><td style="color:#000; background:#1a1a1a; padding:2px 8px;">#000000</td><td>Полная изоляция комплекса.</td></tr>
+        <tr><td><strong>Серый</strong></td><td style="color:#727472;">#727472</td><td>Внутренняя угроза.</td></tr>
+        <tr><td><strong>Белый</strong></td><td style="color:#ccc;">#FFFFFF</td><td>Внешнее вторжение.</td></tr>
+        <tr><td><strong>Суперсиний</strong></td><td style="color:#4a4aff;">#00003F</td><td>Побег разумного SCP (высокий интеллект).</td></tr>
+        <tr><td><strong>Синий</strong></td><td style="color:#1f70b7;">#1F70B7</td><td>Побег разумного SCP.</td></tr>
+        <tr><td><strong>Красный</strong></td><td style="color:#cc0000;">#CC0000</td><td>Агрессивная сущность.</td></tr>
+        <tr><td><strong>Зелёный</strong></td><td style="color:#22a040;">#114818</td><td>Био-угроза.</td></tr>
+        <tr><td><strong>Пурпурный</strong></td><td style="color:#9d30ff;">#5D02A1</td><td>Экстрамерная угроза.</td></tr>
+        <tr><td><strong>Жёлтый</strong></td><td style="color:#ffbf00;">#FFBF00</td><td>Меметическая угроза.</td></tr>
+        <tr><td><strong>Чистый</strong></td><td style="color:#00FFFF;">#00FFFF</td><td>Неизвестная угроза.</td></tr>
+        <tr><td><strong>Суперчистый</strong></td><td style="color:#1bdcd0;">#1BDCD0</td><td>Неописуемая угроза.</td></tr>
+        <tr><td><strong>Хладное серебро</strong></td><td style="color:#5a7a82;">#0B2C34</td><td>Фатальный сбой Фонда.</td></tr>
+        <tr><td><strong>Розовый</strong></td><td style="color:#f48b9e;">#F48B9E</td><td>Дополнительный код.</td></tr>
       </table>
     </div>
 
@@ -646,7 +706,6 @@
 
     <!-- ФОРМА -->
     <h2 id="uniform">👔 Раздел VI. Что можно носить и делать</h2>
-
     <div class="section">
       <h3>6.1. Что можно носить сотрудникам</h3>
       <table class="data-table">
@@ -689,7 +748,7 @@
 
     <hr class="divider">
 
-    <!-- ОБЩИЕ ПРАВИЛА -->
+    <!-- ОБЩИЕ -->
     <h2 id="general">📜 Раздел VII. Общие правила</h2>
     <div class="section">
       <h3>7.1. Основные принципы сервера</h3>
@@ -776,7 +835,7 @@
 
     <hr class="divider">
 
-    <!-- КЛАССЫ -->
+    <!-- ИГРОВЫЕ КЛАССЫ -->
     <h2 id="classes">👥 Раздел IX. Правила игровых классов</h2>
 
     <details>
@@ -1027,13 +1086,41 @@
       <a href="https://t.me/mvprojectru" class="telegram">📢 TELEGRAM-КАНАЛ</a>
     </div>
 
-  </div>
+    <div class="footer">
+      <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.0 | Обновлено: сентябрь 2026</p>
+      <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
+    </div>
 
-  <div class="footer">
-    <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-    <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.0 | Обновлено: сентябрь 2026</p>
-    <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
-  </div>
+  </main>
+
+  <script>
+    // Автоматическое закрытие меню при клике на ссылку (для мобильных)
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          document.querySelector('.sidebar').classList.remove('open');
+        }
+      });
+    });
+
+    // Подсветка активного раздела
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('h2[id]');
+      const links = document.querySelectorAll('.sidebar-nav a');
+      let current = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 100;
+        if (window.scrollY >= top) current = sec.getAttribute('id');
+      });
+      links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>

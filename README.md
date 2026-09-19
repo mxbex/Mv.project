@@ -45,7 +45,7 @@
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  /* НАВИГАЦИЯ С ПОДРАЗДЕЛАМИ */
+  /* НАВИГАЦИЯ */
   .sidebar-nav { padding: 0 12px; }
   .nav-section { margin-bottom: 3px; }
   .nav-section-header {
@@ -54,64 +54,48 @@
     padding: 10px 14px; margin: 2px 0; border-radius: 6px;
     font-size: 0.88em; letter-spacing: 1px; transition: 0.2s;
     border-left: 3px solid transparent;
-    cursor: pointer;
-    user-select: none;
+    cursor: pointer; user-select: none;
   }
   .nav-section-header:hover {
     background: rgba(0,255,136,0.08);
     border-left-color: #00ff88;
   }
   .nav-section-header .arrow {
-    font-size: 0.7em;
-    transition: transform 0.2s;
-    color: #00ff88;
+    font-size: 0.7em; transition: transform 0.2s; color: #00ff88;
   }
-  .nav-section-header.open .arrow {
-    transform: rotate(90deg);
-  }
-  .nav-section-header .label {
-    flex: 1;
-    margin-left: 8px;
-  }
+  .nav-section-header.open .arrow { transform: rotate(90deg); }
+  .nav-section-header .label { flex: 1; margin-left: 8px; }
 
   .nav-sub {
-    max-height: 0;
-    overflow: hidden;
+    max-height: 0; overflow: hidden;
     transition: max-height 0.3s ease;
     padding-left: 10px;
     border-left: 1px dashed #1f1f1f;
     margin-left: 15px;
   }
-  .nav-sub.open {
-    max-height: 1000px;
-  }
+  .nav-sub.open { max-height: 1000px; }
   .nav-sub a {
-    display: block;
-    color: #88bbaa; text-decoration: none;
-    padding: 7px 14px; margin: 2px 0;
-    border-radius: 5px;
-    font-size: 0.78em;
-    letter-spacing: 0.5px;
-    transition: 0.2s;
-    border-left: 2px solid transparent;
+    display: block; color: #88bbaa; text-decoration: none;
+    padding: 7px 14px; margin: 2px 0; border-radius: 5px;
+    font-size: 0.78em; letter-spacing: 0.5px;
+    transition: 0.2s; border-left: 2px solid transparent;
   }
   .nav-sub a:hover {
     background: rgba(0,255,136,0.06);
-    color: #00ff88;
-    border-left-color: #00cc66;
+    color: #00ff88; border-left-color: #00cc66;
     padding-left: 18px;
   }
   .nav-sub a.active {
     background: rgba(0,255,136,0.1);
-    color: #00ff88;
-    border-left-color: #00ff88;
+    color: #00ff88; border-left-color: #00ff88;
   }
 
   /* КОНТЕНТ */
   .main-content {
     margin-left: 290px;
-    padding: 50px 80px;
+    padding: 45px 40px;
     min-height: 100vh;
+    width: calc(100% - 290px);
   }
 
   .menu-toggle {
@@ -125,7 +109,7 @@
   @media (max-width: 900px) {
     .sidebar { transform: translateX(-100%); transition: 0.3s; }
     .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 70px 20px 30px; }
+    .main-content { margin-left: 0; padding: 70px 15px 30px; width: 100%; }
     .menu-toggle { display: block; }
   }
 
@@ -169,22 +153,24 @@
   li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; }
   li:hover { color: #e0e0e0; }
 
-  /* СЕТКА 2 В РЯД */
+  /* СЕТКИ — ШИРОКИЕ */
   .two-col-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px;
     margin: 25px 0;
+    width: 100%;
   }
   @media (max-width: 1200px) {
     .two-col-grid { grid-template-columns: 1fr; }
   }
 
-  /* Таблицы — шире */
+  /* Таблицы — широкие */
   .data-table {
     width: 100%; border-collapse: collapse;
     background: #0a0a0a; border: 1px solid #1a1a1a;
-    font-size: 0.9em;
+    font-size: 0.92em;
+    table-layout: auto;
   }
   .data-table th {
     background: #0f1a12; color: #00ff88; padding: 16px 18px;
@@ -210,13 +196,15 @@
     border-radius: 8px;
     overflow: hidden;
     margin: 20px 0;
+    width: 100%;
   }
 
-  /* Цветные коды */
+  /* Цветные коды — шире */
   .code-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px; margin: 35px 0;
+    width: 100%;
   }
   @media (max-width: 1200px) {
     .code-grid { grid-template-columns: 1fr; }
@@ -324,6 +312,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 30px; margin: 30px 0;
+    width: 100%;
   }
   @media (max-width: 1200px) {
     .clearance-grid { grid-template-columns: 1fr; }
@@ -380,24 +369,18 @@
     </div>
     <nav class="sidebar-nav">
 
-      <!-- КОДЫ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🚨</span>
-          <span class="label">КОДЫ</span>
-          <span class="arrow">▶</span>
+          <span>🚨</span><span class="label">КОДЫ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#codes">Все коды угроз</a>
         </div>
       </div>
 
-      <!-- ДОПУСК -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🔐</span>
-          <span class="label">ДОПУСК</span>
-          <span class="arrow">▶</span>
+          <span>🔐</span><span class="label">ДОПУСК</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#clearance">Уровни 1-5</a>
@@ -405,12 +388,9 @@
         </div>
       </div>
 
-      <!-- МОГ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🛡️</span>
-          <span class="label">МОГ</span>
-          <span class="arrow">▶</span>
+          <span>🛡️</span><span class="label">МОГ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#mtf">Основные МОГ</a>
@@ -419,12 +399,9 @@
         </div>
       </div>
 
-      <!-- ПРОТОКОЛЫ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📋</span>
-          <span class="label">ПРОТОКОЛЫ</span>
-          <span class="arrow">▶</span>
+          <span>📋</span><span class="label">ПРОТОКОЛЫ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#prot-p-l">Протоколы P-L</a>
@@ -436,12 +413,9 @@
         </div>
       </div>
 
-      <!-- ПРИВИЛЕГИИ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>⭐</span>
-          <span class="label">ПРИВИЛЕГИИ</span>
-          <span class="arrow">▶</span>
+          <span>⭐</span><span class="label">ПРИВИЛЕГИИ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#priv-obligations">Обязанности админа</a>
@@ -455,60 +429,45 @@
         </div>
       </div>
 
-      <!-- ФОРМА -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>👔</span>
-          <span class="label">ФОРМА</span>
-          <span class="arrow">▶</span>
+          <span>👔</span><span class="label">ФОРМА</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#uniform">Что можно носить</a>
         </div>
       </div>
 
-      <!-- ОБЩИЕ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📜</span>
-          <span class="label">ОБЩИЕ</span>
-          <span class="arrow">▶</span>
+          <span>📜</span><span class="label">ОБЩИЕ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#general">Принципы и возраст</a>
         </div>
       </div>
 
-      <!-- RP -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🎭</span>
-          <span class="label">RP</span>
-          <span class="arrow">▶</span>
+          <span>🎭</span><span class="label">RP</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#rp">Все RP-правила</a>
         </div>
       </div>
 
-      <!-- КЛАССЫ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>👥</span>
-          <span class="label">КЛАССЫ</span>
-          <span class="arrow">▶</span>
+          <span>👥</span><span class="label">КЛАССЫ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#classes">Игровые классы</a>
         </div>
       </div>
 
-      <!-- SCP -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🧬</span>
-          <span class="label">SCP</span>
-          <span class="arrow">▶</span>
+          <span>🧬</span><span class="label">SCP</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#scp">Основные SCP</a>
@@ -516,24 +475,18 @@
         </div>
       </div>
 
-      <!-- SCP-914 -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>⚙️</span>
-          <span class="label">SCP-914</span>
-          <span class="arrow">▶</span>
+          <span>⚙️</span><span class="label">SCP-914</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#scp914">Правила 914</a>
         </div>
       </div>
 
-      <!-- ИНТЕРКОМ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📢</span>
-          <span class="label">ИНТЕРКОМ</span>
-          <span class="arrow">▶</span>
+          <span>📢</span><span class="label">ИНТЕРКОМ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#intercom">Правила интеркома</a>
@@ -541,24 +494,18 @@
         </div>
       </div>
 
-      <!-- БАНЫ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>⏱️</span>
-          <span class="label">БАНЫ</span>
-          <span class="arrow">▶</span>
+          <span>⏱️</span><span class="label">БАНЫ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#bans">Сроки наказаний</a>
         </div>
       </div>
 
-      <!-- АПЕЛЛЯЦИЯ -->
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📩</span>
-          <span class="label">АПЕЛЛЯЦИЯ</span>
-          <span class="arrow">▶</span>
+          <span>📩</span><span class="label">АПЕЛЛЯЦИЯ</span><span class="arrow">▶</span>
         </div>
         <div class="nav-sub">
           <a href="#appeal">Процедура апелляции</a>
@@ -806,7 +753,7 @@
     <h2 id="mtf">🛡️ Раздел IV. Мобильные Оперативные Группы (МОГ)</h2>
     <p>МОГ — элитные подразделения Фонда, специализирующиеся на решении конкретных угроз.</p>
 
-    <h3 id="mtf-dop">Основные МОГ</h3>
+    <h3>Основные МОГ</h3>
     <div class="table-wrap">
       <table class="data-table">
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
@@ -821,7 +768,7 @@
       </table>
     </div>
 
-    <h3>Дополнительные МОГ</h3>
+    <h3 id="mtf-dop">Дополнительные МОГ</h3>
     <div class="table-wrap">
       <table class="data-table">
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
@@ -1477,21 +1424,19 @@
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.2 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.3 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
     </div>
 
   </main>
 
   <script>
-    // Раскрытие подразделов в меню
     function toggleSection(el) {
       el.classList.toggle('open');
       const sub = el.nextElementSibling;
       if (sub) sub.classList.toggle('open');
     }
 
-    // Автоматическое закрытие меню на телефоне при клике на ссылку
     document.querySelectorAll('.nav-sub a').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 900) {
@@ -1500,7 +1445,6 @@
       });
     });
 
-    // Подсветка активного подраздела при прокрутке
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('h2[id], h3[id]');
       const links = document.querySelectorAll('.nav-sub a');

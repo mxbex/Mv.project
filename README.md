@@ -17,15 +17,10 @@
 
   /* ЛЕВОЕ МЕНЮ */
   .sidebar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 280px;
-    height: 100vh;
-    background: #080808;
-    border-right: 2px solid #00ff88;
-    padding: 25px 0;
-    overflow-y: auto;
-    z-index: 1000;
+    position: fixed; top: 0; left: 0;
+    width: 280px; height: 100vh;
+    background: #080808; border-right: 2px solid #00ff88;
+    padding: 25px 0; overflow-y: auto; z-index: 1000;
     box-shadow: 5px 0 30px rgba(0,0,0,0.8);
   }
   .sidebar-logo {
@@ -34,43 +29,28 @@
     margin-bottom: 20px;
   }
   .sidebar-logo .name {
-    font-size: 1.5em;
-    font-weight: bold;
-    letter-spacing: 3px;
+    font-size: 1.5em; font-weight: bold; letter-spacing: 3px;
     background: linear-gradient(90deg, #00ff88, #00cc66);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: block;
-    margin-bottom: 8px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block; margin-bottom: 8px;
   }
   .sidebar-logo .classif {
-    display: inline-block;
-    background: #ff0000; color: #fff;
-    padding: 3px 10px;
-    font-size: 0.65em;
-    letter-spacing: 2px;
-    font-weight: bold;
-    animation: blink 2s infinite;
+    display: inline-block; background: #ff0000; color: #fff;
+    padding: 3px 10px; font-size: 0.65em; letter-spacing: 2px;
+    font-weight: bold; animation: blink 2s infinite;
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
   .sidebar-nav { padding: 0 15px; }
   .sidebar-nav a {
-    display: block;
-    color: #00ff88;
-    text-decoration: none;
-    padding: 12px 18px;
-    margin: 4px 0;
-    border-radius: 6px;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    transition: 0.2s;
+    display: block; color: #00ff88; text-decoration: none;
+    padding: 12px 18px; margin: 4px 0; border-radius: 6px;
+    font-size: 0.9em; letter-spacing: 1px; transition: 0.2s;
     border-left: 3px solid transparent;
   }
   .sidebar-nav a:hover {
     background: rgba(0,255,136,0.08);
-    border-left-color: #00ff88;
-    transform: translateX(4px);
+    border-left-color: #00ff88; transform: translateX(4px);
   }
   .sidebar-nav a.active {
     background: rgba(0,255,136,0.12);
@@ -80,26 +60,23 @@
   /* КОНТЕНТ */
   .main-content {
     margin-left: 280px;
-    padding: 50px 70px;
+    padding: 50px 60px;
     min-height: 100vh;
+    max-width: calc(100vw - 280px);
   }
 
-  /* Мобильная версия */
   .menu-toggle {
-    display: none;
-    position: fixed;
-    top: 15px; left: 15px;
-    z-index: 1100;
+    display: none; position: fixed;
+    top: 15px; left: 15px; z-index: 1100;
     background: #00ff88; color: #000;
     border: none; padding: 10px 15px;
-    border-radius: 6px;
-    font-weight: bold; cursor: pointer;
-    font-size: 1.2em;
+    border-radius: 6px; font-weight: bold;
+    cursor: pointer; font-size: 1.2em;
   }
   @media (max-width: 900px) {
     .sidebar { transform: translateX(-100%); transition: 0.3s; }
     .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 70px 20px 30px; }
+    .main-content { margin-left: 0; padding: 70px 20px 30px; max-width: 100%; }
     .menu-toggle { display: block; }
   }
 
@@ -142,41 +119,57 @@
   li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; }
   li:hover { color: #e0e0e0; }
 
+  /* СЕТКА 2 В РЯД */
+  .two-col-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin: 25px 0;
+  }
+  @media (max-width: 1100px) {
+    .two-col-grid { grid-template-columns: 1fr; }
+  }
+
   /* Таблицы */
   .data-table {
-    width: 100%; border-collapse: collapse; margin: 25px 0;
-    background: #0a0a0a; border: 1px solid #1a1a1a; font-size: 0.9em;
+    width: 100%; border-collapse: collapse;
+    background: #0a0a0a; border: 1px solid #1a1a1a;
+    font-size: 0.88em;
   }
   .data-table th {
-    background: #0f1a12; color: #00ff88; padding: 15px;
+    background: #0f1a12; color: #00ff88; padding: 14px;
     text-align: left; font-weight: bold; letter-spacing: 1px;
-    border-bottom: 2px solid #00ff88; text-transform: uppercase; font-size: 0.85em;
+    border-bottom: 2px solid #00ff88;
+    text-transform: uppercase; font-size: 0.85em;
   }
   .data-table td {
-    padding: 12px 15px;
+    padding: 12px 14px;
     border-bottom: 1px solid #1a1a1a;
-    color: #c0c0c0;
-    vertical-align: top;
+    color: #c0c0c0; vertical-align: top;
     background: #0a0a0a;
   }
   .data-table tr { background: #0a0a0a; }
   .data-table tr:hover,
   .data-table tr:hover td,
   .data-table tr:hover th {
-    background: #0f0f0f;
-    color: #e0e0e0;
+    background: #0f0f0f; color: #e0e0e0;
   }
   .data-table strong { color: #00ff88; }
-  .table-wrap { overflow-x: auto; background: #0a0a0a; }
+  .table-wrap { background: #0a0a0a; }
 
   /* Цветные коды */
   .code-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 25px; margin: 35px 0;
+  }
+  @media (max-width: 1100px) {
+    .code-grid { grid-template-columns: 1fr; }
   }
   .code-card {
     padding: 25px; border-radius: 10px; background: #0f0f0f;
-    border: 2px solid; transition: 0.3s; position: relative; overflow: hidden;
+    border: 2px solid; transition: 0.3s;
+    position: relative; overflow: hidden;
   }
   .code-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
   .code-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
@@ -268,8 +261,12 @@
   .divider { height: 2px; background: linear-gradient(90deg, transparent, #00ff88, transparent); margin: 50px 0; border: none; }
 
   .clearance-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 25px; margin: 30px 0;
+  }
+  @media (max-width: 1100px) {
+    .clearance-grid { grid-template-columns: 1fr; }
   }
   .clearance-card {
     padding: 25px; border-radius: 10px; border: 2px solid;
@@ -299,14 +296,24 @@
   .level-d h4 { color: #999; }
   .level-e { border-color: #9013fe; }
   .level-e h4 { color: #9013fe; }
+
+  /* Привилегии */
+  .priv-card {
+    padding: 25px; border-radius: 10px;
+    background: #0f0f0f;
+    border: 2px solid #00ff88;
+    transition: 0.3s;
+  }
+  .priv-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
+  .priv-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
+  .priv-card p { font-size: 0.9em; color: #999; }
+  .priv-card ul { margin-top: 10px; font-size: 0.9em; }
 </style>
 </head>
 <body>
 
-  <!-- Кнопка меню для телефона -->
   <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
 
-  <!-- ЛЕВОЕ МЕНЮ -->
   <aside class="sidebar">
     <div class="sidebar-logo">
       <span class="name">MV.PROJECT</span>
@@ -318,6 +325,7 @@
       <a href="#classes-personnel">👤 КЛАССЫ ПЕРСОНАЛА</a>
       <a href="#mtf">🛡️ МОГ</a>
       <a href="#protocols">📋 ПРОТОКОЛЫ</a>
+      <a href="#privileges">⭐ ПРИВИЛЕГИИ</a>
       <a href="#uniform">👔 ФОРМА</a>
       <a href="#general">📜 ОБЩИЕ</a>
       <a href="#rp">🎭 RP</a>
@@ -330,7 +338,6 @@
     </nav>
   </aside>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
   <main class="main-content">
 
     <div class="header">
@@ -355,7 +362,7 @@
         <h4>🟢 КОД ЗЕЛЁНЫЙ</h4>
         <p><strong>Био-угроза / Заражение</strong></p>
         <p>Обозначает любую опасность, связанную с био-угрозой, инфекцией или источником заражения.</p>
-        <p><strong>Указания:</strong> Избегайте контакта с источниками заражения. Не покидайте Зону. Будьте готовы к карантину.</p>
+        <p><strong>Указания:</strong> Избегайте контакта с источниками заражения. Не покидайте Зону.</p>
         <p><strong>МОГ:</strong> Бета-7 «Шляпные болванчики»</p>
       </div>
       <div class="code-card code-blue">
@@ -369,70 +376,60 @@
         <h4>🔷 КОД СУПЕРСИНИЙ</h4>
         <p><strong>Побег разумного объекта (высокий интеллект)</strong></p>
         <p>Побег разумного объекта с интеллектом, равным или превышающим человеческий.</p>
-        <p><strong>Указания:</strong> План эвакуации как при СИНЕМ.</p>
         <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса»</p>
       </div>
       <div class="code-card code-yellow">
         <h4>🟡 КОД ЖЁЛТЫЙ</h4>
         <p><strong>Меметическая / когнитивная угроза</strong></p>
         <p>Присутствие меметической, информационной или когнитивной угрозы.</p>
-        <p><strong>Указания:</strong> Ожидайте спасательную команду. Избегайте перемещения и разговоров. Закройте уши и глаза.</p>
         <p><strong>МОГ:</strong> Эта-10 «Не вижу зла», Эта-11 «Дикие твари»</p>
       </div>
       <div class="code-card code-red">
         <h4>🔴 КОД КРАСНЫЙ</h4>
         <p><strong>Агрессивная настроенная сущность (АНС)</strong></p>
-        <p>Побег агрессивно настроенной сущности, представляющей существенную опасность для Зоны.</p>
-        <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
-        <p><strong>МОГ:</strong> Ню-7 «Удар молота», Эта-5 «Бомбардиры Егеря», Гамма-5 «Ложный след»</p>
+        <p>Побег агрессивно настроенной сущности, представляющей опасность для Зоны.</p>
+        <p><strong>МОГ:</strong> Ню-7 «Удар молота», Эта-5 «Бомбардиры Егеря»</p>
       </div>
       <div class="code-card code-black">
         <h4>⚫ КОД ЧЁРНЫЙ</h4>
         <p><strong>Нарушение содержания НЛУ</strong></p>
         <p>Нарушение содержания Неликвидируемой Угрозы (например, SCP-096).</p>
-        <p><strong>Указания:</strong> Избегайте противостояния с НЛУ любой ценой.</p>
-        <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса», Сигма-23 «Требуется подкрепление»</p>
+        <p><strong>МОГ:</strong> Эпсилон-11, Сигма-23</p>
       </div>
       <div class="code-card code-white">
         <h4>⚪ КОД БЕЛЫЙ</h4>
         <p><strong>Вторжение сил захвата</strong></p>
         <p>Вторжение высокоорганизованных сил захвата.</p>
-        <p><strong>Указания:</strong> Немедленная эвакуация. Изолируйте объекты, заблокируйте двери.</p>
         <p><strong>МОГ:</strong> Все ММОГ уровня батальона</p>
       </div>
       <div class="code-card code-gray">
         <h4>🌫️ КОД СЕРЫЙ</h4>
         <p><strong>Внутренняя угроза</strong></p>
         <p>Аналог БЕЛОГО, но угроза исходит изнутри Зоны.</p>
-        <p><strong>Указания:</strong> План эвакуации как при БЕЛОМ.</p>
         <p><strong>МОГ:</strong> Все ММОГ уровня батальона</p>
       </div>
       <div class="code-card code-purple">
         <h4>🟣 КОД ПУРПУРНЫЙ</h4>
         <p><strong>Экстрамерная угроза</strong></p>
         <p>Нарушения пространства, времени, причинности, нематериальные объекты.</p>
-        <p><strong>Указания:</strong> Стандартный план эвакуации. Будьте готовы к ожиданию.</p>
         <p><strong>МОГ:</strong> Дзета-9, Лямбда-5, Мю-13</p>
       </div>
       <div class="code-card code-clean">
         <h4>⬜ КОД ЧИСТЫЙ</h4>
         <p><strong>Неизвестная угроза</strong></p>
         <p>Обозначает неизвестную угрозу.</p>
-        <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
       <div class="code-card code-superclean">
         <h4>💗 КОД СУПЕРЧИСТЫЙ</h4>
         <p><strong>Неописуемая угроза</strong></p>
         <p>Обозначает угрозу, не поддающуюся описанию.</p>
-        <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
       <div class="code-card code-silver">
         <h4>🥈 КОД ХЛАДНОЕ СЕРЕБРО</h4>
         <p><strong>Фатальный сбой Фонда</strong></p>
         <p>Событие, послужившее причиной фатального нарушения функционирования Фонда.</p>
-        <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
     </div>
@@ -492,10 +489,11 @@
           <li>Директор Зоны</li>
           <li>Представитель КпЭ</li>
           <li>Агент ГАРШ-O4</li>
-          <li>ГНС</li>
-          <li>ГСБ</li>
+          <li>ГНС (Главный Научный Сотрудник)</li>
+          <li>ГСБ (Глава Службы Безопасности)</li>
+          <li><strong>Капитан МОГ</strong> (командир оперативной группы)</li>
         </ul>
-        <p style="margin-top:10px; color:#ff6666;">Доступ: все зоны комплекса.</p>
+        <p style="margin-top:10px; color:#ff6666;">Доступ: все зоны комплекса. Командование операциями.</p>
       </div>
       <div class="clearance-card level-5">
         <h4>УРОВЕНЬ 5</h4>
@@ -537,7 +535,7 @@
           <li>Ключевые инженеры</li>
         </ul>
         <p><strong>Запрещено:</strong> Доступ к аномалиям без карантина и блокировки ментального воздействия.</p>
-        <p><strong>Разрешено:</strong> Доступ к карантинным аномалиям. Эвакуация при ЧС.</p>
+        <p><strong>Разрешено:</strong> Доступ к карантинным аномалиям.</p>
       </div>
       <div class="clearance-card level-c">
         <h4>КЛАСС C</h4>
@@ -547,7 +545,7 @@
           <li>Охрана</li>
           <li>Инженеры</li>
         </ul>
-        <p><strong>Запрещено:</strong> Контакт с опасными аномалиями без защиты. Игнорирование карантина.</p>
+        <p><strong>Запрещено:</strong> Контакт с опасными аномалиями без защиты.</p>
         <p><strong>Разрешено:</strong> Работа с безопасными аномалиями.</p>
       </div>
       <div class="clearance-card level-d">
@@ -568,7 +566,7 @@
           <li>Персонал, пострадавший от аномалий</li>
         </ul>
         <p><strong>Запрещено:</strong> Возвращение к обязанностям до полного обследования.</p>
-        <p><strong>Разрешено:</strong> Карантин и наблюдение. Возврат к работе после допроса и осмотра.</p>
+        <p><strong>Разрешено:</strong> Карантин и наблюдение.</p>
       </div>
     </div>
 
@@ -578,40 +576,48 @@
     <h2 id="mtf">🛡️ Раздел IV. Мобильные Оперативные Группы (МОГ)</h2>
     <p>МОГ — элитные подразделения Фонда, специализирующиеся на решении конкретных угроз.</p>
 
+    <h3>Основные МОГ</h3>
     <div class="table-wrap">
-      <table class="data-table" style="min-width:900px;">
+      <table class="data-table">
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
-        <tr><td><strong>МОГ Ню-7</strong></td><td>«Удар молота»</td><td>Милитаризованная группа быстрого реагирования. Подавление крупномасштабных нарушений содержания.</td></tr>
-        <tr><td><strong>МОГ Эта-10</strong></td><td>«Не вижу зла»</td><td>Меметические, информационные и когнитивные угрозы.</td></tr>
-        <tr><td><strong>МОГ Эта-11</strong></td><td>«Дикие твари»</td><td>Звуковые и музыкальные аномалии, звуковые опасности восприятия.</td></tr>
-        <tr><td><strong>МОГ Бета-7</strong></td><td>«Шляпные болванчики»</td><td>Био-угрозы, инфекции, аномальные пандемии.</td></tr>
-        <tr><td><strong>МОГ Гамма-5</strong></td><td>«Ложный след»</td><td>Дезинформация, сокрытие аномальных событий от общественности.</td></tr>
-        <tr><td><strong>МОГ Эпсилон-11</strong></td><td>«Девятихвостая лиса»</td><td>Внутренняя безопасность, поимка беглых SCP.</td></tr>
-        <tr><td><strong>МОГ Дзета-9</strong></td><td>«Кротокрысы»</td><td>Пространственно-временные аномалии, подземные объекты.</td></tr>
-        <tr><td><strong>МОГ Лямбда-5</strong></td><td>«Белые кролики»</td><td>Экстрамерные, временные и пространственные угрозы.</td></tr>
-        <tr><td><strong>МОГ Мю-13</strong></td><td>«Охотники за привидениями»</td><td>Нематериальные, призрачные, эктоплазматические сущности.</td></tr>
-        <tr><td><strong>МОГ Альфа-1</strong></td><td>«Багряная десница»</td><td>Личная охрана Совета О5. Прибывает только в экстренных случаях.</td></tr>
-        <tr><td><strong>МОГ Альфа-9</strong></td><td>«Последняя надежда»</td><td>Сдерживание SCP и ликвидация неавторизованных групп.</td></tr>
-        <tr><td><strong>МОГ Альфа-40</strong></td><td>«Мятежники»</td><td>Ликвидация неавторизованных группировок внутри Зоны.</td></tr>
-        <tr><td><strong>МОГ Гамма-13</strong></td><td>«Законники Азимова»</td><td>Уничтожение неавторизованных групп. Работа с ИИ-аномалиями.</td></tr>
-        <tr><td><strong>МОГ Лямбда-12</strong></td><td>«Санстанция»</td><td>Паразитные организмы и биологические системы.</td></tr>
-        <tr><td><strong>МОГ Мю-3</strong></td><td>«Богатые Аукционеры»</td><td>Ликвидация неавторизованных групп.</td></tr>
-        <tr><td><strong>МОГ Мю-4</strong></td><td>«Отладчики»</td><td>Устранение неполадок в системах комплекса.</td></tr>
-        <tr><td><strong>МОГ Омега-1</strong></td><td>«Левая рука закона»</td><td>Внутренние разбирательства, охота на предателей Фонда.</td></tr>
-        <tr><td><strong>МОГ Сигма-66</strong></td><td>«Шестнадцать тонн»</td><td>Тяжёлое вооружение, уничтожение неавторизованных.</td></tr>
-        <tr><td><strong>МОГ Тау-5</strong></td><td>«Самсара»</td><td>Религиозные и культовые аномалии.</td></tr>
-        <tr><td><strong>МОГ Эпсилон-9</strong></td><td>«Пожиратели огня»</td><td>Термальные угрозы, пожары, пирокинез.</td></tr>
+        <tr><td><strong>Ню-7</strong></td><td>«Удар молота»</td><td>Подавление крупномасштабных нарушений содержания.</td></tr>
+        <tr><td><strong>Эта-10</strong></td><td>«Не вижу зла»</td><td>Меметические, информационные и когнитивные угрозы.</td></tr>
+        <tr><td><strong>Эта-11</strong></td><td>«Дикие твари»</td><td>Звуковые и музыкальные аномалии.</td></tr>
+        <tr><td><strong>Бета-7</strong></td><td>«Шляпные болванчики»</td><td>Био-угрозы, инфекции, аномальные пандемии.</td></tr>
+        <tr><td><strong>Эпсилон-11</strong></td><td>«Девятихвостая лиса»</td><td>Внутренняя безопасность, поимка беглых SCP.</td></tr>
+        <tr><td><strong>Дзета-9</strong></td><td>«Кротокрысы»</td><td>Пространственно-временные аномалии.</td></tr>
+        <tr><td><strong>Лямбда-5</strong></td><td>«Белые кролики»</td><td>Экстрамерные, временные и пространственные угрозы.</td></tr>
+        <tr><td><strong>Мю-13</strong></td><td>«Охотники за привидениями»</td><td>Нематериальные и эктоплазматические сущности.</td></tr>
+      </table>
+    </div>
+
+    <h3>Дополнительные МОГ</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
+        <tr><td><strong>Альфа-1</strong></td><td>«Багряная десница»</td><td>Личная охрана Совета О5.</td></tr>
+        <tr><td><strong>Альфа-9</strong></td><td>«Последняя надежда»</td><td>Сдерживание SCP, ликвидация неавторизованных групп.</td></tr>
+        <tr><td><strong>Альфа-40</strong></td><td>«Мятежники»</td><td>Ликвидация неавторизованных группировок.</td></tr>
+        <tr><td><strong>Гамма-5</strong></td><td>«Ложный след»</td><td>Дезинформация, сокрытие аномальных событий.</td></tr>
+        <tr><td><strong>Гамма-13</strong></td><td>«Законники Азимова»</td><td>Работа с ИИ-аномалиями.</td></tr>
+        <tr><td><strong>Лямбда-12</strong></td><td>«Санстанция»</td><td>Паразитные организмы и биологические системы.</td></tr>
+        <tr><td><strong>Мю-3</strong></td><td>«Богатые Аукционеры»</td><td>Ликвидация неавторизованных групп.</td></tr>
+        <tr><td><strong>Мю-4</strong></td><td>«Отладчики»</td><td>Устранение неполадок в системах комплекса.</td></tr>
+        <tr><td><strong>Омега-1</strong></td><td>«Левая рука закона»</td><td>Внутренние разбирательства, охота на предателей.</td></tr>
+        <tr><td><strong>Сигма-66</strong></td><td>«Шестнадцать тонн»</td><td>Тяжёлое вооружение.</td></tr>
+        <tr><td><strong>Тау-5</strong></td><td>«Самсара»</td><td>Религиозные и культовые аномалии.</td></tr>
+        <tr><td><strong>Эпсилон-9</strong></td><td>«Пожиратели огня»</td><td>Термальные угрозы, пожары, пирокинез.</td></tr>
       </table>
     </div>
 
     <h3>Тактические группы (ТГ)</h3>
     <div class="table-wrap">
-      <table class="data-table" style="min-width:900px;">
+      <table class="data-table">
         <tr><th>Группа</th><th>Позывной</th><th>Специализация</th></tr>
         <tr><td><strong>ОБР «Курс»</strong></td><td>Тактическая группа</td><td>Сдерживание SCP, разведка, разбирательства.</td></tr>
         <tr><td><strong>ТГ «Птицы»</strong></td><td>Тактическая группа</td><td>Сдерживание SCP-106, сопровождение.</td></tr>
         <tr><td><strong>ТГ «Резонанс»</strong></td><td>Тактическая группа</td><td>Ликвидация угроз, сдерживание SCP.</td></tr>
-        <tr><td><strong>ТГ «Пожарники»</strong></td><td>Инженерная ТГ</td><td>Устранение неполадок, пожаров, техподдержка.</td></tr>
+        <tr><td><strong>ТГ «Пожарники»</strong></td><td>Инженерная ТГ</td><td>Устранение неполадок, пожаров.</td></tr>
         <tr><td><strong>Санитарная ТГ</strong></td><td>Медицинская группа</td><td>Медицинская помощь пострадавшим.</td></tr>
       </table>
     </div>
@@ -621,430 +627,565 @@
     <!-- ПРОТОКОЛЫ -->
     <h2 id="protocols">📋 Раздел V. Протоколы и изоляционные коды</h2>
 
-    <h3>Протоколы P-L (блокировка)</h3>
-    <div class="table-wrap">
-      <table class="data-table">
-        <tr><th>Протокол</th><th>Описание</th></tr>
-        <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td></tr>
-        <tr><td><strong>P-L-2</strong></td><td>Блокировка всех КПП.</td></tr>
-        <tr><td><strong>P-L-3</strong></td><td>Блокировка всех дверей.</td></tr>
-      </table>
+    <div class="two-col-grid">
+      <div>
+        <h3>Протоколы P-L (блокировка)</h3>
+        <table class="data-table">
+          <tr><th>Протокол</th><th>Описание</th></tr>
+          <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td></tr>
+          <tr><td><strong>P-L-2</strong></td><td>Блокировка всех КПП.</td></tr>
+          <tr><td><strong>P-L-3</strong></td><td>Блокировка всех дверей.</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h3>Протоколы P-S (SCP)</h3>
+        <table class="data-table">
+          <tr><th>Протокол</th><th>Описание</th></tr>
+          <tr><td><strong>P-S-1</strong></td><td>Отслеживание SCP-объектов.</td></tr>
+          <tr><td><strong>P-S-2</strong></td><td>Отслеживание статуса SCP-объектов.</td></tr>
+          <tr><td><strong>P-S-3</strong></td><td>Активация тесла-ворот.</td></tr>
+          <tr><td><strong>P-S-4</strong></td><td>Сканирование комплекса.</td></tr>
+          <tr><td><strong>P-S-5</strong></td><td>Полный блэкаут комплекса.</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h3>Протоколы P-B (био-безопасность)</h3>
+        <table class="data-table">
+          <tr><th>Протокол</th><th>Описание</th></tr>
+          <tr><td><strong>P-B-1</strong></td><td>Запечатывание заражённых комнат.</td></tr>
+          <tr><td><strong>P-B-2</strong></td><td>Запечатывание камер содержания SCP.</td></tr>
+          <tr><td><strong>P-B-3</strong></td><td>Деконтаминация ЛЗС.</td></tr>
+          <tr><td><strong>P-B-4</strong></td><td>Деконтаминация ТЗС.</td></tr>
+          <tr><td><strong>P-B-5</strong></td><td>Подрыв комплекса.</td></tr>
+          <tr><td><strong>P-B-6</strong></td><td>Подрыв комплекса и внешнего периметра.</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h3>Протоколы P-I (вторжение)</h3>
+        <table class="data-table">
+          <tr><th>Протокол</th><th>Описание</th></tr>
+          <tr><td><strong>P-I-1</strong></td><td>Уничтожение техники у комплекса.</td></tr>
+          <tr><td><strong>P-I-2</strong></td><td>Блокировка мест взлома и оповещение.</td></tr>
+          <tr><td><strong>P-I-3</strong></td><td>Уничтожение всего персонала в зоне.</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h3>Протоколы P-E (пожаротушение)</h3>
+        <table class="data-table">
+          <tr><th>Протокол</th><th>Описание</th></tr>
+          <tr><td><strong>P-E-1</strong></td><td>Тушение в одной комнате; нет угрозы жизни.</td></tr>
+          <tr><td><strong>P-E-2</strong></td><td>Тушение в одной комнате; есть угроза жизни.</td></tr>
+          <tr><td><strong>P-E-3</strong></td><td>Тушение в одной комнате; угроза взрыва.</td></tr>
+          <tr><td><strong>P-E-4</strong></td><td>Тушение в нескольких комнатах; нет угрозы.</td></tr>
+          <tr><td><strong>P-E-5</strong></td><td>Тушение в нескольких комнатах; есть угроза.</td></tr>
+          <tr><td><strong>P-E-6</strong></td><td>Тушение в целой зоне; большая угроза жизни.</td></tr>
+          <tr><td><strong>P-E-7</strong></td><td>Тушение в КС SCP класса «Безопасный».</td></tr>
+          <tr><td><strong>P-E-8</strong></td><td>Тушение в КС SCP класса «Евклид».</td></tr>
+          <tr><td><strong>P-E-9</strong></td><td>Тушение в КС SCP класса «Кетер».</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <h3>Изоляционные коды (КИР)</h3>
+        <table class="data-table">
+          <tr><th>Код</th><th>Значение</th></tr>
+          <tr><td><strong>Чёрный</strong></td><td>Полная изоляция комплекса.</td></tr>
+          <tr><td><strong>Серый</strong></td><td>Внутренняя угроза.</td></tr>
+          <tr><td><strong>Белый</strong></td><td>Внешнее вторжение.</td></tr>
+          <tr><td><strong>Суперсиний</strong></td><td>Побег разумного SCP (высокий интеллект).</td></tr>
+          <tr><td><strong>Синий</strong></td><td>Побег разумного SCP.</td></tr>
+          <tr><td><strong>Красный</strong></td><td>Агрессивная сущность.</td></tr>
+          <tr><td><strong>Зелёный</strong></td><td>Био-угроза.</td></tr>
+          <tr><td><strong>Пурпурный</strong></td><td>Экстрамерная угроза.</td></tr>
+          <tr><td><strong>Жёлтый</strong></td><td>Меметическая угроза.</td></tr>
+          <tr><td><strong>Чистый</strong></td><td>Неизвестная угроза.</td></tr>
+          <tr><td><strong>Суперчистый</strong></td><td>Неописуемая угроза.</td></tr>
+          <tr><td><strong>Хладное серебро</strong></td><td>Фатальный сбой Фонда.</td></tr>
+          <tr><td><strong>Розовый</strong></td><td>Дополнительный код.</td></tr>
+        </table>
+      </div>
     </div>
 
-    <h3>Протоколы P-B (био-безопасность)</h3>
-    <div class="table-wrap">
-      <table class="data-table">
-        <tr><th>Протокол</th><th>Описание</th></tr>
-        <tr><td><strong>P-B-1</strong></td><td>Запечатывание заражённых комнат.</td></tr>
-        <tr><td><strong>P-B-2</strong></td><td>Запечатывание камер содержания SCP.</td></tr>
-        <tr><td><strong>P-B-3</strong></td><td>Деконтаминация Лёгкой зоны содержания.</td></tr>
-        <tr><td><strong>P-B-4</strong></td><td>Деконтаминация Тяжёлой зоны содержания.</td></tr>
-        <tr><td><strong>P-B-5</strong></td><td>Подрыв комплекса.</td></tr>
-        <tr><td><strong>P-B-6</strong></td><td>Подрыв комплекса и внешнего периметра.</td></tr>
-      </table>
+    <hr class="divider">
+
+    <!-- ПРИВИЛЕГИИ -->
+    <h2 id="privileges">⭐ Раздел VI. Правила привилегий и администрации</h2>
+    <p>Администрация сервера — это не просто люди с командами, а <strong>лицо проекта</strong>. Каждый админ обязан соблюдать регламент и не злоупотреблять полномочиями.</p>
+
+    <div class="alert alert-danger">
+      <strong>⛔ ВАЖНО:</strong> Нарушение правил привилегий = понижение, ЧСА или полное снятие с должности.
     </div>
 
-    <h3>Протоколы P-S (SCP)</h3>
-    <div class="table-wrap">
-      <table class="data-table">
-        <tr><th>Протокол</th><th>Описание</th></tr>
-        <tr><td><strong>P-S-1</strong></td><td>Отслеживание SCP-объектов.</td></tr>
-        <tr><td><strong>P-S-2</strong></td><td>Отслеживание статуса SCP-объектов.</td></tr>
-        <tr><td><strong>P-S-3</strong></td><td>Активация тесла-ворот.</td></tr>
-        <tr><td><strong>P-S-4</strong></td><td>Сканирование комплекса.</td></tr>
-        <tr><td><strong>P-S-5</strong></td><td>Полный блэкаут комплекса.</td></tr>
-      </table>
+    <h3>Основные правила для администрации</h3>
+    <div class="two-col-grid">
+      <div class="priv-card">
+        <h4>✅ Что ОБЯЗАН делать админ</h4>
+        <ul>
+          <li>Быть активным (заходить минимум 3–4 раза в неделю).</li>
+          <li>Знать правила сервера наизусть.</li>
+          <li>Реагировать на жалобы игроков.</li>
+          <li>Использовать команды только по назначению.</li>
+          <li>Быть вежливым и сдержанным.</li>
+          <li>Помогать новичкам.</li>
+          <li>Соблюдать иерархию и субординацию.</li>
+          <li>Фиксировать выданные наказания.</li>
+        </ul>
+      </div>
+
+      <div class="priv-card" style="border-color:#ff0000;">
+        <h4 style="color:#ff6666;">❌ Что ЗАПРЕЩЕНО админу</h4>
+        <ul>
+          <li>Оскорблять игроков или коллег.</li>
+          <li>Злоупотреблять полномочиями.</li>
+          <li>Игнорировать игроков.</li>
+          <li>Читерить или использовать сторонний софт.</li>
+          <li>Использовать админ-команды в личных целях.</li>
+          <li>Сливать информацию из админ-чата.</li>
+          <li>Кормить читеров или закрывать на них глаза.</li>
+          <li>Создавать конфликты на глазах у игроков.</li>
+          <li>Долго отсутствовать без предупреждения (7+ дней).</li>
+        </ul>
+      </div>
+
+      <div class="priv-card" style="border-color:#ffaa00;">
+        <h4 style="color:#ffaa00;">⚠️ Наказания за враньё</h4>
+        <ul>
+          <li><strong>1-е враньё:</strong> строгий выговор.</li>
+          <li><strong>2-е враньё:</strong> временный ЧСА (3–7 дней).</li>
+          <li><strong>3-е враньё:</strong> понижение или пожизненный ЧСА.</li>
+        </ul>
+        <p style="margin-top:10px; color:#999;">Враньё подрывает доверие внутри команды.</p>
+      </div>
+
+      <div class="priv-card" style="border-color:#ff0000;">
+        <h4 style="color:#ff6666;">🚫 Конфиденциальность переписок</h4>
+        <ul>
+          <li>Запрещено публиковать скриншоты админ-чата.</li>
+          <li>Запрещено пересылать личные сообщения третьим лицам.</li>
+          <li>Запрещено рассказывать игрокам о внутренних обсуждениях.</li>
+          <li><strong>Даже для обжалования</strong> нельзя показывать переписки.</li>
+          <li><strong>Наказание:</strong> ПОЖИЗНЕННЫЙ ЧСА без права восстановления.</li>
+        </ul>
+      </div>
+
+      <div class="priv-card" style="border-color:#9013fe;">
+        <h4 style="color:#c07aff;">🛡️ Администрирование на других серверах</h4>
+        <ul>
+          <li>Запрещено быть админом на других серверах SCP:SL.</li>
+          <li>Это конфликт интересов.</li>
+          <li><strong>Наказание:</strong> пожизненный ЧСА без права восстановления.</li>
+          <li>После ЧСА — запрет на админство на других серверах.</li>
+        </ul>
+      </div>
+
+      <div class="priv-card" style="border-color:#00ff88;">
+        <h4>👑 Иерархия должностей</h4>
+        <ul>
+          <li><strong>Высший состав:</strong> Владелец, Со-владелец, Гл. Админ, Зам., HR, Dev.</li>
+          <li><strong>Кураторы:</strong> Ст. куратор, кураторы админов/модеров/помощников/стажёров, дисциплины.</li>
+          <li><strong>Ивент-отдел:</strong> Гл. ивентолог, ивентолог.</li>
+          <li><strong>Администраторы:</strong> Ст. админ, админ, мл. админ.</li>
+          <li><strong>Модераторы:</strong> Ст. модер, модер, мл. модер.</li>
+          <li><strong>Помощники и стажёры:</strong> Ст. помощник, помощник, мл. помощник, стажёры.</li>
+          <li><strong>Контент-мейкеры:</strong> Гл. КМ, ст. КМ, КМ, видео-оператор, стример, летсплейщик.</li>
+        </ul>
+      </div>
+
+      <div class="priv-card" style="border-color:#f5a623;">
+        <h4 style="color:#f5a623;">⚖️ Виды взысканий</h4>
+        <ul>
+          <li><strong>Выговор устный</strong> — мелкие нарушения.</li>
+          <li><strong>Выговор письменный</strong> — грубые или повторные нарушения.</li>
+          <li><strong>Временный ЧСА</strong> — систематические нарушения (3–30 дней).</li>
+          <li><strong>Понижение</strong> — неисполнение обязанностей.</li>
+          <li><strong>Пожизненный ЧСА</strong> — за читерство, слив инфы, оскорбления, враньё (3+ раз), админство на других серверах.</li>
+        </ul>
+      </div>
+
+      <div class="priv-card" style="border-color:#00ccff;">
+        <h4 style="color:#00ccff;">📋 Права администрации</h4>
+        <ul>
+          <li>Право на ошибку, если админ готов её признать.</li>
+          <li>Право на защиту своей позиции при обсуждении.</li>
+          <li>Право обратиться к старшему админу или владельцу.</li>
+          <li>Право на апелляцию наказания (через владельца, лично).</li>
+        </ul>
+      </div>
     </div>
 
-    <h3>Протоколы P-I (вторжение)</h3>
-    <div class="table-wrap">
-      <table class="data-table">
-        <tr><th>Протокол</th><th>Описание</th></tr>
-        <tr><td><strong>P-I-1</strong></td><td>Уничтожение техники, приближающейся к комплексу.</td></tr>
-        <tr><td><strong>P-I-2</strong></td><td>Блокировка мест взлома и оповещение.</td></tr>
-        <tr><td><strong>P-I-3</strong></td><td>Уничтожение всего персонала в зоне.</td></tr>
-      </table>
-    </div>
-
-    <h3>Протоколы P-E (пожаротушение)</h3>
-    <div class="table-wrap">
-      <table class="data-table">
-        <tr><th>Протокол</th><th>Описание</th></tr>
-        <tr><td><strong>P-E-1</strong></td><td>Тушение в одной комнате; нет угрозы жизни.</td></tr>
-        <tr><td><strong>P-E-2</strong></td><td>Тушение в одной комнате; есть угроза жизни.</td></tr>
-        <tr><td><strong>P-E-3</strong></td><td>Тушение в одной комнате; угроза взрыва.</td></tr>
-        <tr><td><strong>P-E-4</strong></td><td>Тушение в нескольких комнатах; нет угрозы жизни.</td></tr>
-        <tr><td><strong>P-E-5</strong></td><td>Тушение в нескольких комнатах; есть угроза жизни.</td></tr>
-        <tr><td><strong>P-E-6</strong></td><td>Тушение в целой зоне; большая угроза жизни.</td></tr>
-        <tr><td><strong>P-E-7</strong></td><td>Тушение в КС SCP класса «Безопасный».</td></tr>
-        <tr><td><strong>P-E-8</strong></td><td>Тушение в КС SCP класса «Евклид».</td></tr>
-        <tr><td><strong>P-E-9</strong></td><td>Тушение в КС SCP класса «Кетер».</td></tr>
-      </table>
-    </div>
-
-    <h3>Изоляционные коды (КИР)</h3>
-    <div class="table-wrap">
-      <table class="data-table">
-        <tr><th>Код</th><th>Цвет</th><th>Значение</th></tr>
-        <tr><td><strong>Чёрный</strong></td><td style="color:#000; background:#1a1a1a; padding:2px 8px;">#000000</td><td>Полная изоляция комплекса.</td></tr>
-        <tr><td><strong>Серый</strong></td><td style="color:#727472;">#727472</td><td>Внутренняя угроза.</td></tr>
-        <tr><td><strong>Белый</strong></td><td style="color:#ccc;">#FFFFFF</td><td>Внешнее вторжение.</td></tr>
-        <tr><td><strong>Суперсиний</strong></td><td style="color:#4a4aff;">#00003F</td><td>Побег разумного SCP (высокий интеллект).</td></tr>
-        <tr><td><strong>Синий</strong></td><td style="color:#1f70b7;">#1F70B7</td><td>Побег разумного SCP.</td></tr>
-        <tr><td><strong>Красный</strong></td><td style="color:#cc0000;">#CC0000</td><td>Агрессивная сущность.</td></tr>
-        <tr><td><strong>Зелёный</strong></td><td style="color:#22a040;">#114818</td><td>Био-угроза.</td></tr>
-        <tr><td><strong>Пурпурный</strong></td><td style="color:#9d30ff;">#5D02A1</td><td>Экстрамерная угроза.</td></tr>
-        <tr><td><strong>Жёлтый</strong></td><td style="color:#ffbf00;">#FFBF00</td><td>Меметическая угроза.</td></tr>
-        <tr><td><strong>Чистый</strong></td><td style="color:#00FFFF;">#00FFFF</td><td>Неизвестная угроза.</td></tr>
-        <tr><td><strong>Суперчистый</strong></td><td style="color:#1bdcd0;">#1BDCD0</td><td>Неописуемая угроза.</td></tr>
-        <tr><td><strong>Хладное серебро</strong></td><td style="color:#5a7a82;">#0B2C34</td><td>Фатальный сбой Фонда.</td></tr>
-        <tr><td><strong>Розовый</strong></td><td style="color:#f48b9e;">#F48B9E</td><td>Дополнительный код.</td></tr>
-      </table>
+    <div class="alert alert-info">
+      <strong>💡 Помни:</strong> Администратор — это <strong>пример для игроков</strong>. 
+      Ты не просто человек с командами, ты — <strong>лицо проекта</strong>. Будь на высоте.
     </div>
 
     <hr class="divider">
 
     <!-- ФОРМА -->
-    <h2 id="uniform">👔 Раздел VI. Что можно носить и делать</h2>
-    <div class="section">
-      <h3>6.1. Что можно носить сотрудникам</h3>
-      <table class="data-table">
-        <tr><th>Должность</th><th>Разрешено</th></tr>
-        <tr><td><strong>Уборщики / Неважный персонал</strong></td><td>Спецодежда, перчатки, фонарь, пропуск 1 УД</td></tr>
-        <tr><td><strong>Капрал СБ</strong></td><td>Форма СБ, дубинка, пистолет, бронежилет, рация</td></tr>
-        <tr><td><strong>Младший НС / Инженер</strong></td><td>Халат, очки, планшет, инструменты, фонарь</td></tr>
-        <tr><td><strong>Сержант / Лейтенант СБ</strong></td><td>Форма СБ, пистолет-пулемёт, бронежилет, рация, наручники</td></tr>
-        <tr><td><strong>Старший НС / НС</strong></td><td>Халат, очки, планшет, рация, пропуск 3 УД</td></tr>
-        <tr><td><strong>Директор / ГСБ / ГНС</strong></td><td>Официальная форма, пистолет, рация, пропуск 4 УД</td></tr>
-        <tr><td><strong>Совет О5 / КпЭ</strong></td><td>Официальная форма, пистолет, рация, полный допуск</td></tr>
-      </table>
+    <h2 id="uniform">👔 Раздел VII. Что можно носить и делать</h2>
 
-      <h3>6.2. Что носить ЗАПРЕЩЕНО</h3>
-      <div class="alert alert-danger">
-        <ul>
-          <li>Одежда, не соответствующая роли (FailRP).</li>
-          <li>Оружие, не входящее в экипировку роли.</li>
-          <li>Маски, скрывающие лицо (кроме масок СБ и SCP-049).</li>
-          <li>Уникальные предметы SCP без допуска.</li>
-          <li>Чужие ключ-карты.</li>
-          <li>Аксессуары, нарушающие RP (короны, шляпы, накладки).</li>
-        </ul>
+    <div class="two-col-grid">
+      <div>
+        <h3>✅ Что можно носить сотрудникам</h3>
+        <table class="data-table">
+          <tr><th>Должность</th><th>Разрешено</th></tr>
+          <tr><td><strong>Уборщики</strong></td><td>Спецодежда, перчатки, фонарь, пропуск 1 УД</td></tr>
+          <tr><td><strong>Капрал СБ</strong></td><td>Форма СБ, дубинка, пистолет, бронежилет, рация</td></tr>
+          <tr><td><strong>Мл. НС / Инженер</strong></td><td>Халат, очки, планшет, инструменты, фонарь</td></tr>
+          <tr><td><strong>Сержант / Лейтенант СБ</strong></td><td>Форма СБ, ПП, бронежилет, рация, наручники</td></tr>
+          <tr><td><strong>Ст. НС / НС</strong></td><td>Халат, очки, планшет, рация, пропуск 3 УД</td></tr>
+          <tr><td><strong>Директор / ГСБ / ГНС</strong></td><td>Официальная форма, пистолет, рация, пропуск 4 УД</td></tr>
+          <tr><td><strong>Совет О5 / КпЭ</strong></td><td>Официальная форма, пистолет, полный допуск</td></tr>
+          <tr><td><strong>Капитан МОГ</strong></td><td>Тактическая форма, штурмовая винтовка, рация, пропуск 4 УД</td></tr>
+        </table>
       </div>
 
-      <h3>6.3. Что ЗАПРЕЩЕНО делать персоналу</h3>
-      <div class="alert alert-danger">
-        <ul>
-          <li>Покидать комплекс без приказа.</li>
-          <li>Использовать оружие без RP-причины.</li>
-          <li>Открывать двери без соответствующего допуска.</li>
-          <li>Передавать ключ-карты другим сотрудникам.</li>
-          <li>Вступать в контакт с SCP без протокола.</li>
-          <li>Игнорировать коды угроз.</li>
-          <li>Мешать работе других отделов.</li>
-          <li>Нарушать субординацию.</li>
-        </ul>
+      <div>
+        <h3>❌ Что носить ЗАПРЕЩЕНО</h3>
+        <div class="alert alert-danger">
+          <ul>
+            <li>Одежда, не соответствующая роли (FailRP).</li>
+            <li>Оружие, не входящее в экипировку роли.</li>
+            <li>Маски, скрывающие лицо (кроме СБ и SCP-049).</li>
+            <li>Уникальные предметы SCP без допуска.</li>
+            <li>Чужие ключ-карты.</li>
+            <li>Аксессуары, нарушающие RP (короны, шляпы).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3>❌ Что ЗАПРЕЩЕНО делать</h3>
+        <div class="alert alert-danger">
+          <ul>
+            <li>Покидать комплекс без приказа.</li>
+            <li>Использовать оружие без RP-причины.</li>
+            <li>Открывать двери без допуска.</li>
+            <li>Передавать ключ-карты другим.</li>
+            <li>Вступать в контакт с SCP без протокола.</li>
+            <li>Игнорировать коды угроз.</li>
+            <li>Мешать другим отделам.</li>
+            <li>Нарушать субординацию.</li>
+          </ul>
+        </div>
       </div>
     </div>
 
     <hr class="divider">
 
     <!-- ОБЩИЕ -->
-    <h2 id="general">📜 Раздел VII. Общие правила</h2>
-    <div class="section">
-      <h3>7.1. Основные принципы сервера</h3>
-      <p>Сервер <strong>MV.Project</strong> — это <span class="highlight">Medium RP</span> проект. Приоритет — интересный геймплей и комфорт для всех игроков.</p>
-      <ul>
-        <li><strong>7.1.1.</strong> Уважение к другим игрокам — основа сервера.</li>
-        <li><strong>7.1.2.</strong> Запрещены любые формы дискриминации.</li>
-        <li><strong>7.1.3.</strong> Запрещены угрозы в реальной жизни, доксинг, преследование.</li>
-        <li><strong>7.1.4.</strong> Запрещена пропаганда терроризма, насилия, наркотиков.</li>
-        <li><strong>7.1.5.</strong> Запрещены любые действия, направленные на разрушение сервера.</li>
-      </ul>
+    <h2 id="general">📜 Раздел VIII. Общие правила</h2>
+    <div class="two-col-grid">
+      <div class="section" style="margin:0;">
+        <h3>8.1. Принципы сервера</h3>
+        <p>Сервер <strong>MV.Project</strong> — это <span class="highlight">Medium RP</span> проект.</p>
+        <ul>
+          <li>Уважение — основа сервера.</li>
+          <li>Запрещена дискриминация.</li>
+          <li>Запрещены угрозы в реальной жизни.</li>
+          <li>Запрещена пропаганда терроризма и насилия.</li>
+          <li>Запрещены атаки на сервер.</li>
+        </ul>
+      </div>
 
-      <h3>7.2. Возрастные ограничения</h3>
-      <ul>
-        <li><strong>7.2.1.</strong> Минимальный возраст — <span class="highlight">13 лет</span>.</li>
-        <li><strong>7.2.2.</strong> Обман по поводу возраста = перманентный бан.</li>
-        <li><strong>7.2.3.</strong> Дети младше 13 лет — кик.</li>
-      </ul>
-
-      <h3>7.3. Аккаунты и SteamID</h3>
-      <ul>
-        <li><strong>7.3.1.</strong> Запрещено использование нескольких аккаунтов.</li>
-        <li><strong>7.3.2.</strong> Запрещена передача аккаунта третьим лицам.</li>
-        <li><strong>7.3.3.</strong> Запрещено использование VAC-забаненных аккаунтов.</li>
-        <li><strong>7.3.4.</strong> Обход бана = перманентный бан + IP-бан.</li>
-      </ul>
+      <div class="section" style="margin:0;">
+        <h3>8.2. Возраст и аккаунты</h3>
+        <ul>
+          <li>Минимальный возраст — <span class="highlight">13 лет</span>.</li>
+          <li>Обман по возрасту = перманентный бан.</li>
+          <li>Запрещено несколько аккаунтов.</li>
+          <li>Запрещена передача аккаунта.</li>
+          <li>Обход бана = перманентный бан + IP-бан.</li>
+        </ul>
+      </div>
     </div>
 
     <hr class="divider">
 
     <!-- RP -->
-    <h2 id="rp">🎭 Раздел VIII. RP-правила</h2>
+    <h2 id="rp">🎭 Раздел IX. RP-правила</h2>
     <div class="section">
-      <h3>8.1. Что такое RP?</h3>
-      <p><strong>RP (Roleplay)</strong> — отыгрыш роли персонажа. На сервере действует Medium RP — играть роль, но без фанатизма.</p>
+      <h3>9.1. Что такое RP?</h3>
+      <p><strong>RP (Roleplay)</strong> — отыгрыш роли персонажа. Medium RP = играть роль без фанатизма.</p>
 
-      <h4>❌ No RDM (Random Deathmatch)</h4>
-      <ul>
-        <li>Запрещено убивать без RP-причины.</li>
-        <li>Убийство без причины = бан от 1 до 30 дней.</li>
-      </ul>
+      <div class="two-col-grid">
+        <div>
+          <h4>❌ No RDM</h4>
+          <ul>
+            <li>Запрещено убивать без RP-причины.</li>
+            <li>Наказание: бан 1–30 дней.</li>
+          </ul>
 
-      <h4>❌ No Teamkill</h4>
-      <ul>
-        <li>Запрещено убивать союзников.</li>
-        <li>Намеренный TK = бан от 3 дней.</li>
-      </ul>
+          <h4>❌ No Teamkill</h4>
+          <ul>
+            <li>Запрещено убивать союзников.</li>
+            <li>Наказание: бан от 3 дней.</li>
+          </ul>
 
-      <h4>❌ No Metagaming (Meta)</h4>
-      <ul>
-        <li>Запрещено использовать внеигровую информацию.</li>
-        <li>Meta = бан от 3 дней.</li>
-      </ul>
+          <h4>❌ No Metagaming</h4>
+          <ul>
+            <li>Запрещено использовать внеигровую инфу.</li>
+            <li>Наказание: бан от 3 дней.</li>
+          </ul>
+        </div>
 
-      <h4>❌ No Powergaming</h4>
-      <ul>
-        <li>Запрещены действия, невозможные в реальности.</li>
-        <li>Powergaming = бан от 3 дней.</li>
-      </ul>
+        <div>
+          <h4>❌ No Powergaming</h4>
+          <ul>
+            <li>Запрещены действия, невозможные в реальности.</li>
+            <li>Наказание: бан от 3 дней.</li>
+          </ul>
 
-      <h4>❌ No Banhop (Баннихоп)</h4>
-      <ul>
-        <li>Запрещён баннихоп во время побега.</li>
-        <li>Баннихоп = бан от 1 дня.</li>
-      </ul>
+          <h4>❌ No Banhop</h4>
+          <ul>
+            <li>Запрещён баннихоп при побеге.</li>
+            <li>Наказание: бан от 1 дня.</li>
+          </ul>
 
-      <h4>❌ No FailRP</h4>
-      <ul>
-        <li>Запрещено нарушать логику персонажа.</li>
-        <li>FailRP = предупреждение или бан от 1 дня.</li>
-      </ul>
-
-      <h3>8.2. Терминология</h3>
-      <table class="data-table">
-        <tr><th>Термин</th><th>Значение</th></tr>
-        <tr><td><strong>RDM</strong></td><td>Random Deathmatch — убийство без причины</td></tr>
-        <tr><td><strong>Teamkill</strong></td><td>Убийство союзника</td></tr>
-        <tr><td><strong>Meta</strong></td><td>Использование внеигровой информации</td></tr>
-        <tr><td><strong>Powergaming</strong></td><td>Действия, невозможные в реальности</td></tr>
-        <tr><td><strong>Banhop</strong></td><td>Прыжки для ускорения при побеге</td></tr>
-        <tr><td><strong>FailRP</strong></td><td>Нарушение логики персонажа</td></tr>
-      </table>
+          <h4>❌ No FailRP</h4>
+          <ul>
+            <li>Запрещено нарушать логику персонажа.</li>
+            <li>Наказание: предупреждение или бан.</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <hr class="divider">
 
     <!-- ИГРОВЫЕ КЛАССЫ -->
-    <h2 id="classes">👥 Раздел IX. Правила игровых классов</h2>
+    <h2 id="classes">👥 Раздел X. Правила игровых классов</h2>
 
-    <details>
-      <summary>🟠 Класс D — Персонал класса D</summary>
-      <ul>
-        <li>Обязаны слушаться охрану и учёных.</li>
-        <li>Запрещено устраивать бунт без RP-причины.</li>
-        <li>Побег разрешён, но без Banhop.</li>
-        <li>Запрещено намеренно мешать тестам.</li>
-        <li>При КОДЕ КРАСНОМ+ разрешено всё для выживания.</li>
-      </ul>
-    </details>
+    <div class="two-col-grid">
+      <details>
+        <summary>🟠 Класс D</summary>
+        <ul>
+          <li>Обязаны слушаться охрану и учёных.</li>
+          <li>Запрещено устраивать бунт без RP-причины.</li>
+          <li>Побег разрешён, но без Banhop.</li>
+          <li>Запрещено мешать тестам.</li>
+          <li>При КОДЕ КРАСНОМ+ разрешено всё для выживания.</li>
+        </ul>
+      </details>
 
-    <details>
-      <summary>🔵 Учёные</summary>
-      <ul>
-        <li>Обязаны проводить тесты SCP.</li>
-        <li>Запрещено покидать комплекс без причины.</li>
-        <li>Обязаны сотрудничать с МОГ.</li>
-        <li>Запрещено давать Класс D предметы без разрешения.</li>
-      </ul>
-    </details>
+      <details>
+        <summary>🔵 Учёные</summary>
+        <ul>
+          <li>Обязаны проводить тесты SCP.</li>
+          <li>Запрещено покидать комплекс без причины.</li>
+          <li>Обязаны сотрудничать с МОГ.</li>
+          <li>Запрещено давать Класс D предметы без разрешения.</li>
+        </ul>
+      </details>
 
-    <details>
-      <summary>🟢 Охрана Фонда (Facility Guard)</summary>
-      <ul>
-        <li>Обязаны следить за порядком.</li>
-        <li>Запрещено убивать Класс D без причины.</li>
-        <li>Обязаны сопровождать учёных.</li>
-        <li>При КОДЕ 3+ — обязаны защищать комплекс.</li>
-      </ul>
-    </details>
+      <details>
+        <summary>🟢 Охрана Фонда</summary>
+        <ul>
+          <li>Обязаны следить за порядком.</li>
+          <li>Запрещено убивать Класс D без причины.</li>
+          <li>Обязаны сопровождать учёных.</li>
+          <li>При КОДЕ 3+ — защищать комплекс.</li>
+        </ul>
+      </details>
 
-    <details>
-      <summary>🔴 МОГ — Мобильная Оперативная Группа (NTF)</summary>
-      <ul>
-        <li>Действуют по протоколу.</li>
-        <li>Запрещено убивать учёных и охрану.</li>
-        <li>Обязаны защищать комплекс от ПХ.</li>
-        <li>При КОДЕ 4 — обязаны вернуть SCP в камеры.</li>
-      </ul>
-    </details>
+      <details>
+        <summary>🔴 МОГ (NTF)</summary>
+        <ul>
+          <li>Действуют по протоколу.</li>
+          <li>Запрещено убивать учёных и охрану.</li>
+          <li>Обязаны защищать комплекс от ПХ.</li>
+          <li>При КОДЕ 4 — вернуть SCP в камеры.</li>
+        </ul>
+      </details>
 
-    <details>
-      <summary>⚫ ПХ — Повстанцы Хаоса (Chaos Insurgency)</summary>
-      <ul>
-        <li>Цель — освобождение SCP и захват комплекса.</li>
-        <li>Запрещён RDM без RP-причины.</li>
-        <li>Запрещено убивать своих.</li>
-        <li>Обязаны подчиняться командиру отряда.</li>
-      </ul>
-    </details>
+      <details>
+        <summary>⚫ ПХ (Chaos Insurgency)</summary>
+        <ul>
+          <li>Цель — освобождение SCP и захват комплекса.</li>
+          <li>Запрещён RDM без RP-причины.</li>
+          <li>Запрещено убивать своих.</li>
+          <li>Обязаны подчиняться командиру отряда.</li>
+        </ul>
+      </details>
 
-    <details>
-      <summary>🟣 SCP-объекты</summary>
-      <ul>
-        <li>Обязаны отыгрывать свою роль.</li>
-        <li>Запрещено фармить убийства без причины.</li>
-        <li>SCP-049 обязан лечить, а не убивать всех подряд.</li>
-        <li>Запрещено кемперить.</li>
-      </ul>
-    </details>
+      <details>
+        <summary>🟣 SCP-объекты</summary>
+        <ul>
+          <li>Обязаны отыгрывать свою роль.</li>
+          <li>Запрещено фармить убийства без причины.</li>
+          <li>SCP-049 обязан лечить.</li>
+          <li>Запрещено кемперить.</li>
+        </ul>
+      </details>
+    </div>
 
     <hr class="divider">
 
     <!-- SCP -->
-    <h2 id="scp">🧬 Раздел X. Правила SCP-объектов</h2>
-    <div class="section">
-      <table class="data-table">
-        <tr><th>SCP</th><th>Правило</th><th>Наказание</th></tr>
-        <tr><td><strong>SCP-173</strong></td><td>Двигается только при отсутствии зрительного контакта. Запрещён телепорт при 3+ наблюдателях.</td><td>Бан 7-30 дней</td></tr>
-        <tr><td><strong>SCP-049</strong></td><td>Обязан лечить. Поднимает зомби только по RP-причине.</td><td>Бан 3-7 дней</td></tr>
-        <tr><td><strong>SCP-106</strong></td><td>Запрещено намеренно отправлять игроков в карманное измерение без RP-причины.</td><td>Бан 3-7 дней</td></tr>
-        <tr><td><strong>SCP-096</strong></td><td>Запрещено намеренно смотреть на 096, чтобы вызвать агрессию.</td><td>Бан 1-3 дня</td></tr>
-        <tr><td><strong>SCP-939</strong></td><td>Обязан использовать звук для охоты.</td><td>Предупреждение / Бан 1 день</td></tr>
-        <tr><td><strong>SCP-3114</strong></td><td>Обязан маскироваться под человека. Запрещено быстрое раскрытие.</td><td>Бан 1-3 дня</td></tr>
-        <tr><td><strong>SCP-079</strong></td><td>Обязан сотрудничать с SCP.</td><td>Предупреждение / Бан 1 день</td></tr>
-      </table>
+    <h2 id="scp">🧬 Раздел XI. Правила SCP-объектов</h2>
 
-      <h3>SCP-953 — Полиморфная гуманоидная рептилия</h3>
-      <p><strong>SCP-953</strong> — опасный SCP-объект, способный принимать облик человека. Класс: <span class="highlight">Кетер</span>.</p>
+    <div class="two-col-grid">
+      <div>
+        <h3>Основные SCP</h3>
+        <table class="data-table">
+          <tr><th>SCP</th><th>Правило</th><th>Наказание</th></tr>
+          <tr><td><strong>173</strong></td><td>Двигается только при отсутствии зрительного контакта. Запрещён телепорт при 3+ наблюдателях.</td><td>Бан 7-30 дней</td></tr>
+          <tr><td><strong>049</strong></td><td>Обязан лечить. Поднимает зомби только по RP-причине.</td><td>Бан 3-7 дней</td></tr>
+          <tr><td><strong>106</strong></td><td>Запрещено намеренно отправлять игроков в карманное измерение без RP-причины.</td><td>Бан 3-7 дней</td></tr>
+          <tr><td><strong>096</strong></td><td>Запрещено намеренно смотреть на 096, чтобы вызвать агрессию.</td><td>Бан 1-3 дня</td></tr>
+          <tr><td><strong>939</strong></td><td>Обязан использовать звук для охоты.</td><td>Предупреждение / Бан 1 день</td></tr>
+          <tr><td><strong>3114</strong></td><td>Обязан маскироваться под человека. Запрещено быстрое раскрытие.</td><td>Бан 1-3 дня</td></tr>
+          <tr><td><strong>079</strong></td><td>Обязан сотрудничать с SCP.</td><td>Предупреждение / Бан 1 день</td></tr>
+        </table>
+      </div>
 
-      <table class="data-table">
-        <tr><th>Правило</th><th>Наказание</th></tr>
-        <tr><td>Запрещено использование облика для нарушения RP.</td><td>Бан 7 дней</td></tr>
-        <tr><td>Запрещено заманивание игроков в ловушки под видом союзника.</td><td>Бан 14 дней</td></tr>
-        <tr><td>Запрещено использование невидимости для постоянных атак без RP-причины.</td><td>Бан 7 дней</td></tr>
-        <tr><td>Обязан отыгрывать роль SCP-953 согласно лору (лис-оборотень, Корея).</td><td>Предупреждение / Бан 3 дня</td></tr>
-        <tr><td>Запрещено убивать без RP-причины даже в облике.</td><td>Бан 3 дня</td></tr>
-      </table>
-
-      <div class="alert alert-warning">
-        <strong>⚠️ Важно:</strong> SCP-953 должен использовать свой облик для RP, а не для RDM. 
-        Если вас замечают в использовании способностей для обхода правил — наказание как за обычное нарушение.
+      <div>
+        <h3>SCP-953 — Полиморфная рептилия</h3>
+        <p><strong>SCP-953</strong> — опасный SCP, способный принимать облик человека. Класс: <span class="highlight">Кетер</span>.</p>
+        <table class="data-table">
+          <tr><th>Правило</th><th>Наказание</th></tr>
+          <tr><td>Запрещено использование облика для нарушения RP.</td><td>Бан 7 дней</td></tr>
+          <tr><td>Запрещено заманивание игроков в ловушки под видом союзника.</td><td>Бан 14 дней</td></tr>
+          <tr><td>Запрещено использование невидимости для постоянных атак без RP-причины.</td><td>Бан 7 дней</td></tr>
+          <tr><td>Обязан отыгрывать роль SCP-953 согласно лору.</td><td>Предупреждение / Бан 3 дня</td></tr>
+          <tr><td>Запрещено убивать без RP-причины даже в облике.</td><td>Бан 3 дня</td></tr>
+        </table>
+        <div class="alert alert-warning">
+          <strong>⚠️ Важно:</strong> SCP-953 должен использовать облик для RP, а не для RDM.
+        </div>
       </div>
     </div>
 
     <hr class="divider">
 
     <!-- SCP-914 -->
-    <h2 id="scp914">⚙️ Раздел XI. Правила SCP-914</h2>
-    <div class="section">
-      <ul>
-        <li><strong>11.1.</strong> Запрещено использование 914 в личных целях без RP-причины.</li>
-        <li><strong>11.2.</strong> Запрещено превращение в SCP-049-2 без RP-причины.</li>
-        <li><strong>11.3.</strong> Запрещено использование 914 для обхода правил.</li>
-        <li><strong>11.4.</strong> При использовании 914 обязательно соблюдать очередь.</li>
-        <li><strong>11.5.</strong> Запрещено намеренное закидывание людей в 914 на смертельные режимы.</li>
-      </ul>
+    <h2 id="scp914">⚙️ Раздел XII. Правила SCP-914</h2>
+    <div class="two-col-grid">
+      <div class="section" style="margin:0;">
+        <h3>Правила использования</h3>
+        <ul>
+          <li>Запрещено использование 914 в личных целях без RP-причины.</li>
+          <li>Запрещено превращение в SCP-049-2 без RP-причины.</li>
+          <li>Запрещено использование 914 для обхода правил.</li>
+          <li>Обязательно соблюдать очередь.</li>
+          <li>Запрещено закидывание людей на смертельные режимы.</li>
+        </ul>
+      </div>
 
-      <h3>Режимы 914</h3>
-      <table class="data-table">
-        <tr><th>Режим</th><th>Эффект</th><th>Разрешено?</th></tr>
-        <tr><td><strong>Rough</strong></td><td>Грубая обработка, часто ломает предметы</td><td>Да</td></tr>
-        <tr><td><strong>Coarse</strong></td><td>Обработка, может ухудшить предмет</td><td>Да</td></tr>
-        <tr><td><strong>1:1</strong></td><td>Обмен предмета на аналогичный</td><td>Да</td></tr>
-        <tr><td><strong>Fine</strong></td><td>Улучшение предмета</td><td>Да</td></tr>
-        <tr><td><strong>Very Fine</strong></td><td>Максимальное улучшение, превращение в SCP-049-2</td><td>Только по RP</td></tr>
-      </table>
+      <div>
+        <h3>Режимы 914</h3>
+        <table class="data-table">
+          <tr><th>Режим</th><th>Эффект</th><th>ОК?</th></tr>
+          <tr><td><strong>Rough</strong></td><td>Ломает предметы</td><td>Да</td></tr>
+          <tr><td><strong>Coarse</strong></td><td>Может ухудшить предмет</td><td>Да</td></tr>
+          <tr><td><strong>1:1</strong></td><td>Обмен предмета</td><td>Да</td></tr>
+          <tr><td><strong>Fine</strong></td><td>Улучшение предмета</td><td>Да</td></tr>
+          <tr><td><strong>Very Fine</strong></td><td>SCP-049-2</td><td>Только по RP</td></tr>
+        </table>
+      </div>
     </div>
 
     <hr class="divider">
 
     <!-- ИНТЕРКОМ -->
-    <h2 id="intercom">📢 Раздел XII. Правила интеркома и чата</h2>
-    <div class="section">
-      <h3>12.1. Формат сообщения в интеркоме (C.A.S.S.I.E.)</h3>
-      <div class="alert alert-info">
-        <strong>📢 Как правильно говорить через интерком:</strong>
+    <h2 id="intercom">📢 Раздел XIII. Правила интеркома и чата</h2>
+
+    <div class="alert alert-info">
+      <strong>📢 Формат сообщения в интеркоме:</strong>
+      <p>«[Имя/Позывной], [Уровень допуска], [Класс персонала], [Что требуется]».</p>
+      <ul>
+        <li><strong>Пример 1:</strong> «Говорит СБ-Капрал Иванов, 2 уровень допуска, класс C. Требуется подкрепление в Лёгкой зоне содержания».</li>
+        <li><strong>Пример 2:</strong> «Говорит НС Петров, 3 уровень допуска, класс B. Внимание: побег SCP-173, КОД СИНИЙ».</li>
+        <li><strong>Пример 3:</strong> «Говорит Капитан МОГ, 4 уровень допуска, класс B. Внимание: объявляю КОД КРАСНЫЙ».</li>
+      </ul>
+    </div>
+
+    <div class="two-col-grid">
+      <div>
+        <h3>Запрещено в интеркоме</h3>
+        <div class="alert alert-danger">
+          <ul>
+            <li>Спам и троллинг.</li>
+            <li>Музыка без RP-причины.</li>
+            <li>Крики, оскорбления, нецензурные звуки.</li>
+            <li>Личные разговоры, не относящиеся к RP.</li>
+            <li>Перебивание говорящего.</li>
+            <li>Ложные коды угроз.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <h3>Наказания за интерком</h3>
+        <table class="data-table">
+          <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
+          <tr><td>Спам</td><td>Мут 1 ч</td><td>Мут 6 ч</td><td>Бан 1 день</td></tr>
+          <tr><td>Музыка</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
+          <tr><td>Ложный код</td><td>Бан 7 дней</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
+          <tr><td>Оскорбления</td><td>Мут 6 ч</td><td>Бан 1 день</td><td>Бан 7 дней</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h3>Правила чата</h3>
+    <div class="two-col-grid">
+      <div class="section" style="margin:0;">
+        <h4>Текстовый чат</h4>
         <ul>
-          <li><strong>Формат:</strong> «[Имя/Позывной], [Уровень допуска], [Класс персонала], [Что требуется]».</li>
-          <li><strong>Пример 1:</strong> «Говорит СБ-Капрал Иванов, 2 уровень допуска, класс C. Требуется подкрепление в Лёгкой зоне содержания».</li>
-          <li><strong>Пример 2:</strong> «Говорит НС Петров, 3 уровень допуска, класс B. Внимание всему персоналу: побег SCP-173, КОД СИНИЙ».</li>
-          <li><strong>Пример 3:</strong> «Говорит Директор Зоны, 4 уровень допуска, класс B. Внимание: объявляю КОД КРАСНЫЙ. Всему персоналу эвакуироваться в безопасную зону».</li>
+          <li>Запрещён спам (более 3 сообщений подряд).</li>
+          <li>Запрещён флуд.</li>
+          <li>Запрещены оскорбления.</li>
+          <li>Запрещён Caps Lock без причины.</li>
+          <li>Запрещена реклама других серверов.</li>
+          <li>Запрещено обсуждение политики и религии.</li>
         </ul>
       </div>
 
-      <h4>Запрещено при использовании интеркома:</h4>
-      <ul>
-        <li>Использовать интерком для спама или троллинга.</li>
-        <li>Включать музыку без RP-причины.</li>
-        <li>Кричать, оскорблять, издавать нецензурные звуки.</li>
-        <li>Использовать интерком для личных разговоров, не относящихся к RP.</li>
-        <li>Перебивать говорящего через интерком.</li>
-        <li>Объявлять ложные коды угроз.</li>
-      </ul>
-
-      <h3>12.2. Текстовый чат</h3>
-      <ul>
-        <li>Запрещён спам (более 3 сообщений подряд).</li>
-        <li>Запрещён флуд.</li>
-        <li>Запрещены оскорбления.</li>
-        <li>Запрещено использование Caps Lock без причины.</li>
-        <li>Запрещена реклама других серверов.</li>
-        <li>Запрещено обсуждение политики и религии.</li>
-      </ul>
-
-      <h3>12.3. Голосовой чат</h3>
-      <ul>
-        <li>Запрещены громкие, неприятные звуки в микрофон.</li>
-        <li>Запрещено использование Soundpad без разрешения.</li>
-        <li>Запрещён спам в голосовом чате.</li>
-        <li>Запрещено перебивать других игроков.</li>
-      </ul>
-
-      <h3>12.4. Рация</h3>
-      <ul>
-        <li>Рация используется только для RP-общения.</li>
-        <li>Запрещено использовать рацию для спама.</li>
-      </ul>
-
-      <h4>Наказания за нарушение правил интеркома:</h4>
-      <table class="data-table">
-        <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
-        <tr><td>Спам через интерком</td><td>Мут 1 ч</td><td>Мут 6 ч</td><td>Бан 1 день</td></tr>
-        <tr><td>Музыка через интерком</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
-        <tr><td>Ложный код</td><td>Бан 7 дней</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
-        <tr><td>Оскорбления через интерком</td><td>Мут 6 ч</td><td>Бан 1 день</td><td>Бан 7 дней</td></tr>
-      </table>
+      <div class="section" style="margin:0;">
+        <h4>Голосовой чат</h4>
+        <ul>
+          <li>Запрещены громкие, неприятные звуки.</li>
+          <li>Запрещён Soundpad без разрешения.</li>
+          <li>Запрещён спам в голосовом чате.</li>
+          <li>Запрещено перебивать других.</li>
+          <li>Рация — только для RP-общения.</li>
+        </ul>
+      </div>
     </div>
 
     <hr class="divider">
 
     <!-- БАНЫ -->
-    <h2 id="bans">⏱️ Раздел XIII. Сроки наказаний</h2>
-    <table class="data-table">
-      <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
-      <tr><td>Спам в чате</td><td>Мут 30 мин</td><td>Мут 2 ч</td><td>Мут 12 ч</td></tr>
-      <tr><td>Оскорбления</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
-      <tr><td>Громкий микрофон</td><td>Мут 1 ч</td><td>Мут 6 ч</td><td>Мут 24 ч</td></tr>
-      <tr><td>Soundpad без разрешения</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
-      <tr><td>No RDM (1-2)</td><td>Бан 1 день</td><td>Бан 3 дня</td><td>Бан 7 дней</td></tr>
-      <tr><td>No RDM (3+)</td><td>Бан 7 дней</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
-      <tr><td>Teamkill (случайный)</td><td>Предупреждение</td><td>Бан 1 день</td><td>Бан 3 дня</td></tr>
-      <tr><td>Teamkill (намеренный)</td><td>Бан 3 дня</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
-      <tr><td>Meta / Powergaming</td><td>Бан 3 дня</td><td>Бан 7 дней</td><td>Бан 14 дней</td></tr>
-      <tr><td>FailRP</td><td>Предупреждение</td><td>Бан 1 день</td><td>Бан 3 дня</td></tr>
-      <tr><td>Banhop</td><td>Бан 1 день</td><td>Бан 3 дня</td><td>Бан 7 дней</td></tr>
-      <tr><td>Телепорт к 173 (3+)</td><td>Бан 7 дней</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
-      <tr><td>Использование 914 без RP</td><td>Бан 3 дня</td><td>Бан 7 дней</td><td>Бан 14 дней</td></tr>
-      <tr><td>Использование багов</td><td>Бан 30 дней</td><td>Бан 90 дней</td><td>Перманентный бан</td></tr>
-      <tr><td>Читы / стороннее ПО</td><td colspan="3">Перманентный бан (без апелляции)</td></tr>
-      <tr><td>Реклама серверов</td><td colspan="3">Перманентный бан</td></tr>
-      <tr><td>Угрозы / травля</td><td colspan="3">Перманентный бан</td></tr>
-      <tr><td>Обход бана</td><td colspan="3">Перманентный бан + IP-бан</td></tr>
-      <tr><td>Подкуп администрации</td><td colspan="3">Перманентный бан</td></tr>
-      <tr><td>Ложное объявление кода</td><td colspan="3">Бан 7 дней</td></tr>
-      <tr><td>Неуважение к админам</td><td>Мут 1 ч</td><td>Мут 12 ч</td><td>Бан 3 дня</td></tr>
-    </table>
+    <h2 id="bans">⏱️ Раздел XIV. Сроки наказаний</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
+        <tr><td>Спам в чате</td><td>Мут 30 мин</td><td>Мут 2 ч</td><td>Мут 12 ч</td></tr>
+        <tr><td>Оскорбления</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
+        <tr><td>Громкий микрофон</td><td>Мут 1 ч</td><td>Мут 6 ч</td><td>Мут 24 ч</td></tr>
+        <tr><td>Soundpad без разрешения</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
+        <tr><td>No RDM (1-2)</td><td>Бан 1 день</td><td>Бан 3 дня</td><td>Бан 7 дней</td></tr>
+        <tr><td>No RDM (3+)</td><td>Бан 7 дней</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
+        <tr><td>Teamkill (случайный)</td><td>Предупреждение</td><td>Бан 1 день</td><td>Бан 3 дня</td></tr>
+        <tr><td>Teamkill (намеренный)</td><td>Бан 3 дня</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
+        <tr><td>Meta / Powergaming</td><td>Бан 3 дня</td><td>Бан 7 дней</td><td>Бан 14 дней</td></tr>
+        <tr><td>FailRP</td><td>Предупреждение</td><td>Бан 1 день</td><td>Бан 3 дня</td></tr>
+        <tr><td>Banhop</td><td>Бан 1 день</td><td>Бан 3 дня</td><td>Бан 7 дней</td></tr>
+        <tr><td>Телепорт к 173 (3+)</td><td>Бан 7 дней</td><td>Бан 14 дней</td><td>Бан 30 дней</td></tr>
+        <tr><td>Использование 914 без RP</td><td>Бан 3 дня</td><td>Бан 7 дней</td><td>Бан 14 дней</td></tr>
+        <tr><td>Использование багов</td><td>Бан 30 дней</td><td>Бан 90 дней</td><td>Перманентный бан</td></tr>
+        <tr><td>Читы / стороннее ПО</td><td colspan="3">Перманентный бан (без апелляции)</td></tr>
+        <tr><td>Реклама серверов</td><td colspan="3">Перманентный бан</td></tr>
+        <tr><td>Угрозы / травля</td><td colspan="3">Перманентный бан</td></tr>
+        <tr><td>Обход бана</td><td colspan="3">Перманентный бан + IP-бан</td></tr>
+        <tr><td>Подкуп администрации</td><td colspan="3">Перманентный бан</td></tr>
+        <tr><td>Ложное объявление кода</td><td colspan="3">Бан 7 дней</td></tr>
+        <tr><td>Неуважение к админам</td><td>Мут 1 ч</td><td>Мут 12 ч</td><td>Бан 3 дня</td></tr>
+      </table>
+    </div>
 
     <div class="alert alert-warning">
       <strong>⚠️ Примечание:</strong> Администрация оставляет за собой право изменять срок наказания. Рецидивы = удвоение срока.
@@ -1053,24 +1194,45 @@
     <hr class="divider">
 
     <!-- АПЕЛЛЯЦИЯ -->
-    <h2 id="appeal">📩 Раздел XIV. Процедура апелляции</h2>
-    <div class="section">
-      <ol>
-        <li>Зайди на наш Discord-сервер.</li>
-        <li>Перейди в канал <strong>#апелляции</strong>.</li>
-        <li>Создай тикет по шаблону.</li>
-        <li>Укажи свой SteamID, причину бана и объяснение.</li>
-      </ol>
+    <h2 id="appeal">📩 Раздел XV. Процедура апелляции</h2>
+    <div class="two-col-grid">
+      <div class="section" style="margin:0;">
+        <h3>Как подать апелляцию</h3>
+        <ol>
+          <li>Зайди на наш Discord-сервер.</li>
+          <li>Перейди в канал <strong>#апелляции</strong>.</li>
+          <li>Создай тикет по шаблону.</li>
+          <li>Укажи свой SteamID, причину бана и объяснение.</li>
+        </ol>
 
-      <h3>Срок рассмотрения</h3>
-      <ul>
-        <li>Обычная апелляция — до 24 часов.</li>
-        <li>Сложная апелляция — до 72 часов.</li>
-        <li>Апелляция на перманентный бан — до 7 дней.</li>
-      </ul>
+        <h3>Сроки рассмотрения</h3>
+        <ul>
+          <li>Обычная апелляция — до 24 часов.</li>
+          <li>Сложная апелляция — до 72 часов.</li>
+          <li>Апелляция на перманентный бан — до 7 дней.</li>
+        </ul>
+      </div>
 
-      <div class="alert alert-danger">
-        <strong>⛔ Оскорбление администрации при апелляции = автоматический отказ.</strong>
+      <div>
+        <h3>Правила апелляции</h3>
+        <div class="alert alert-danger">
+          <ul>
+            <li>Запрещено оскорблять администрацию при апелляции.</li>
+            <li>Запрещено дублировать апелляции.</li>
+            <li>Запрещено подавать апелляцию с другого аккаунта.</li>
+            <li>Решение по апелляции окончательное.</li>
+            <li>Апелляция без доказательств рассматривается в последнюю очередь.</li>
+          </ul>
+        </div>
+
+        <h3>Шаблон апелляции</h3>
+        <div class="section" style="margin:0; padding:15px;">
+          <p><strong>SteamID:</strong> [ваш ID]</p>
+          <p><strong>Причина бана:</strong> [причина]</p>
+          <p><strong>Кто забанил:</strong> [ник админа]</p>
+          <p><strong>Объяснение:</strong> [почему бан несправедлив]</p>
+          <p><strong>Доказательства:</strong> [ссылка]</p>
+        </div>
       </div>
     </div>
 
@@ -1088,14 +1250,13 @@
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.0 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.1 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
     </div>
 
   </main>
 
   <script>
-    // Автоматическое закрытие меню при клике на ссылку (для мобильных)
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 900) {
@@ -1104,7 +1265,6 @@
       });
     });
 
-    // Подсветка активного раздела
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('h2[id]');
       const links = document.querySelectorAll('.sidebar-nav a');

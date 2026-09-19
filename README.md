@@ -12,21 +12,21 @@
     --accent-deep: #009944;
     --accent-rgb: 0, 255, 136;
 
-    /* legacy-алиасы (используются по всему CSS) */
     --green: var(--accent);
     --green-dim: var(--accent-dim);
     --green-deep: var(--accent-deep);
 
-    /* базовая тёмная тема */
     --bg: #050505;
     --panel: #0d0d0d;
     --panel-2: #0f0f0f;
     --border: #1a1a1a;
     --text: #b8b8b8;
     --ease: cubic-bezier(.22,.68,.32,1);
+
+    /* ширина зазоров между блоками */
+    --grid-gap: 14px;
   }
 
-  /* ==== 12 АКЦЕНТНЫХ ЦВЕТОВ ==== */
   html[data-accent="cyan"]    { --accent: #00ccff; --accent-dim: #00a3cc; --accent-deep: #007a99; --accent-rgb: 0, 204, 255; }
   html[data-accent="blue"]    { --accent: #4a90d9; --accent-dim: #3a74ad; --accent-deep: #2a5881; --accent-rgb: 74, 144, 217; }
   html[data-accent="purple"]  { --accent: #b366ff; --accent-dim: #9013fe; --accent-deep: #6d0ebd; --accent-rgb: 179, 102, 255; }
@@ -39,7 +39,6 @@
   html[data-accent="lime"]    { --accent: #aaff00; --accent-dim: #88cc00; --accent-deep: #669900; --accent-rgb: 170, 255, 0; }
   html[data-accent="white"]   { --accent: #ffffff; --accent-dim: #cccccc; --accent-deep: #999999; --accent-rgb: 255, 255, 255; }
 
-  /* ==== СВЕТЛАЯ ТЕМА ==== */
   html[data-theme="light"] {
     --bg: #f4f4f0;
     --panel: #ffffff;
@@ -104,7 +103,7 @@
   .parallax-layer.middle .parallax-line { font-size: 7em; color: rgba(255, 0, 0, 0.022); }
   .parallax-layer.front .parallax-line { font-size: 4em; color: rgba(255, 255, 255, 0.018); }
 
-  /* ============ ВОДЯНЫЕ ЗНАКИ (отдельные MV.PROJECT) ============ */
+  /* ============ ВОДЯНЫЕ ЗНАКИ ============ */
   .watermark-overlay {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
@@ -154,7 +153,6 @@
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
-  /* ============ ГЛИТЧ LEVEL 5 ============ */
   @keyframes levelGlitch {
     0%, 86%, 100% {
       text-shadow: 0 0 30px rgba(255,0,0,.45);
@@ -224,8 +222,10 @@
   }
 
   /* ============ ОСНОВНОЙ КОНТЕНТ ============ */
+  /* Было: padding: 45px 40px;
+     Стало: padding: 40px 20px — больше ширины контенту */
   .main-content {
-    margin-left: 290px; padding: 45px 40px;
+    margin-left: 290px; padding: 40px 20px;
     min-height: 100vh; width: calc(100% - 290px);
     position: relative; z-index: 10;
     background: rgba(5, 5, 5, 0.65);
@@ -247,7 +247,7 @@
   @media (max-width: 900px) {
     .sidebar { transform: translateX(-100%); transition: transform .35s var(--ease); }
     .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 70px 15px 30px; width: 100%; }
+    .main-content { margin-left: 0; padding: 70px 12px 30px; width: 100%; }
     .menu-toggle { display: block; }
   }
 
@@ -365,7 +365,7 @@
     .search-box input { padding: 10px 38px 10px 38px; font-size: .78em; }
   }
 
-  /* ============ НАСТРОЙКИ (шестерёнка) ============ */
+  /* ============ НАСТРОЙКИ ============ */
   .settings-wrap {
     position: fixed; top: 74px; right: 24px;
     z-index: 1290;
@@ -559,12 +559,14 @@
   li:hover { color: var(--accent); border-bottom-color: rgba(var(--accent-rgb), .35); }
 
   /* ============ СЕТКИ ============ */
+  /* Gap уменьшен с 30px до 14px — блоки шире, воздух меньше */
   .two-col-grid,
   .code-grid,
   .clearance-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px; margin: 25px 0; width: 100%;
+    gap: var(--grid-gap);
+    margin: 18px 0; width: 100%;
     align-items: start;
   }
   @media (max-width: 1200px) {
@@ -579,13 +581,13 @@
     transition: background .4s var(--ease), border-color .4s var(--ease);
   }
   .data-table th {
-    background: rgba(var(--accent-rgb), .08); color: var(--accent); padding: 16px 18px;
+    background: rgba(var(--accent-rgb), .08); color: var(--accent); padding: 14px 16px;
     text-align: left; font-weight: bold; letter-spacing: 1px;
     border-bottom: 2px solid var(--accent);
     text-transform: uppercase; font-size: .85em;
   }
   .data-table td {
-    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
     color: var(--text); vertical-align: top;
     background: #0a0a0a; line-height: 1.7;
     transition: .2s;
@@ -598,7 +600,7 @@
   .data-table strong { color: var(--accent); }
   .table-wrap {
     background: #0a0a0a; border-radius: 10px; overflow: hidden;
-    margin: 20px 0; width: 100%;
+    margin: 14px 0; width: 100%;
     border: 1px solid var(--border);
     transition: .3s var(--ease);
   }
@@ -606,7 +608,7 @@
 
   /* ============ КАРТОЧКИ КОДОВ ============ */
   .code-card {
-    padding: 28px; border-radius: 12px; background: var(--panel-2);
+    padding: 22px; border-radius: 12px; background: var(--panel-2);
     border: 2px solid; transition: .35s var(--ease);
     position: relative; overflow: hidden;
     isolation: isolate;
@@ -625,9 +627,9 @@
     box-shadow: 0 18px 50px rgba(0,0,0,.7);
   }
   .code-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-  .code-card h4 { font-size: 1.4em; margin-bottom: 15px; letter-spacing: 3px; }
-  .code-card p { font-size: .92em; color: #999; margin-bottom: 12px; }
-  .code-card ul { margin-top: 10px; font-size: .88em; }
+  .code-card h4 { font-size: 1.35em; margin-bottom: 12px; letter-spacing: 3px; }
+  .code-card p { font-size: .92em; color: #999; margin-bottom: 10px; }
+  .code-card ul { margin-top: 8px; font-size: .88em; }
   .code-card li { border-bottom: 1px dotted rgba(255,255,255,.05); }
 
   .code-red { border-color: #ff0000; background: linear-gradient(135deg, #0f0f0f, rgba(255,0,0,.08)); }
@@ -672,7 +674,7 @@
 
   /* ============ АЛЕРТЫ ============ */
   .alert {
-    padding: 22px 28px; border-radius: 10px; margin: 25px 0;
+    padding: 18px 24px; border-radius: 10px; margin: 18px 0;
     border-left: 6px solid; font-size: .95em;
     transition: .3s var(--ease);
     backdrop-filter: blur(4px);
@@ -683,7 +685,7 @@
   .alert-info { background: rgba(var(--accent-rgb), .05); border-color: var(--accent); color: var(--accent-dim); }
 
   .section {
-    margin: 40px 0; padding: 32px;
+    margin: 24px 0; padding: 24px;
     background: var(--panel); border-radius: 12px;
     border: 1px solid var(--border);
     transition: .3s var(--ease);
@@ -743,11 +745,11 @@
     font-weight: bold; letter-spacing: 1px;
     background: var(--panel-2);
     border: none; border-left: 5px solid var(--accent);
-    padding: 18px 22px;
+    padding: 16px 20px;
     display: flex; align-items: center; gap: 12px;
     transition: .3s var(--ease);
   }
-  .acc-head:hover { background: rgba(var(--accent-rgb), .06); padding-left: 28px; }
+  .acc-head:hover { background: rgba(var(--accent-rgb), .06); padding-left: 24px; }
   .acc.open .acc-head { border-left-color: #ffaa00; color: #ffaa00; }
   .acc-head .acc-arrow {
     margin-left: auto; font-size: .7em;
@@ -761,24 +763,24 @@
   }
   .acc.open .acc-body { grid-template-rows: 1fr; }
   .acc-inner { overflow: hidden; }
-  .acc-inner > * { padding: 0 22px; }
-  .acc-inner > *:first-child { padding-top: 18px; }
-  .acc-inner > *:last-child { padding-bottom: 18px; }
-  .acc-inner ul { padding-left: 46px; }
+  .acc-inner > * { padding: 0 20px; }
+  .acc-inner > *:first-child { padding-top: 16px; }
+  .acc-inner > *:last-child { padding-bottom: 16px; }
+  .acc-inner ul { padding-left: 44px; }
 
   /* ============ УТИЛИТЫ ============ */
   .highlight { background: rgba(var(--accent-rgb), .1); padding: 2px 8px; border-radius: 4px; color: var(--accent); }
   .critical { background: rgba(255,0,0,.15); padding: 2px 8px; border-radius: 4px; color: #ff6666; font-weight: bold; }
   .evacuated { background: rgba(255,170,0,.15); padding: 2px 8px; border-radius: 4px; color: #ffcc66; font-weight: bold; }
   .divider {
-    height: 2px; border: none; margin: 50px 0;
+    height: 2px; border: none; margin: 40px 0;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     opacity: .7;
   }
 
   /* ============ ДОПУСК / КЛАССЫ ============ */
   .clearance-card {
-    padding: 28px; border-radius: 12px; border: 2px solid;
+    padding: 22px; border-radius: 12px; border: 2px solid;
     background: var(--panel-2); transition: .35s var(--ease);
     position: relative; overflow: hidden;
   }
@@ -790,9 +792,9 @@
   }
   .clearance-card:hover::after { opacity: 1; }
   .clearance-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,.7); }
-  .clearance-card h4 { font-size: 1.5em; margin-bottom: 15px; letter-spacing: 2px; }
+  .clearance-card h4 { font-size: 1.4em; margin-bottom: 12px; letter-spacing: 2px; }
   .clearance-card p { font-size: .9em; color: #999; }
-  .clearance-card ul { margin-top: 10px; font-size: .9em; }
+  .clearance-card ul { margin-top: 8px; font-size: .9em; }
 
   .level-1 { border-color: #666; } .level-1 h4 { color: #999; }
   .level-2 { border-color: #f5a623; } .level-2 h4 { color: #f5a623; }
@@ -807,7 +809,7 @@
 
   /* ============ КАРТОЧКИ ============ */
   .priv-card, .item-card, .scp-card {
-    padding: 28px; border-radius: 12px;
+    padding: 22px; border-radius: 12px;
     background: var(--panel-2); border: 2px solid var(--accent);
     transition: .35s var(--ease);
     position: relative; overflow: hidden;
@@ -825,11 +827,11 @@
     transform: translateY(-6px);
     box-shadow: 0 18px 50px rgba(0,0,0,.7), 0 0 35px rgba(var(--accent-rgb), .1);
   }
-  .priv-card h4, .scp-card h4 { color: var(--accent); font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
+  .priv-card h4, .scp-card h4 { color: var(--accent); font-size: 1.25em; margin-bottom: 12px; letter-spacing: 2px; }
   .priv-card p, .scp-card p { font-size: .9em; color: #999; }
-  .priv-card ul, .item-card ul, .scp-card ul { margin-top: 10px; font-size: .9em; }
+  .priv-card ul, .item-card ul, .scp-card ul { margin-top: 8px; font-size: .9em; }
 
-  .item-card h4 { font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
+  .item-card h4 { font-size: 1.25em; margin-bottom: 12px; letter-spacing: 2px; }
   .item-yes { border-color: var(--accent); } .item-yes h4 { color: var(--accent); }
   .item-no { border-color: #ff0000; } .item-no h4 { color: #ff6666; }
   .item-arrest { border-color: #ffaa00; } .item-arrest h4 { color: #ffaa00; }
@@ -891,7 +893,7 @@
     .to-top { right: 14px; bottom: 14px; width: 46px; height: 46px; }
   }
 
-  /* ============ СВЕТЛАЯ ТЕМА: ПЕРЕОПРЕДЕЛЕНИЯ ============ */
+  /* ============ СВЕТЛАЯ ТЕМА ============ */
   html[data-theme="light"] body { background: #f4f4f0; color: #333; }
   html[data-theme="light"] .parallax-layer.back .parallax-line { color: rgba(var(--accent-rgb), .07); }
   html[data-theme="light"] .parallax-layer.middle .parallax-line { color: rgba(200,0,0,.04); }
@@ -974,7 +976,6 @@
 
   <div class="watermark-overlay" id="watermark-overlay"></div>
 
-  <!-- ПОИСК -->
   <div class="search-box" id="searchBox">
     <span class="search-icon">🔍</span>
     <input type="text" id="searchInput" placeholder="Поиск по уставу..." autocomplete="off" spellcheck="false">
@@ -982,7 +983,6 @@
     <div class="search-results" id="searchResults"></div>
   </div>
 
-  <!-- ШЕСТЕРЁНКА / НАСТРОЙКИ -->
   <div class="settings-wrap" id="settingsWrap">
     <button class="settings-toggle" id="settingsToggle" type="button" aria-label="Настройки">⚙</button>
     <div class="settings-panel" id="settingsPanel">
@@ -1171,7 +1171,6 @@
       <span class="critical">Незнание правил не освобождает от ответственности.</span>
     </div>
 
-    <!-- КОДЫ -->
     <h2 id="codes" class="reveal">🚨 Раздел I. Цветовые коды угроз</h2>
     <p class="reveal">Коды угроз — стандартная система оповещения Фонда. Персонал обязан знать их значение.</p>
 
@@ -1264,7 +1263,6 @@
 
     <hr class="divider">
 
-    <!-- ДОПУСК -->
     <h2 id="clearance" class="reveal">🔐 Раздел II. Уровни допуска персонала</h2>
 
     <div class="clearance-grid">
@@ -1333,7 +1331,6 @@
 
     <hr class="divider">
 
-    <!-- КЛАССЫ ПЕРСОНАЛА -->
     <h2 id="classes-personnel" class="reveal">👤 Раздел III. Классы персонала</h2>
 
     <div class="clearance-grid">
@@ -1393,7 +1390,6 @@
 
     <hr class="divider">
 
-    <!-- МОГ -->
     <h2 id="mtf" class="reveal">🛡️ Раздел IV. Мобильные Оперативные Группы (МОГ)</h2>
 
     <h3 class="reveal">Основные МОГ</h3>
@@ -1444,7 +1440,6 @@
 
     <hr class="divider">
 
-    <!-- ПРОТОКОЛЫ -->
     <h2 id="protocols" class="reveal">📋 Раздел V. Протоколы и изоляционные коды</h2>
     <p class="reveal">Использование протоколов разрешено только персоналу с соответствующим уровнем допуска.</p>
 
@@ -1531,7 +1526,6 @@
 
     <hr class="divider">
 
-    <!-- ПРИВИЛЕГИИ -->
     <h2 id="privileges" class="reveal">⭐ Раздел VI. Правила привилегий и администрации</h2>
     <p class="reveal">Администрация сервера — это <strong>лицо проекта</strong>.</p>
 
@@ -1636,7 +1630,6 @@
 
     <hr class="divider">
 
-    <!-- ФОРМА -->
     <h2 id="uniform" class="reveal">👔 Раздел VII. Что можно носить и делать</h2>
 
     <div class="two-col-grid">
@@ -1674,7 +1667,6 @@
 
     <hr class="divider">
 
-    <!-- ПРЕДМЕТЫ И АРЕСТ -->
     <h2 id="items" class="reveal">🎒 Раздел VIII. Предметы, арест и расстрел</h2>
     <p class="reveal">Правила о том, что можно носить, что нельзя, и какие меры применяются к нарушителям.</p>
 
@@ -1863,7 +1855,6 @@
 
     <hr class="divider">
 
-    <!-- ОБЩИЕ -->
     <h2 id="general" class="reveal">📜 Раздел IX. Общие правила</h2>
     <div class="two-col-grid">
       <div class="section reveal-left" style="margin:0;">
@@ -1892,7 +1883,6 @@
 
     <hr class="divider">
 
-    <!-- RP -->
     <h2 id="rp" class="reveal">🎭 Раздел X. RP-правила</h2>
     <div class="section reveal">
       <h3>10.1. Что такое RP?</h3>
@@ -1943,7 +1933,6 @@
 
     <hr class="divider">
 
-    <!-- ИГРОВЫЕ КЛАССЫ -->
     <h2 id="classes" class="reveal">👥 Раздел XI. Правила игровых классов</h2>
 
     <div class="two-col-grid">
@@ -2023,7 +2012,6 @@
 
     <hr class="divider">
 
-    <!-- SCP -->
     <h2 id="scp" class="reveal">🧬 Раздел XII. Правила SCP-объектов</h2>
     <p class="reveal">Подробная информация о каждом SCP: здоровье, разумность, способности, что можно и что нельзя.</p>
 
@@ -2150,7 +2138,6 @@
 
     <hr class="divider">
 
-    <!-- SCP-914 -->
     <h2 id="scp914" class="reveal">⚙️ Раздел XIII. Правила SCP-914</h2>
     <div class="two-col-grid">
       <div class="section reveal-left" style="margin:0;">
@@ -2181,7 +2168,6 @@
 
     <hr class="divider">
 
-    <!-- ИНТЕРКОМ -->
     <h2 id="intercom" class="reveal">📢 Раздел XIV. Правила интеркома и чата</h2>
 
     <div class="alert alert-info reveal">
@@ -2251,7 +2237,6 @@
 
     <hr class="divider">
 
-    <!-- БАНЫ -->
     <h2 id="bans" class="reveal">⏱️ Раздел XV. Сроки наказаний</h2>
     <div class="table-wrap reveal">
       <table class="data-table">
@@ -2286,7 +2271,6 @@
 
     <hr class="divider">
 
-    <!-- АПЕЛЛЯЦИЯ -->
     <h2 id="appeal" class="reveal">📩 Раздел XVI. Процедура апелляции</h2>
     <div class="two-col-grid">
       <div class="section reveal-left" style="margin:0;">
@@ -2371,7 +2355,6 @@
       });
     });
 
-    /* ============ АКТИВНЫЙ ПУНКТ МЕНЮ ============ */
     const navLinks = document.querySelectorAll('.nav-sub a');
     const sections = document.querySelectorAll('h2[id], h3[id]');
 
@@ -2412,7 +2395,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    /* ============ REVEAL НА СКРОЛЛЕ ============ */
+    /* ============ REVEAL ============ */
     (function initReveal() {
       const items = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
       if (!('IntersectionObserver' in window)) {
@@ -2472,7 +2455,7 @@
       }
     })();
 
-    /* ============ ПАРАЛЛАКС-СЛОИ ============ */
+    /* ============ ПАРАЛЛАКС ============ */
     (function fillParallaxLayers() {
       const backEl = document.getElementById('layer-back');
       const middleEl = document.getElementById('layer-middle');
@@ -2638,7 +2621,7 @@
       });
     })();
 
-    /* ============ НАСТРОЙКИ: ТЕМА + АКЦЕНТ ============ */
+    /* ============ НАСТРОЙКИ ============ */
     (function initSettings() {
       const html = document.documentElement;
       const toggle = document.getElementById('settingsToggle');
@@ -2663,7 +2646,6 @@
         { id: 'white',   hex: '#ffffff' }
       ];
 
-      // Строим сетку цветов
       COLORS.forEach(c => {
         const b = document.createElement('button');
         b.className = 'color-swatch';
@@ -2709,7 +2691,6 @@
         setTheme('dark');
       });
 
-      // Загрузка сохранённых настроек
       let savedAccent = 'green', savedTheme = 'dark';
       try {
         savedAccent = localStorage.getItem('mvp-accent') || 'green';
@@ -2723,7 +2704,6 @@
       setTheme(savedTheme);
     })();
 
-    /* Первичный запуск */
     onScroll();
   </script>
 

@@ -5,14 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MV.Project | Устав Фонда SCP</title>
 <style>
+  /* ============ БАЗА ============ */
+  :root {
+    --green: #00ff88;
+    --green-dim: #00cc66;
+    --green-deep: #009944;
+    --red: #ff2a2a;
+    --amber: #ffaa00;
+    --bg: #050505;
+    --panel: #0d0d0d;
+    --panel-2: #0f0f0f;
+    --border: #1a1a1a;
+    --text: #b8b8b8;
+    --ease: cubic-bezier(.22,.68,.32,1);
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   html, body { width: 100%; min-height: 100%; }
   body {
     font-family: 'Consolas', 'Courier New', monospace;
-    background: #050505; color: #c0c0c0; line-height: 1.9;
+    background: var(--bg); color: var(--text); line-height: 1.9;
     overflow-x: hidden;
   }
 
+  ::selection { background: rgba(0,255,136,.3); color: #fff; }
+
+  /* Кастомный скроллбар страницы */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #060606; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--green), var(--green-deep));
+    border-radius: 5px; border: 2px solid #060606;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+  /* ============ ПРОГРЕСС ПРОКРУТКИ ============ */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--green), #00ccff, var(--green));
+    background-size: 200% 100%;
+    z-index: 2000; pointer-events: none;
+    box-shadow: 0 0 14px rgba(0,255,136,.85);
+    animation: gradientShift 3s linear infinite;
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  /* ============ ФОН ============ */
   .parallax-bg {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 100vh;
@@ -48,61 +90,79 @@
     text-transform: uppercase;
   }
 
+  /* ============ SIDEBAR ============ */
   .sidebar {
     position: fixed; top: 0; left: 0;
     width: 290px; height: 100vh;
-    background: #080808; border-right: 2px solid #00ff88;
+    background: linear-gradient(180deg, #080808, #060606);
+    border-right: 2px solid var(--green);
     padding: 25px 0; overflow-y: auto; z-index: 1000;
-    box-shadow: 5px 0 30px rgba(0,0,0,0.8);
+    box-shadow: 5px 0 40px rgba(0,0,0,.9), 0 0 60px rgba(0,255,136,.04);
   }
   .sidebar::-webkit-scrollbar { width: 6px; }
   .sidebar::-webkit-scrollbar-track { background: #0a0a0a; }
-  .sidebar::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
 
-  .sidebar-logo { padding: 0 25px 25px; border-bottom: 1px solid #1a1a1a; margin-bottom: 20px; }
+  .sidebar-logo { padding: 0 25px 25px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
   .sidebar-logo .name {
     font-size: 1.5em; font-weight: bold; letter-spacing: 3px;
-    background: linear-gradient(90deg, #00ff88, #00cc66);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #00ff88, #00cc66, #00ff88);
+    background-size: 200% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
     display: block; margin-bottom: 8px;
+    animation: gradientShift 4s linear infinite;
   }
   .sidebar-logo .classif {
-    display: inline-block; background: #ff0000; color: #fff;
+    display: inline-block; background: var(--red); color: #fff;
     padding: 3px 10px; font-size: 0.65em; letter-spacing: 2px;
     font-weight: bold; animation: blink 2s infinite;
+    border-radius: 3px;
   }
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
   .sidebar-nav { padding: 0 12px; }
   .nav-section { margin-bottom: 3px; }
   .nav-section-header {
     display: flex; align-items: center; justify-content: space-between;
-    color: #00ff88; text-decoration: none;
+    color: var(--green); text-decoration: none;
     padding: 10px 14px; margin: 2px 0; border-radius: 6px;
-    font-size: 0.88em; letter-spacing: 1px; transition: 0.2s;
+    font-size: 0.88em; letter-spacing: 1px; transition: .25s var(--ease);
     border-left: 3px solid transparent;
     cursor: pointer; user-select: none;
+    position: relative; overflow: hidden;
   }
-  .nav-section-header:hover { background: rgba(0,255,136,0.08); border-left-color: #00ff88; }
-  .nav-section-header .arrow { font-size: 0.7em; transition: transform 0.2s; color: #00ff88; }
+  .nav-section-header::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(0,255,136,.12), transparent);
+    opacity: 0; transition: opacity .25s; pointer-events: none;
+  }
+  .nav-section-header:hover { background: rgba(0,255,136,.08); border-left-color: var(--green); }
+  .nav-section-header:hover::after { opacity: 1; }
+  .nav-section-header .arrow { font-size: .7em; transition: transform .3s var(--ease); color: var(--green); }
   .nav-section-header.open .arrow { transform: rotate(90deg); }
   .nav-section-header .label { flex: 1; margin-left: 8px; }
 
   .nav-sub {
     max-height: 0; overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height .45s var(--ease);
     padding-left: 10px; border-left: 1px dashed #1f1f1f; margin-left: 15px;
   }
-  .nav-sub.open { max-height: 1000px; }
+  .nav-sub.open { max-height: 1200px; }
   .nav-sub a {
     display: block; color: #88bbaa; text-decoration: none;
     padding: 7px 14px; margin: 2px 0; border-radius: 5px;
-    font-size: 0.78em; letter-spacing: 0.5px;
-    transition: 0.2s; border-left: 2px solid transparent;
+    font-size: .78em; letter-spacing: .5px;
+    transition: .25s var(--ease); border-left: 2px solid transparent;
   }
-  .nav-sub a:hover { background: rgba(0,255,136,0.06); color: #00ff88; border-left-color: #00cc66; padding-left: 18px; }
-  .nav-sub a.active { background: rgba(0,255,136,0.1); color: #00ff88; border-left-color: #00ff88; }
+  .nav-sub a:hover { background: rgba(0,255,136,.07); color: var(--green); border-left-color: var(--green-dim); padding-left: 18px; }
+  .nav-sub a.active {
+    background: rgba(0,255,136,.12); color: var(--green);
+    border-left-color: var(--green);
+    box-shadow: inset 0 0 12px rgba(0,255,136,.08);
+  }
 
+  /* ============ ОСНОВНОЙ КОНТЕНТ ============ */
   .main-content {
     margin-left: 290px; padding: 45px 40px;
     min-height: 100vh; width: calc(100% - 290px);
@@ -113,299 +173,437 @@
   .menu-toggle {
     display: none; position: fixed;
     top: 15px; left: 15px; z-index: 1100;
-    background: #00ff88; color: #000;
+    background: var(--green); color: #000;
     border: none; padding: 10px 15px;
-    border-radius: 6px; font-weight: bold;
+    border-radius: 8px; font-weight: bold;
     cursor: pointer; font-size: 1.2em;
+    box-shadow: 0 0 20px rgba(0,255,136,.5);
+    transition: .25s var(--ease);
   }
+  .menu-toggle:hover { transform: scale(1.06); }
+
   @media (max-width: 900px) {
-    .sidebar { transform: translateX(-100%); transition: 0.3s; }
+    .sidebar { transform: translateX(-100%); transition: transform .35s var(--ease); }
     .sidebar.open { transform: translateX(0); }
     .main-content { margin-left: 0; padding: 70px 15px 30px; width: 100%; }
     .menu-toggle { display: block; }
   }
 
-  .header { text-align: center; padding-bottom: 40px; border-bottom: 3px solid #00ff88; margin-bottom: 50px; }
+  /* ============ ЗАГОЛОВОК ============ */
+  .header {
+    text-align: center; padding-bottom: 40px;
+    border-bottom: 3px solid var(--green); margin-bottom: 50px;
+    position: relative; overflow: hidden;
+  }
+  .header::after {
+    content: ''; position: absolute; bottom: -3px; left: -100%;
+    width: 60%; height: 3px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    animation: scanHeader 4s ease-in-out infinite;
+  }
+  @keyframes scanHeader {
+    0% { left: -60%; }
+    60%, 100% { left: 120%; }
+  }
+
   .classification {
-    display: inline-block; background: #ff0000; color: #fff;
+    display: inline-block; background: var(--red); color: #fff;
     padding: 8px 25px; font-weight: bold; letter-spacing: 4px;
-    font-size: 0.9em; margin-bottom: 25px; animation: blink 2s infinite;
+    font-size: .9em; margin-bottom: 25px; animation: blink 2s infinite;
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(255,0,0,.45);
   }
   h1 {
     font-size: clamp(2em, 6vw, 4em);
-    background: linear-gradient(90deg, #00ff88, #00cc66, #009944);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #00ff88, #00cc66, #009944, #00ff88);
+    background-size: 300% auto;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
     letter-spacing: 5px; margin-bottom: 15px;
+    animation: gradientShift 6s linear infinite;
+    filter: drop-shadow(0 0 25px rgba(0,255,136,.25));
   }
-  .subtitle { color: #00ff88; font-size: clamp(0.9em, 2vw, 1.2em); letter-spacing: 3px; }
-  .codename { color: #666; font-size: 0.9em; margin-top: 15px; letter-spacing: 2px; }
+  .subtitle { color: var(--green); font-size: clamp(.9em, 2vw, 1.2em); letter-spacing: 3px; }
+  .codename { color: #666; font-size: .9em; margin-top: 15px; letter-spacing: 2px; }
 
+  /* ============ ЗАГОЛОВКИ ============ */
   h2 {
-    color: #00ff88; font-size: clamp(1.3em, 3vw, 1.9em);
+    color: var(--green); font-size: clamp(1.3em, 3vw, 1.9em);
     margin: 55px 0 25px; padding: 18px 0 18px 25px;
-    border-left: 6px solid #00ff88;
-    background: linear-gradient(90deg, rgba(0,255,136,0.12), transparent);
+    border-left: 6px solid var(--green);
+    background: linear-gradient(90deg, rgba(0,255,136,.12), transparent);
     letter-spacing: 2px; text-transform: uppercase;
     scroll-margin-top: 20px;
+    position: relative;
+    transition: .3s var(--ease);
   }
+  h2::before {
+    content: ''; position: absolute; left: -6px; top: 0; bottom: 0;
+    width: 6px; background: var(--green);
+    box-shadow: 0 0 20px var(--green);
+  }
+  h2:hover { padding-left: 35px; background: linear-gradient(90deg, rgba(0,255,136,.2), transparent); }
+
   h3 {
     color: #66ffaa; font-size: clamp(1.05em, 2.2vw, 1.35em);
     margin: 35px 0 18px; padding-left: 18px;
-    border-left: 4px solid #00cc66; letter-spacing: 1px;
+    border-left: 4px solid var(--green-dim); letter-spacing: 1px;
     scroll-margin-top: 20px;
+    transition: .3s var(--ease);
   }
+  h3:hover { border-left-color: var(--green); padding-left: 24px; }
+
   h4 { color: #88ffbb; font-size: 1.1em; margin: 25px 0 12px; letter-spacing: 1px; }
 
-  p { margin: 12px 0; color: #b0b0b0; }
-  strong { color: #00ff88; }
+  p { margin: 12px 0; color: var(--text); }
+  strong { color: var(--green); }
 
   ul, ol { padding-left: 30px; margin: 18px 0; }
-  li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; }
-  li:hover { color: #e0e0e0; }
+  li { padding: 8px 0 8px 10px; color: var(--text); border-bottom: 1px dotted var(--border); transition: .2s; }
+  li:hover { color: #e8e8e8; border-bottom-color: rgba(0,255,136,.25); }
 
-  /* ДВУХКОЛОНОЧНАЯ СЕТКА — ИСПРАВЛЕНА (align-items: start) */
-  .two-col-grid {
+  /* ============ СЕТКИ ============ */
+  .two-col-grid,
+  .code-grid,
+  .clearance-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px;
-    margin: 25px 0;
-    width: 100%;
+    gap: 30px; margin: 25px 0; width: 100%;
     align-items: start;
   }
-  @media (max-width: 1200px) { .two-col-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1200px) {
+    .two-col-grid, .code-grid, .clearance-grid { grid-template-columns: 1fr; }
+  }
 
+  /* ============ ТАБЛИЦЫ ============ */
   .data-table {
     width: 100%; border-collapse: collapse;
-    background: #0a0a0a; border: 1px solid #1a1a1a;
-    font-size: 0.92em; table-layout: auto;
+    background: #0a0a0a; border: 1px solid var(--border);
+    font-size: .92em; table-layout: auto;
   }
   .data-table th {
-    background: #0f1a12; color: #00ff88; padding: 16px 18px;
+    background: #0f1a12; color: var(--green); padding: 16px 18px;
     text-align: left; font-weight: bold; letter-spacing: 1px;
-    border-bottom: 2px solid #00ff88;
-    text-transform: uppercase; font-size: 0.85em;
+    border-bottom: 2px solid var(--green);
+    text-transform: uppercase; font-size: .85em;
   }
   .data-table td {
-    padding: 14px 18px; border-bottom: 1px solid #1a1a1a;
-    color: #c0c0c0; vertical-align: top;
+    padding: 14px 18px; border-bottom: 1px solid var(--border);
+    color: var(--text); vertical-align: top;
     background: #0a0a0a; line-height: 1.7;
+    transition: .2s;
   }
-  .data-table tr { background: #0a0a0a; }
-  .data-table tr:hover, .data-table tr:hover td, .data-table tr:hover th {
-    background: #0f0f0f; color: #e0e0e0;
+  .data-table tr { background: #0a0a0a; transition: .2s; }
+  .data-table tbody tr:hover, .data-table tr:hover td {
+    background: #101010; color: #e8e8e8;
   }
-  .data-table strong { color: #00ff88; }
-  .table-wrap { background: #0a0a0a; border-radius: 8px; overflow: hidden; margin: 20px 0; width: 100%; }
+  .data-table tr:hover td:first-child { box-shadow: inset 3px 0 0 var(--green); }
+  .data-table strong { color: var(--green); }
+  .table-wrap {
+    background: #0a0a0a; border-radius: 10px; overflow: hidden;
+    margin: 20px 0; width: 100%;
+    border: 1px solid var(--border);
+    transition: .3s var(--ease);
+  }
+  .table-wrap:hover { border-color: rgba(0,255,136,.35); box-shadow: 0 12px 40px rgba(0,0,0,.6); }
 
-  .code-grid {
-    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px; margin: 35px 0; width: 100%;
-    align-items: start;
-  }
-  @media (max-width: 1200px) { .code-grid { grid-template-columns: 1fr; } }
+  /* ============ КАРТОЧКИ КОДОВ ============ */
   .code-card {
-    padding: 28px; border-radius: 10px; background: #0f0f0f;
-    border: 2px solid; transition: 0.3s;
+    padding: 28px; border-radius: 12px; background: var(--panel-2);
+    border: 2px solid; transition: .35s var(--ease);
     position: relative; overflow: hidden;
+    isolation: isolate;
   }
-  .code-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+  .code-card::after {
+    content: ''; position: absolute; top: 0; left: -120%;
+    width: 60%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.06), transparent);
+    transform: skewX(-18deg);
+    transition: left .7s var(--ease);
+    pointer-events: none;
+  }
+  .code-card:hover::after { left: 140%; }
+  .code-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.7);
+  }
   .code-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
   .code-card h4 { font-size: 1.4em; margin-bottom: 15px; letter-spacing: 3px; }
-  .code-card p { font-size: 0.92em; color: #999; margin-bottom: 12px; }
-  .code-card ul { margin-top: 10px; font-size: 0.88em; }
-  .code-card li { border-bottom: 1px dotted rgba(255,255,255,0.05); }
-  .code-red { border-color: #ff0000; background: linear-gradient(135deg, #0f0f0f, rgba(255,0,0,0.08)); }
-  .code-red::before { background: #ff0000; }
-  .code-red h4 { color: #ff0000; text-shadow: 0 0 15px rgba(255,0,0,0.5); }
-  .code-black { border-color: #444; background: linear-gradient(135deg, #0f0f0f, rgba(50,50,50,0.15)); }
-  .code-black::before { background: #444; }
-  .code-black h4 { color: #999; text-shadow: 0 0 15px rgba(150,150,150,0.5); }
-  .code-green { border-color: #00ff88; background: linear-gradient(135deg, #0f0f0f, rgba(0,255,136,0.08)); }
-  .code-green::before { background: #00ff88; }
-  .code-green h4 { color: #00ff88; text-shadow: 0 0 15px rgba(0,255,136,0.5); }
-  .code-blue { border-color: #4a90d9; background: linear-gradient(135deg, #0f0f0f, rgba(74,144,217,0.08)); }
-  .code-blue::before { background: #4a90d9; }
-  .code-blue h4 { color: #4a90d9; text-shadow: 0 0 15px rgba(74,144,217,0.5); }
-  .code-superblue { border-color: #00ccff; background: linear-gradient(135deg, #0f0f0f, rgba(0,204,255,0.08)); }
-  .code-superblue::before { background: #00ccff; }
-  .code-superblue h4 { color: #00ccff; text-shadow: 0 0 15px rgba(0,204,255,0.5); }
-  .code-yellow { border-color: #ffcc00; background: linear-gradient(135deg, #0f0f0f, rgba(255,204,0,0.08)); }
-  .code-yellow::before { background: #ffcc00; }
-  .code-yellow h4 { color: #ffcc00; text-shadow: 0 0 15px rgba(255,204,0,0.5); }
-  .code-orange { border-color: #ff8800; background: linear-gradient(135deg, #0f0f0f, rgba(255,136,0,0.08)); }
-  .code-orange::before { background: #ff8800; }
-  .code-orange h4 { color: #ff8800; text-shadow: 0 0 15px rgba(255,136,0,0.5); }
-  .code-purple { border-color: #9013fe; background: linear-gradient(135deg, #0f0f0f, rgba(144,19,254,0.08)); }
-  .code-purple::before { background: #9013fe; }
-  .code-purple h4 { color: #9013fe; text-shadow: 0 0 15px rgba(144,19,254,0.5); }
-  .code-white { border-color: #cccccc; background: linear-gradient(135deg, #0f0f0f, rgba(200,200,200,0.08)); }
-  .code-white::before { background: #cccccc; }
-  .code-white h4 { color: #dddddd; text-shadow: 0 0 15px rgba(200,200,200,0.4); }
-  .code-gray { border-color: #888; background: linear-gradient(135deg, #0f0f0f, rgba(136,136,136,0.1)); }
-  .code-gray::before { background: #888; }
-  .code-gray h4 { color: #aaa; text-shadow: 0 0 15px rgba(150,150,150,0.5); }
-  .code-clean { border-color: #e0e0e0; background: linear-gradient(135deg, #0f0f0f, rgba(224,224,224,0.06)); }
-  .code-clean::before { background: #e0e0e0; }
-  .code-clean h4 { color: #e0e0e0; text-shadow: 0 0 15px rgba(224,224,224,0.5); }
-  .code-superclean { border-color: #ff69b4; background: linear-gradient(135deg, #0f0f0f, rgba(255,105,180,0.08)); }
-  .code-superclean::before { background: #ff69b4; }
-  .code-superclean h4 { color: #ff69b4; text-shadow: 0 0 15px rgba(255,105,180,0.5); }
-  .code-silver { border-color: #c0c0c0; background: linear-gradient(135deg, #0f0f0f, rgba(192,192,192,0.08)); }
-  .code-silver::before { background: #c0c0c0; }
-  .code-silver h4 { color: #c0c0c0; text-shadow: 0 0 15px rgba(192,192,192,0.5); }
+  .code-card p { font-size: .92em; color: #999; margin-bottom: 12px; }
+  .code-card ul { margin-top: 10px; font-size: .88em; }
+  .code-card li { border-bottom: 1px dotted rgba(255,255,255,.05); }
 
+  .code-red { border-color: #ff0000; background: linear-gradient(135deg, #0f0f0f, rgba(255,0,0,.08)); }
+  .code-red::before { background: #ff0000; box-shadow: 0 0 18px #ff0000; }
+  .code-red h4 { color: #ff0000; text-shadow: 0 0 15px rgba(255,0,0,.5); }
+  .code-black { border-color: #444; background: linear-gradient(135deg, #0f0f0f, rgba(50,50,50,.15)); }
+  .code-black::before { background: #444; }
+  .code-black h4 { color: #999; text-shadow: 0 0 15px rgba(150,150,150,.5); }
+  .code-green { border-color: var(--green); background: linear-gradient(135deg, #0f0f0f, rgba(0,255,136,.08)); }
+  .code-green::before { background: var(--green); box-shadow: 0 0 18px var(--green); }
+  .code-green h4 { color: var(--green); text-shadow: 0 0 15px rgba(0,255,136,.5); }
+  .code-blue { border-color: #4a90d9; background: linear-gradient(135deg, #0f0f0f, rgba(74,144,217,.08)); }
+  .code-blue::before { background: #4a90d9; }
+  .code-blue h4 { color: #4a90d9; text-shadow: 0 0 15px rgba(74,144,217,.5); }
+  .code-superblue { border-color: #00ccff; background: linear-gradient(135deg, #0f0f0f, rgba(0,204,255,.08)); }
+  .code-superblue::before { background: #00ccff; box-shadow: 0 0 18px #00ccff; }
+  .code-superblue h4 { color: #00ccff; text-shadow: 0 0 15px rgba(0,204,255,.5); }
+  .code-yellow { border-color: #ffcc00; background: linear-gradient(135deg, #0f0f0f, rgba(255,204,0,.08)); }
+  .code-yellow::before { background: #ffcc00; }
+  .code-yellow h4 { color: #ffcc00; text-shadow: 0 0 15px rgba(255,204,0,.5); }
+  .code-orange { border-color: #ff8800; background: linear-gradient(135deg, #0f0f0f, rgba(255,136,0,.08)); }
+  .code-orange::before { background: #ff8800; }
+  .code-orange h4 { color: #ff8800; text-shadow: 0 0 15px rgba(255,136,0,.5); }
+  .code-purple { border-color: #9013fe; background: linear-gradient(135deg, #0f0f0f, rgba(144,19,254,.08)); }
+  .code-purple::before { background: #9013fe; box-shadow: 0 0 18px #9013fe; }
+  .code-purple h4 { color: #9013fe; text-shadow: 0 0 15px rgba(144,19,254,.5); }
+  .code-white { border-color: #cccccc; background: linear-gradient(135deg, #0f0f0f, rgba(200,200,200,.08)); }
+  .code-white::before { background: #cccccc; }
+  .code-white h4 { color: #ddd; text-shadow: 0 0 15px rgba(200,200,200,.4); }
+  .code-gray { border-color: #888; background: linear-gradient(135deg, #0f0f0f, rgba(136,136,136,.1)); }
+  .code-gray::before { background: #888; }
+  .code-gray h4 { color: #aaa; text-shadow: 0 0 15px rgba(150,150,150,.5); }
+  .code-clean { border-color: #e0e0e0; background: linear-gradient(135deg, #0f0f0f, rgba(224,224,224,.06)); }
+  .code-clean::before { background: #e0e0e0; }
+  .code-clean h4 { color: #e0e0e0; text-shadow: 0 0 15px rgba(224,224,224,.5); }
+  .code-superclean { border-color: #ff69b4; background: linear-gradient(135deg, #0f0f0f, rgba(255,105,180,.08)); }
+  .code-superclean::before { background: #ff69b4; box-shadow: 0 0 18px #ff69b4; }
+  .code-superclean h4 { color: #ff69b4; text-shadow: 0 0 15px rgba(255,105,180,.5); }
+  .code-silver { border-color: #c0c0c0; background: linear-gradient(135deg, #0f0f0f, rgba(192,192,192,.08)); }
+  .code-silver::before { background: #c0c0c0; }
+  .code-silver h4 { color: #c0c0c0; text-shadow: 0 0 15px rgba(192,192,192,.5); }
+
+  /* ============ АЛЕРТЫ ============ */
   .alert {
-    padding: 22px 28px; border-radius: 8px; margin: 25px 0;
-    border-left: 6px solid; font-size: 0.95em;
+    padding: 22px 28px; border-radius: 10px; margin: 25px 0;
+    border-left: 6px solid; font-size: .95em;
+    transition: .3s var(--ease);
+    backdrop-filter: blur(4px);
   }
-  .alert-danger { background: rgba(255, 0, 0, 0.08); border-color: #ff0000; color: #ff8888; }
-  .alert-warning { background: rgba(255, 170, 0, 0.08); border-color: #ffaa00; color: #ffcc66; }
-  .alert-info { background: rgba(0, 255, 136, 0.05); border-color: #00ff88; color: #88ffbb; }
+  .alert:hover { transform: translateX(6px); }
+  .alert-danger { background: rgba(255, 0, 0, .08); border-color: #ff0000; color: #ff8888; }
+  .alert-warning { background: rgba(255, 170, 0, .08); border-color: #ffaa00; color: #ffcc66; }
+  .alert-info { background: rgba(0, 255, 136, .05); border-color: var(--green); color: #88ffbb; }
 
   .section {
     margin: 40px 0; padding: 32px;
-    background: #0d0d0d; border-radius: 10px;
-    border: 1px solid #1a1a1a;
+    background: var(--panel); border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: .3s var(--ease);
   }
+  .section:hover { border-color: rgba(0,255,136,.25); }
 
+  /* ============ ФУТЕР ============ */
   .footer {
     text-align: center; margin-top: 70px; padding: 40px 20px;
-    border-top: 2px solid #1a1a1a; color: #555;
-    font-size: 0.85em; letter-spacing: 1px; background: #080808;
-    border-radius: 10px;
+    border-top: 2px solid var(--border); color: #555;
+    font-size: .85em; letter-spacing: 1px; background: #080808;
+    border-radius: 12px;
   }
-  .discord {
-    display: inline-block; background: #5865F2; color: white;
-    padding: 15px 40px; border-radius: 10px; text-decoration: none;
-    font-weight: bold; margin: 10px; transition: 0.3s;
+  .discord, .telegram, .youtube {
+    display: inline-block; color: #fff;
+    padding: 15px 40px; border-radius: 12px; text-decoration: none;
+    font-weight: bold; margin: 10px; transition: .3s var(--ease);
     letter-spacing: 2px; font-size: 1em;
+    position: relative; overflow: hidden;
   }
-  .discord:hover { background: #4752c4; transform: scale(1.05); box-shadow: 0 0 40px rgba(88, 101, 242, 0.6); }
-  .telegram {
-    display: inline-block; background: #0088cc; color: white;
-    padding: 15px 40px; border-radius: 10px; text-decoration: none;
-    font-weight: bold; margin: 10px; transition: 0.3s;
-    letter-spacing: 2px; font-size: 1em;
+  .discord::after, .telegram::after, .youtube::after {
+    content: ''; position: absolute; top: 0; left: -120%;
+    width: 60%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent);
+    transform: skewX(-18deg);
   }
-  .telegram:hover { background: #006699; transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 136, 204, 0.6); }
-  .youtube {
-    display: inline-block; background: #ff0000; color: white;
-    padding: 15px 40px; border-radius: 10px; text-decoration: none;
-    font-weight: bold; margin: 10px; transition: 0.3s;
-    letter-spacing: 2px; font-size: 1em;
+  .discord:hover::after, .telegram:hover::after, .youtube:hover::after {
+    animation: btnShine .8s var(--ease);
   }
-  .youtube:hover { background: #cc0000; transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 0, 0, 0.6); }
+  @keyframes btnShine { to { left: 150%; } }
+
+  .discord { background: #5865F2; }
+  .discord:hover { background: #4752c4; transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(88,101,242,.55); }
+  .telegram { background: #0088cc; }
+  .telegram:hover { background: #006699; transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(0,136,204,.55); }
+  .youtube { background: #ff0000; }
+  .youtube:hover { background: #cc0000; transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(255,0,0,.55); }
   .center { text-align: center; }
 
-  /* DETAILS — исправлено */
-  details {
-    background: #0d0d0d;
-    border: 1px solid #1a1a1a;
-    border-radius: 6px;
+  /* ============ АККОРДЕОН (замена details) ============ */
+  .acc {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
     overflow: hidden;
     align-self: start;
     height: fit-content;
+    transition: .35s var(--ease);
   }
-  details summary {
-    padding: 18px 22px; cursor: pointer; color: #00ff88;
-    font-weight: bold; letter-spacing: 1px; background: #0f0f0f;
-    list-style: none; border-left: 5px solid #00ff88; transition: 0.2s;
-  }
-  details summary::-webkit-details-marker { display: none; }
-  details summary:hover { background: #141414; }
-  details[open] summary { border-left-color: #ffaa00; color: #ffaa00; }
-  details > *:not(summary) { padding: 18px 22px; }
+  .acc:hover { border-color: rgba(0,255,136,.35); }
+  .acc.open { border-color: rgba(0,255,136,.5); box-shadow: 0 12px 40px rgba(0,0,0,.6), 0 0 30px rgba(0,255,136,.06); }
 
-  .highlight { background: rgba(0, 255, 136, 0.1); padding: 2px 8px; border-radius: 3px; color: #00ff88; }
-  .critical { background: rgba(255, 0, 0, 0.15); padding: 2px 8px; border-radius: 3px; color: #ff6666; font-weight: bold; }
-  .evacuated { background: rgba(255, 170, 0, 0.15); padding: 2px 8px; border-radius: 3px; color: #ffcc66; font-weight: bold; }
-  .divider { height: 2px; background: linear-gradient(90deg, transparent, #00ff88, transparent); margin: 50px 0; border: none; }
-
-  .clearance-grid {
-    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px; margin: 30px 0; width: 100%;
-    align-items: start;
+  .acc-head {
+    width: 100%; text-align: left; cursor: pointer;
+    color: var(--green); font-family: inherit; font-size: 1em;
+    font-weight: bold; letter-spacing: 1px;
+    background: var(--panel-2);
+    border: none; border-left: 5px solid var(--green);
+    padding: 18px 22px;
+    display: flex; align-items: center; gap: 12px;
+    transition: .3s var(--ease);
   }
-  @media (max-width: 1200px) { .clearance-grid { grid-template-columns: 1fr; } }
+  .acc-head:hover { background: #141414; padding-left: 28px; }
+  .acc.open .acc-head { border-left-color: var(--amber); color: var(--amber); background: #141414; }
+  .acc-head .acc-arrow {
+    margin-left: auto; font-size: .7em;
+    transition: transform .35s var(--ease);
+  }
+  .acc.open .acc-head .acc-arrow { transform: rotate(90deg); }
+
+  .acc-body {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .45s var(--ease);
+  }
+  .acc.open .acc-body { grid-template-rows: 1fr; }
+  .acc-inner { overflow: hidden; }
+  .acc-inner > * { padding: 0 22px; }
+  .acc-inner > *:first-child { padding-top: 18px; }
+  .acc-inner > *:last-child { padding-bottom: 18px; }
+  .acc-inner ul { padding-left: 46px; }
+  .acc-inner p { padding-left: 22px; }
+
+  /* ============ БЕЙДЖИ / МЕЛОЧИ ============ */
+  .highlight { background: rgba(0,255,136,.1); padding: 2px 8px; border-radius: 4px; color: var(--green); }
+  .critical { background: rgba(255,0,0,.15); padding: 2px 8px; border-radius: 4px; color: #ff6666; font-weight: bold; }
+  .evacuated { background: rgba(255,170,0,.15); padding: 2px 8px; border-radius: 4px; color: #ffcc66; font-weight: bold; }
+  .divider {
+    height: 2px; border: none; margin: 50px 0;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: .7;
+  }
+
+  /* ============ ДОПУСК / КЛАССЫ ============ */
   .clearance-card {
-    padding: 28px; border-radius: 10px; border: 2px solid;
-    background: #0f0f0f; transition: 0.3s;
+    padding: 28px; border-radius: 12px; border: 2px solid;
+    background: var(--panel-2); transition: .35s var(--ease);
+    position: relative; overflow: hidden;
   }
-  .clearance-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+  .clearance-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
+    background: radial-gradient(circle at top right, rgba(255,255,255,.05), transparent 60%);
+    opacity: 0; transition: opacity .35s;
+    pointer-events: none;
+  }
+  .clearance-card:hover::after { opacity: 1; }
+  .clearance-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,.7); }
   .clearance-card h4 { font-size: 1.5em; margin-bottom: 15px; letter-spacing: 2px; }
-  .clearance-card p { font-size: 0.9em; color: #999; }
-  .clearance-card ul { margin-top: 10px; font-size: 0.9em; }
-  .level-1 { border-color: #666; }
-  .level-1 h4 { color: #999; }
-  .level-2 { border-color: #f5a623; }
-  .level-2 h4 { color: #f5a623; }
-  .level-3 { border-color: #d0021b; }
-  .level-3 h4 { color: #d0021b; }
-  .level-4 { border-color: #9013fe; }
-  .level-4 h4 { color: #9013fe; }
-  .level-5 { border-color: #00ff88; }
-  .level-5 h4 { color: #00ff88; }
-  .level-a { border-color: #ff0000; }
-  .level-a h4 { color: #ff0000; }
-  .level-b { border-color: #ff8800; }
-  .level-b h4 { color: #ff8800; }
-  .level-c { border-color: #00ccff; }
-  .level-c h4 { color: #00ccff; }
-  .level-d { border-color: #666; }
-  .level-d h4 { color: #999; }
-  .level-e { border-color: #9013fe; }
-  .level-e h4 { color: #9013fe; }
+  .clearance-card p { font-size: .9em; color: #999; }
+  .clearance-card ul { margin-top: 10px; font-size: .9em; }
 
-  .priv-card {
-    padding: 28px; border-radius: 10px;
-    background: #0f0f0f; border: 2px solid #00ff88; transition: 0.3s;
-  }
-  .priv-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
-  .priv-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
-  .priv-card p { font-size: 0.9em; color: #999; }
-  .priv-card ul { margin-top: 10px; font-size: 0.9em; }
+  .level-1 { border-color: #666; } .level-1 h4 { color: #999; }
+  .level-2 { border-color: #f5a623; } .level-2 h4 { color: #f5a623; }
+  .level-3 { border-color: #d0021b; } .level-3 h4 { color: #d0021b; }
+  .level-4 { border-color: #9013fe; } .level-4 h4 { color: #9013fe; }
+  .level-5 { border-color: var(--green); } .level-5 h4 { color: var(--green); }
+  .level-a { border-color: #ff0000; } .level-a h4 { color: #ff0000; }
+  .level-b { border-color: #ff8800; } .level-b h4 { color: #ff8800; }
+  .level-c { border-color: #00ccff; } .level-c h4 { color: #00ccff; }
+  .level-d { border-color: #666; } .level-d h4 { color: #999; }
+  .level-e { border-color: #9013fe; } .level-e h4 { color: #9013fe; }
 
-  .item-card {
-    padding: 28px; border-radius: 10px;
-    background: #0f0f0f; border: 2px solid; transition: 0.3s;
+  /* ============ ПРИВИЛЕГИИ / ПРЕДМЕТЫ / SCP ============ */
+  .priv-card, .item-card, .scp-card {
+    padding: 28px; border-radius: 12px;
+    background: var(--panel-2); border: 2px solid var(--green);
+    transition: .35s var(--ease);
+    position: relative; overflow: hidden;
   }
-  .item-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
+  .priv-card::after, .item-card::after, .scp-card::after {
+    content: ''; position: absolute; top: 0; left: -120%;
+    width: 60%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.06), transparent);
+    transform: skewX(-18deg);
+    transition: left .8s var(--ease);
+    pointer-events: none;
+  }
+  .priv-card:hover::after, .item-card:hover::after, .scp-card:hover::after { left: 140%; }
+  .priv-card:hover, .item-card:hover, .scp-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0,0,0,.7), 0 0 35px rgba(0,255,136,.1);
+  }
+  .priv-card h4, .scp-card h4 { color: var(--green); font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
+  .priv-card p, .scp-card p { font-size: .9em; color: #999; }
+  .priv-card ul, .item-card ul, .scp-card ul { margin-top: 10px; font-size: .9em; }
+
   .item-card h4 { font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
-  .item-card ul { margin-top: 10px; font-size: 0.9em; }
-  .item-yes { border-color: #00ff88; }
-  .item-yes h4 { color: #00ff88; }
-  .item-no { border-color: #ff0000; }
-  .item-no h4 { color: #ff6666; }
-  .item-arrest { border-color: #ffaa00; }
-  .item-arrest h4 { color: #ffaa00; }
-  .item-execute { border-color: #d0021b; }
-  .item-execute h4 { color: #ff3333; }
+  .item-yes { border-color: var(--green); } .item-yes h4 { color: var(--green); }
+  .item-no { border-color: #ff0000; } .item-no h4 { color: #ff6666; }
+  .item-arrest { border-color: #ffaa00; } .item-arrest h4 { color: #ffaa00; }
+  .item-execute { border-color: #d0021b; } .item-execute h4 { color: #ff3333; }
 
-  .scp-card {
-    padding: 28px; border-radius: 10px;
-    background: #0f0f0f; border: 2px solid #00ff88; transition: 0.3s;
-  }
-  .scp-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
-  .scp-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
-  .scp-card p { font-size: 0.9em; color: #999; }
-  .scp-card ul { margin-top: 10px; font-size: 0.9em; }
   .hp-badge {
-    display: inline-block; background: rgba(255, 0, 0, 0.15);
+    display: inline-block; background: rgba(255,0,0,.15);
     border: 1px solid #ff4444; color: #ff8888;
-    padding: 4px 12px; border-radius: 5px;
-    font-size: 0.85em; font-weight: bold;
+    padding: 4px 12px; border-radius: 6px;
+    font-size: .85em; font-weight: bold;
     margin-bottom: 10px; letter-spacing: 1px;
   }
   .evacuated-badge {
-    display: inline-block; background: rgba(255, 170, 0, 0.15);
+    display: inline-block; background: rgba(255,170,0,.15);
     border: 1px solid #ffaa00; color: #ffcc66;
-    padding: 4px 12px; border-radius: 5px;
-    font-size: 0.85em; font-weight: bold;
+    padding: 4px 12px; border-radius: 6px;
+    font-size: .85em; font-weight: bold;
     margin-bottom: 10px; letter-spacing: 1px;
+    animation: blink 2.4s infinite;
+  }
+
+  /* ============ REVEAL-АНИМАЦИИ ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity .8s var(--ease), transform .8s var(--ease);
+    will-change: opacity, transform;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .reveal-left { opacity: 0; transform: translateX(-34px);
+    transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal-left.in { opacity: 1; transform: none; }
+
+  .reveal-right { opacity: 0; transform: translateX(34px);
+    transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal-right.in { opacity: 1; transform: none; }
+
+  .reveal-scale { opacity: 0; transform: scale(.94);
+    transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal-scale.in { opacity: 1; transform: none; }
+
+  /* ============ КНОПКА НАВЕРХ ============ */
+  .to-top {
+    position: fixed; right: 24px; bottom: 24px;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), var(--green-deep));
+    color: #000; border: none; cursor: pointer;
+    font-size: 1.4em; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1500;
+    opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none;
+    transition: .4s var(--ease);
+    box-shadow: 0 0 30px rgba(0,255,136,.5);
+  }
+  .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+  .to-top:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 0 45px rgba(0,255,136,.8); }
+
+  @media (max-width: 900px) {
+    .to-top { right: 14px; bottom: 14px; width: 46px; height: 46px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; }
   }
 </style>
 </head>
 <body>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
 
   <div class="parallax-bg">
     <div class="parallax-layer back" id="layer-back"></div>
@@ -575,17 +773,17 @@
       <p class="codename">Уставной документ №SCP-RP-01 «ЗАСЛОН» | Участок 11 | Возрастной рейтинг: 13+</p>
     </div>
 
-    <div class="alert alert-danger">
+    <div class="alert alert-danger reveal">
       <strong>⛔ ВНИМАНИЕ:</strong> Данный устав обязателен к прочтению каждому сотруднику Участка. 
       Заходя на сервер <strong>MV.Project</strong>, вы автоматически соглашаетесь с правилами. 
       <span class="critical">Незнание правил не освобождает от ответственности.</span>
     </div>
 
     <!-- КОДЫ -->
-    <h2 id="codes">🚨 Раздел I. Цветовые коды угроз</h2>
-    <p>Коды угроз — стандартная система оповещения Фонда. Персонал обязан знать их значение.</p>
+    <h2 id="codes" class="reveal">🚨 Раздел I. Цветовые коды угроз</h2>
+    <p class="reveal">Коды угроз — стандартная система оповещения Фонда. Персонал обязан знать их значение.</p>
 
-    <div class="alert alert-info">
+    <div class="alert alert-info reveal">
       <strong>📢 Общие правила при ЛЮБОМ коде:</strong>
       <ul>
         <li>Персонал обязан слушаться <strong>СБ или любую МОГ</strong>.</li>
@@ -595,76 +793,76 @@
     </div>
 
     <div class="code-grid">
-      <div class="code-card code-green">
+      <div class="code-card code-green reveal-scale">
         <h4>🟢 КОД ЗЕЛЁНЫЙ</h4>
         <p><strong>Био-угроза / Заражение</strong></p>
         <p>Опасность, связанная с био-угрозой, инфекцией или источником заражения.</p>
         <p><strong>Указания:</strong> Избегайте контакта с источниками. Не покидайте Участок.</p>
         <p><strong>МОГ:</strong> Бета-7 «Шляпные болванчики»</p>
       </div>
-      <div class="code-card code-blue">
+      <div class="code-card code-blue reveal-scale">
         <h4>🔵 КОД СИНИЙ</h4>
         <p><strong>Побег разумного объекта</strong></p>
         <p>Побег объекта с интеллектом ниже человеческого.</p>
         <p><strong>Указания:</strong> Следуйте указаниям охраны.</p>
         <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса»</p>
       </div>
-      <div class="code-card code-superblue">
+      <div class="code-card code-superblue reveal-scale">
         <h4>🔷 КОД СУПЕРСИНИЙ</h4>
         <p><strong>Побег разумного объекта (высокий интеллект)</strong></p>
         <p>Побег объекта с интеллектом, равным или превышающим человеческий.</p>
         <p><strong>МОГ:</strong> Эпсилон-11 «Девятихвостая лиса»</p>
       </div>
-      <div class="code-card code-yellow">
+      <div class="code-card code-yellow reveal-scale">
         <h4>🟡 КОД ЖЁЛТЫЙ</h4>
         <p><strong>Меметическая / когнитивная угроза</strong></p>
         <p>Присутствие меметической или информационной угрозы.</p>
         <p><strong>МОГ:</strong> Эта-10, Эта-11</p>
       </div>
-      <div class="code-card code-red">
+      <div class="code-card code-red reveal-scale">
         <h4>🔴 КОД КРАСНЫЙ</h4>
         <p><strong>Агрессивная сущность (АНС)</strong></p>
         <p>Побег опасной агрессивной сущности.</p>
         <p><strong>МОГ:</strong> Ню-7, Эта-5, Гамма-5</p>
       </div>
-      <div class="code-card code-black">
+      <div class="code-card code-black reveal-scale">
         <h4>⚫ КОД ЧЁРНЫЙ</h4>
         <p><strong>Нарушение содержания НЛУ</strong></p>
         <p>Нарушение содержания Неликвидируемой Угрозы.</p>
         <p><strong>⚠️ ВАЖНО:</strong> <span class="critical">Эвакуация ЗАПРЕЩЕНА!</span> Код чёрный может быть и на SCP-106 — покидание комплекса смертельно опасно.</p>
         <p><strong>МОГ:</strong> Эпсилон-11, Сигма-23</p>
       </div>
-      <div class="code-card code-white">
+      <div class="code-card code-white reveal-scale">
         <h4>⚪ КОД БЕЛЫЙ</h4>
         <p><strong>Вторжение сил захвата</strong></p>
         <p>Вторжение высокоорганизованных сил захвата.</p>
         <p><strong>МОГ:</strong> Все ММОГ уровня батальона</p>
       </div>
-      <div class="code-card code-gray">
+      <div class="code-card code-gray reveal-scale">
         <h4>🌫️ КОД СЕРЫЙ</h4>
         <p><strong>Внутренняя угроза</strong></p>
         <p>Аналог БЕЛОГО, но угроза изнутри Участка.</p>
         <p><strong>МОГ:</strong> Все ММОГ уровня батальона</p>
       </div>
-      <div class="code-card code-purple">
+      <div class="code-card code-purple reveal-scale">
         <h4>🟣 КОД ПУРПУРНЫЙ</h4>
         <p><strong>Экстрамерная угроза</strong></p>
         <p>Нарушения пространства, времени, причинности.</p>
         <p><strong>МОГ:</strong> Дзета-9, Лямбда-5, Мю-13</p>
       </div>
-      <div class="code-card code-clean">
+      <div class="code-card code-clean reveal-scale">
         <h4>⬜ КОД ЧИСТЫЙ</h4>
         <p><strong>НОУС</strong></p>
         <p>Нарушение Удержания Объекта Содержания — <strong>известная сущность, но неизвестно какая именно</strong>.</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
-      <div class="code-card code-superclean">
+      <div class="code-card code-superclean reveal-scale">
         <h4>💗 КОД СУПЕРЧИСТЫЙ</h4>
         <p><strong>Неизвестная аномальная угроза</strong></p>
         <p>Обозначает <strong>неизвестную аномальную угрозу</strong> (сама угроза не идентифицирована).</p>
         <p><strong>МОГ:</strong> Отсутствуют</p>
       </div>
-      <div class="code-card code-silver">
+      <div class="code-card code-silver reveal-scale">
         <h4>🥈 КОД ХЛАДНОЕ СЕРЕБРО</h4>
         <p><strong>Фатальный сбой Фонда</strong></p>
         <p>Событие, ведущее к краху Фонда.</p>
@@ -675,10 +873,10 @@
     <hr class="divider">
 
     <!-- ДОПУСК -->
-    <h2 id="clearance">🔐 Раздел II. Уровни допуска персонала</h2>
+    <h2 id="clearance" class="reveal">🔐 Раздел II. Уровни допуска персонала</h2>
 
     <div class="clearance-grid">
-      <div class="clearance-card level-1">
+      <div class="clearance-card level-1 reveal-left">
         <h4>УРОВЕНЬ 1</h4>
         <p><strong>Неважный персонал</strong></p>
         <ul>
@@ -689,7 +887,7 @@
         <p style="margin-top:10px; color:#ff6666;">Доступ: только общественные зоны. Сопровождение обязательно.</p>
         <p><strong>Протоколы:</strong> не имеет права использовать.</p>
       </div>
-      <div class="clearance-card level-2">
+      <div class="clearance-card level-2 reveal-right">
         <h4>УРОВЕНЬ 2</h4>
         <p><strong>Младший персонал</strong></p>
         <ul>
@@ -700,7 +898,7 @@
         <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая зона, подсобные помещения.</p>
         <p><strong>Протоколы:</strong> P-S-1.</p>
       </div>
-      <div class="clearance-card level-3">
+      <div class="clearance-card level-3 reveal-left">
         <h4>УРОВЕНЬ 3</h4>
         <p><strong>Старший персонал</strong></p>
         <ul>
@@ -712,7 +910,7 @@
         <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая и Тяжёлая зоны.</p>
         <p><strong>Протоколы:</strong> P-L-1, P-L-2, P-L-3, P-S-1, P-S-2, P-S-3.</p>
       </div>
-      <div class="clearance-card level-4">
+      <div class="clearance-card level-4 reveal-right">
         <h4>УРОВЕНЬ 4</h4>
         <p><strong>Командование</strong></p>
         <ul>
@@ -726,7 +924,7 @@
         <p style="margin-top:10px; color:#ff6666;">Доступ: все зоны Участка.</p>
         <p><strong>Протоколы:</strong> все P-L, P-S, P-B, P-I, P-E.</p>
       </div>
-      <div class="clearance-card level-5">
+      <div class="clearance-card level-5 reveal-left">
         <h4>УРОВЕНЬ 5</h4>
         <p><strong>Совет О5</strong></p>
         <ul>
@@ -744,10 +942,10 @@
     <hr class="divider">
 
     <!-- КЛАССЫ ПЕРСОНАЛА -->
-    <h2 id="classes-personnel">👤 Раздел III. Классы персонала</h2>
+    <h2 id="classes-personnel" class="reveal">👤 Раздел III. Классы персонала</h2>
 
     <div class="clearance-grid">
-      <div class="clearance-card level-a">
+      <div class="clearance-card level-a reveal-scale">
         <h4>КЛАСС A</h4>
         <p><strong>Стратегически важный персонал</strong></p>
         <ul>
@@ -757,7 +955,7 @@
         <p><strong>Запрещено:</strong> Прямой доступ к аномалиям. Выход из защищённых зон.</p>
         <p><strong>Разрешено:</strong> Работа в защищённых зонах.</p>
       </div>
-      <div class="clearance-card level-b">
+      <div class="clearance-card level-b reveal-scale">
         <h4>КЛАСС B</h4>
         <p><strong>Важный персонал</strong></p>
         <ul>
@@ -768,7 +966,7 @@
         <p><strong>Запрещено:</strong> Доступ к аномалиям без карантина.</p>
         <p><strong>Разрешено:</strong> Доступ к карантинным аномалиям.</p>
       </div>
-      <div class="clearance-card level-c">
+      <div class="clearance-card level-c reveal-scale">
         <h4>КЛАСС C</h4>
         <p><strong>Прямой доступ</strong></p>
         <ul>
@@ -779,7 +977,7 @@
         <p><strong>Запрещено:</strong> Контакт с опасными аномалиями.</p>
         <p><strong>Разрешено:</strong> Работа с безопасными аномалиями.</p>
       </div>
-      <div class="clearance-card level-d">
+      <div class="clearance-card level-d reveal-scale">
         <h4>КЛАСС D</h4>
         <p><strong>Расходный персонал</strong></p>
         <ul>
@@ -789,7 +987,7 @@
         <p><strong>Запрещено:</strong> Контакт с классами A и B. Побег.</p>
         <p><strong>Разрешено:</strong> Участие в тестах.</p>
       </div>
-      <div class="clearance-card level-e">
+      <div class="clearance-card level-e reveal-scale">
         <h4>КЛАСС E</h4>
         <p><strong>Временное обозначение</strong></p>
         <ul>
@@ -804,10 +1002,10 @@
     <hr class="divider">
 
     <!-- МОГ -->
-    <h2 id="mtf">🛡️ Раздел IV. Мобильные Оперативные Группы (МОГ)</h2>
+    <h2 id="mtf" class="reveal">🛡️ Раздел IV. Мобильные Оперативные Группы (МОГ)</h2>
 
-    <h3>Основные МОГ</h3>
-    <div class="table-wrap">
+    <h3 class="reveal">Основные МОГ</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
         <tr><td><strong>Ню-7</strong></td><td>«Удар молота»</td><td>Подавление нарушений содержания.</td></tr>
@@ -821,8 +1019,8 @@
       </table>
     </div>
 
-    <h3 id="mtf-dop">Дополнительные МОГ</h3>
-    <div class="table-wrap">
+    <h3 id="mtf-dop" class="reveal">Дополнительные МОГ</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
         <tr><td><strong>Альфа-1</strong></td><td>«Багряная десница»</td><td>Охрана Совета О5.</td></tr>
@@ -840,8 +1038,8 @@
       </table>
     </div>
 
-    <h3 id="mtf-tg">Тактические группы (ТГ)</h3>
-    <div class="table-wrap">
+    <h3 id="mtf-tg" class="reveal">Тактические группы (ТГ)</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Группа</th><th>Позывной</th><th>Специализация</th></tr>
         <tr><td><strong>ОБР «Курс»</strong></td><td>Тактическая группа</td><td>Сдерживание SCP, разведка.</td></tr>
@@ -855,11 +1053,11 @@
     <hr class="divider">
 
     <!-- ПРОТОКОЛЫ -->
-    <h2 id="protocols">📋 Раздел V. Протоколы и изоляционные коды</h2>
-    <p>Использование протоколов разрешено только персоналу с соответствующим уровнем допуска.</p>
+    <h2 id="protocols" class="reveal">📋 Раздел V. Протоколы и изоляционные коды</h2>
+    <p class="reveal">Использование протоколов разрешено только персоналу с соответствующим уровнем допуска.</p>
 
-    <h3 id="prot-p-l">Протоколы P-L (блокировка) — УД 3+</h3>
-    <div class="table-wrap">
+    <h3 id="prot-p-l" class="reveal">Протоколы P-L (блокировка) — УД 3+</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Протокол</th><th>Описание</th><th>УД</th></tr>
         <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td><td>3+</td></tr>
@@ -868,8 +1066,8 @@
       </table>
     </div>
 
-    <h3 id="prot-p-s">Протоколы P-S (SCP) — УД 2+</h3>
-    <div class="table-wrap">
+    <h3 id="prot-p-s" class="reveal">Протоколы P-S (SCP) — УД 2+</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Протокол</th><th>Описание</th><th>УД</th></tr>
         <tr><td><strong>P-S-1</strong></td><td>Отслеживание SCP-объектов.</td><td>2+</td></tr>
@@ -880,8 +1078,8 @@
       </table>
     </div>
 
-    <h3 id="prot-p-b">Протоколы P-B (био-безопасность) — УД 3+</h3>
-    <div class="table-wrap">
+    <h3 id="prot-p-b" class="reveal">Протоколы P-B (био-безопасность) — УД 3+</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Протокол</th><th>Описание</th><th>УД</th></tr>
         <tr><td><strong>P-B-1</strong></td><td>Запечатывание заражённых комнат.</td><td>3+</td></tr>
@@ -893,8 +1091,8 @@
       </table>
     </div>
 
-    <h3 id="prot-p-i">Протоколы P-I (вторжение) — УД 3+</h3>
-    <div class="table-wrap">
+    <h3 id="prot-p-i" class="reveal">Протоколы P-I (вторжение) — УД 3+</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Протокол</th><th>Описание</th><th>УД</th></tr>
         <tr><td><strong>P-I-1</strong></td><td>Уничтожение техники у комплекса.</td><td>3+</td></tr>
@@ -903,8 +1101,8 @@
       </table>
     </div>
 
-    <h3 id="prot-p-e">Протоколы P-E (пожаротушение) — УД 3+</h3>
-    <div class="table-wrap">
+    <h3 id="prot-p-e" class="reveal">Протоколы P-E (пожаротушение) — УД 3+</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Протокол</th><th>Описание</th><th>УД</th></tr>
         <tr><td><strong>P-E-1</strong></td><td>Тушение в одной комнате; нет угрозы жизни.</td><td>3+</td></tr>
@@ -919,8 +1117,8 @@
       </table>
     </div>
 
-    <h3 id="prot-kir">Изоляционные коды (КИР)</h3>
-    <div class="table-wrap">
+    <h3 id="prot-kir" class="reveal">Изоляционные коды (КИР)</h3>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Код</th><th>Значение</th></tr>
         <tr><td><strong>Чёрный</strong></td><td>Полная изоляция комплекса. <span class="critical">Эвакуация запрещена!</span></td></tr>
@@ -942,15 +1140,15 @@
     <hr class="divider">
 
     <!-- ПРИВИЛЕГИИ -->
-    <h2 id="privileges">⭐ Раздел VI. Правила привилегий и администрации</h2>
-    <p>Администрация сервера — это <strong>лицо проекта</strong>.</p>
+    <h2 id="privileges" class="reveal">⭐ Раздел VI. Правила привилегий и администрации</h2>
+    <p class="reveal">Администрация сервера — это <strong>лицо проекта</strong>.</p>
 
-    <div class="alert alert-danger">
+    <div class="alert alert-danger reveal">
       <strong>⛔ ВАЖНО:</strong> Нарушение правил привилегий = понижение, ЧСА или снятие.
     </div>
 
     <div class="two-col-grid">
-      <div class="priv-card" id="priv-obligations">
+      <div class="priv-card reveal-left" id="priv-obligations">
         <h4>✅ Что ОБЯЗАН делать админ</h4>
         <ul>
           <li>Быть активным (3–4 раза в неделю).</li>
@@ -964,7 +1162,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-forbidden" style="border-color:#ff0000;">
+      <div class="priv-card reveal-right" id="priv-forbidden" style="border-color:#ff0000;">
         <h4 style="color:#ff6666;">❌ Что ЗАПРЕЩЕНО админу</h4>
         <ul>
           <li>Оскорблять игроков или коллег.</li>
@@ -979,7 +1177,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-lies" style="border-color:#ffaa00;">
+      <div class="priv-card reveal-left" id="priv-lies" style="border-color:#ffaa00;">
         <h4 style="color:#ffaa00;">⚠️ Наказания за враньё</h4>
         <ul>
           <li><strong>1-е:</strong> строгий выговор.</li>
@@ -988,7 +1186,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-confidential" style="border-color:#ff0000;">
+      <div class="priv-card reveal-right" id="priv-confidential" style="border-color:#ff0000;">
         <h4 style="color:#ff6666;">🚫 Конфиденциальность переписок</h4>
         <ul>
           <li>Запрещено публиковать скриншоты админ-чата.</li>
@@ -999,7 +1197,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-others" style="border-color:#9013fe;">
+      <div class="priv-card reveal-left" id="priv-others" style="border-color:#9013fe;">
         <h4 style="color:#c07aff;">🛡️ Админство на других серверах</h4>
         <ul>
           <li>Запрещено быть админом на других серверах.</li>
@@ -1008,7 +1206,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-hierarchy" style="border-color:#00ff88;">
+      <div class="priv-card reveal-right" id="priv-hierarchy" style="border-color:#00ff88;">
         <h4>👑 Иерархия должностей</h4>
         <ul>
           <li><strong>Высший состав:</strong> Владелец, Со-владелец, Гл. Админ, Зам., HR, Dev.</li>
@@ -1022,7 +1220,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-punish" style="border-color:#f5a623;">
+      <div class="priv-card reveal-left" id="priv-punish" style="border-color:#f5a623;">
         <h4 style="color:#f5a623;">⚖️ Виды взысканий</h4>
         <ul>
           <li><strong>Выговор устный</strong> — мелкие нарушения.</li>
@@ -1033,7 +1231,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" id="priv-rights" style="border-color:#00ccff;">
+      <div class="priv-card reveal-right" id="priv-rights" style="border-color:#00ccff;">
         <h4 style="color:#00ccff;">📋 Права администрации</h4>
         <ul>
           <li>Право на ошибку, если готов её признать.</li>
@@ -1047,25 +1245,27 @@
     <hr class="divider">
 
     <!-- ФОРМА -->
-    <h2 id="uniform">👔 Раздел VII. Что можно носить и делать</h2>
+    <h2 id="uniform" class="reveal">👔 Раздел VII. Что можно носить и делать</h2>
 
     <div class="two-col-grid">
-      <div>
+      <div class="reveal-left">
         <h3>✅ Что можно носить сотрудникам</h3>
-        <table class="data-table">
-          <tr><th>Должность</th><th>Разрешено</th></tr>
-          <tr><td><strong>Уборщики</strong></td><td>Спецодежда, перчатки, фонарь, пропуск 1 УД</td></tr>
-          <tr><td><strong>Капрал СБ</strong></td><td>Форма СБ, дубинка, FSP-9, бронежилет</td></tr>
-          <tr><td><strong>Мл. НС / Инженер</strong></td><td>Халат, очки, планшет, инструменты</td></tr>
-          <tr><td><strong>Сержант / Лейтенант СБ</strong></td><td>Форма СБ, CrossVec, бронежилет, наручники</td></tr>
-          <tr><td><strong>Ст. НС / НС</strong></td><td>Халат, очки, планшет, пропуск 3 УД</td></tr>
-          <tr><td><strong>Директор / ГСБ / ГНС</strong></td><td>Официальная форма, Revolver, пропуск 4 УД</td></tr>
-          <tr><td><strong>Совет О5 / КпЭ</strong></td><td>Официальная форма, Revolver, полный допуск</td></tr>
-          <tr><td><strong>Капитан МОГ</strong></td><td>Тактическая форма, MTF E-11 SR, пропуск 4 УД</td></tr>
-        </table>
+        <div class="table-wrap">
+          <table class="data-table">
+            <tr><th>Должность</th><th>Разрешено</th></tr>
+            <tr><td><strong>Уборщики</strong></td><td>Спецодежда, перчатки, фонарь, пропуск 1 УД</td></tr>
+            <tr><td><strong>Капрал СБ</strong></td><td>Форма СБ, дубинка, FSP-9, бронежилет</td></tr>
+            <tr><td><strong>Мл. НС / Инженер</strong></td><td>Халат, очки, планшет, инструменты</td></tr>
+            <tr><td><strong>Сержант / Лейтенант СБ</strong></td><td>Форма СБ, CrossVec, бронежилет, наручники</td></tr>
+            <tr><td><strong>Ст. НС / НС</strong></td><td>Халат, очки, планшет, пропуск 3 УД</td></tr>
+            <tr><td><strong>Директор / ГСБ / ГНС</strong></td><td>Официальная форма, Revolver, пропуск 4 УД</td></tr>
+            <tr><td><strong>Совет О5 / КпЭ</strong></td><td>Официальная форма, Revolver, полный допуск</td></tr>
+            <tr><td><strong>Капитан МОГ</strong></td><td>Тактическая форма, MTF E-11 SR, пропуск 4 УД</td></tr>
+          </table>
+        </div>
       </div>
 
-      <div>
+      <div class="reveal-right">
         <h3>❌ Что носить ЗАПРЕЩЕНО</h3>
         <div class="alert alert-danger">
           <ul>
@@ -1083,12 +1283,12 @@
     <hr class="divider">
 
     <!-- ПРЕДМЕТЫ И АРЕСТ -->
-    <h2 id="items">🎒 Раздел VIII. Предметы, арест и расстрел</h2>
-    <p>Правила о том, что можно носить, что нельзя, и какие меры применяются к нарушителям.</p>
+    <h2 id="items" class="reveal">🎒 Раздел VIII. Предметы, арест и расстрел</h2>
+    <p class="reveal">Правила о том, что можно носить, что нельзя, и какие меры применяются к нарушителям.</p>
 
-    <h3 id="items-can">✅ Что можно носить персоналу</h3>
+    <h3 id="items-can" class="reveal">✅ Что можно носить персоналу</h3>
     <div class="two-col-grid">
-      <div class="item-card item-yes">
+      <div class="item-card item-yes reveal-scale">
         <h4>🧪 Учёные (УД 2-3)</h4>
         <ul>
           <li>Аптечки (Medkit)</li>
@@ -1099,7 +1299,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-yes">
+      <div class="item-card item-yes reveal-scale">
         <h4>🛡️ Охрана и МОГ (УД 2-4)</h4>
         <ul>
           <li>Штатное оружие (MTF E-11 SR, CrossVec, FSP-9, FR-MG-0, AK, Logicer)</li>
@@ -1111,7 +1311,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-yes">
+      <div class="item-card item-yes reveal-scale">
         <h4>⚙️ Инженеры (УД 2)</h4>
         <ul>
           <li>Инструменты (Toolkit)</li>
@@ -1121,7 +1321,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-yes">
+      <div class="item-card item-yes reveal-scale">
         <h4>🧹 Класс D и уборщики (УД 1)</h4>
         <ul>
           <li>Метла и ведро (только уборщики)</li>
@@ -1132,9 +1332,9 @@
       </div>
     </div>
 
-    <h3 id="items-cant">❌ Что носить ЗАПРЕЩЕНО</h3>
+    <h3 id="items-cant" class="reveal">❌ Что носить ЗАПРЕЩЕНО</h3>
     <div class="two-col-grid">
-      <div class="item-card item-no">
+      <div class="item-card item-no reveal-scale">
         <h4>🚫 Общие запреты (для всех)</h4>
         <ul>
           <li><strong>Карта выше своего уровня допуска</strong></li>
@@ -1148,7 +1348,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-no">
+      <div class="item-card item-no reveal-scale">
         <h4>🚫 Для класса D и уборщиков</h4>
         <ul>
           <li>Любое огнестрельное оружие</li>
@@ -1161,7 +1361,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-no">
+      <div class="item-card item-no reveal-scale">
         <h4>🚫 Для учёных</h4>
         <ul>
           <li>Тяжёлое оружие (MTF E-11 SR, Logicer, FR-MG-0, AK)</li>
@@ -1174,7 +1374,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-no">
+      <div class="item-card item-no reveal-scale">
         <h4>🚫 Для охраны</h4>
         <ul>
           <li>SCP-предметы без допуска</li>
@@ -1186,13 +1386,13 @@
       </div>
     </div>
 
-    <h3 id="items-arrest">🚨 Арест персонала</h3>
-    <p>Арест — временное помещение сотрудника под стражу с последующим <strong>выводом на эвакуацию</strong> (удаление из Участка).</p>
+    <h3 id="items-arrest" class="reveal">🚨 Арест персонала</h3>
+    <p class="reveal">Арест — временное помещение сотрудника под стражу с последующим <strong>выводом на эвакуацию</strong> (удаление из Участка).</p>
 
     <div class="two-col-grid">
-      <div class="item-card item-arrest">
+      <div class="item-card item-arrest reveal-left">
         <h4>⚠️ Арест + вывод на эвакуацию</h4>
-        <p style="color:#ffaa00; font-size:0.9em;">При обнаружении запрещённых предметов сотрудник СБ обязан:</p>
+        <p style="color:#ffaa00; font-size:.9em;">При обнаружении запрещённых предметов сотрудник СБ обязан:</p>
         <ul>
           <li>Обнаружено <strong>запрещённое оружие</strong> (не по экипировке).</li>
           <li>Обнаружена <strong>карта выше уровня допуска</strong>.</li>
@@ -1210,7 +1410,7 @@
         </ol>
       </div>
 
-      <div class="item-card item-arrest">
+      <div class="item-card item-arrest reveal-right">
         <h4>🚨 Серьёзные нарушения</h4>
         <ul>
           <li>Проникновение в запрещённые зоны.</li>
@@ -1230,9 +1430,9 @@
       </div>
     </div>
 
-    <h3 id="items-execute">💀 Расстрел класса D</h3>
+    <h3 id="items-execute" class="reveal">💀 Расстрел класса D</h3>
     <div class="two-col-grid">
-      <div class="item-card item-execute">
+      <div class="item-card item-execute reveal-left">
         <h4>🛑 Расстрел на месте (без ареста)</h4>
         <p style="color:#ff6666;">Класс D подлежит немедленному расстрелу при:</p>
         <ul>
@@ -1246,7 +1446,7 @@
         </ul>
       </div>
 
-      <div class="item-card item-execute">
+      <div class="item-card item-execute reveal-right">
         <h4>⚠️ Важно для СБ и МОГ</h4>
         <ul>
           <li>Расстрел разрешён <strong>при ЛЮБОМ коде</strong>.</li>
@@ -1258,7 +1458,7 @@
       </div>
     </div>
 
-    <div class="alert alert-info">
+    <div class="alert alert-info reveal">
       <strong>💡 Права задержанного (персонал):</strong>
       <ul>
         <li>Узнать причину ареста.</li>
@@ -1272,9 +1472,9 @@
     <hr class="divider">
 
     <!-- ОБЩИЕ -->
-    <h2 id="general">📜 Раздел IX. Общие правила</h2>
+    <h2 id="general" class="reveal">📜 Раздел IX. Общие правила</h2>
     <div class="two-col-grid">
-      <div class="section" style="margin:0;">
+      <div class="section reveal-left" style="margin:0;">
         <h3>9.1. Принципы сервера</h3>
         <p>Сервер <strong>MV.Project</strong> — <span class="highlight">Medium RP</span> проект.</p>
         <ul>
@@ -1286,7 +1486,7 @@
         </ul>
       </div>
 
-      <div class="section" style="margin:0;">
+      <div class="section reveal-right" style="margin:0;">
         <h3>9.2. Возраст и аккаунты</h3>
         <ul>
           <li>Минимальный возраст — <span class="highlight">13 лет</span>.</li>
@@ -1301,8 +1501,8 @@
     <hr class="divider">
 
     <!-- RP -->
-    <h2 id="rp">🎭 Раздел X. RP-правила</h2>
-    <div class="section">
+    <h2 id="rp" class="reveal">🎭 Раздел X. RP-правила</h2>
+    <div class="section reveal">
       <h3>10.1. Что такое RP?</h3>
       <p><strong>RP (Roleplay)</strong> — отыгрыш роли персонажа. Medium RP = играть роль без фанатизма.</p>
 
@@ -1352,79 +1552,91 @@
     <hr class="divider">
 
     <!-- ИГРОВЫЕ КЛАССЫ -->
-    <h2 id="classes">👥 Раздел XI. Правила игровых классов</h2>
+    <h2 id="classes" class="reveal">👥 Раздел XI. Правила игровых классов</h2>
 
     <div class="two-col-grid">
-      <details>
-        <summary>🟠 Класс D</summary>
-        <ul>
-          <li>Обязаны слушаться охрану.</li>
-          <li>Запрещено бунтовать без RP-причины.</li>
-          <li>Побег разрешён, но без Banhop.</li>
-          <li>Запрещено мешать тестам.</li>
-          <li>При КОДЕ КРАСНОМ+ разрешено всё для выживания.</li>
-        </ul>
-      </details>
+      <div class="acc reveal-scale">
+        <button class="acc-head" type="button"><span>🟠</span> Класс D <span class="acc-arrow">▶</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <ul>
+            <li>Обязаны слушаться охрану.</li>
+            <li>Запрещено бунтовать без RP-причины.</li>
+            <li>Побег разрешён, но без Banhop.</li>
+            <li>Запрещено мешать тестам.</li>
+            <li>При КОДЕ КРАСНОМ+ разрешено всё для выживания.</li>
+          </ul>
+        </div></div>
+      </div>
 
-      <details>
-        <summary>🔵 Учёные</summary>
-        <ul>
-          <li>Обязаны проводить тесты SCP.</li>
-          <li>Запрещено покидать Участок.</li>
-          <li>Обязаны сотрудничать с МОГ.</li>
-          <li>Запрещено давать Класс D предметы.</li>
-        </ul>
-      </details>
+      <div class="acc reveal-scale">
+        <button class="acc-head" type="button"><span>🔵</span> Учёные <span class="acc-arrow">▶</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <ul>
+            <li>Обязаны проводить тесты SCP.</li>
+            <li>Запрещено покидать Участок.</li>
+            <li>Обязаны сотрудничать с МОГ.</li>
+            <li>Запрещено давать Класс D предметы.</li>
+          </ul>
+        </div></div>
+      </div>
 
-      <details>
-        <summary>🟢 Охрана Фонда</summary>
-        <ul>
-          <li>Обязаны следить за порядком.</li>
-          <li>Запрещено убивать Класс D без причины.</li>
-          <li>Обязаны сопровождать учёных.</li>
-          <li>При КОДЕ 3+ — защищать Участок.</li>
-        </ul>
-      </details>
+      <div class="acc reveal-scale">
+        <button class="acc-head" type="button"><span>🟢</span> Охрана Фонда <span class="acc-arrow">▶</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <ul>
+            <li>Обязаны следить за порядком.</li>
+            <li>Запрещено убивать Класс D без причины.</li>
+            <li>Обязаны сопровождать учёных.</li>
+            <li>При КОДЕ 3+ — защищать Участок.</li>
+          </ul>
+        </div></div>
+      </div>
 
-      <details>
-        <summary>🔴 МОГ (NTF)</summary>
-        <ul>
-          <li>Действуют по протоколу.</li>
-          <li>Запрещено убивать учёных и охрану.</li>
-          <li>Обязаны защищать Участок.</li>
-          <li>При КОДЕ 4 — вернуть SCP в камеры.</li>
-        </ul>
-      </details>
+      <div class="acc reveal-scale">
+        <button class="acc-head" type="button"><span>🔴</span> МОГ (NTF) <span class="acc-arrow">▶</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <ul>
+            <li>Действуют по протоколу.</li>
+            <li>Запрещено убивать учёных и охрану.</li>
+            <li>Обязаны защищать Участок.</li>
+            <li>При КОДЕ 4 — вернуть SCP в камеры.</li>
+          </ul>
+        </div></div>
+      </div>
 
-      <details>
-        <summary>⚫ ПХ (Chaos Insurgency)</summary>
-        <ul>
-          <li>Цель — освобождение SCP.</li>
-          <li>Запрещён RDM.</li>
-          <li>Запрещено убивать своих.</li>
-          <li>Обязаны подчиняться командиру.</li>
-        </ul>
-      </details>
+      <div class="acc reveal-scale">
+        <button class="acc-head" type="button"><span>⚫</span> ПХ (Chaos Insurgency) <span class="acc-arrow">▶</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <ul>
+            <li>Цель — освобождение SCP.</li>
+            <li>Запрещён RDM.</li>
+            <li>Запрещено убивать своих.</li>
+            <li>Обязаны подчиняться командиру.</li>
+          </ul>
+        </div></div>
+      </div>
 
-      <details>
-        <summary>🟣 SCP-объекты</summary>
-        <ul>
-          <li>Обязаны отыгрывать свою роль.</li>
-          <li>Запрещено фармить убийства.</li>
-          <li>SCP-049 обязан лечить.</li>
-          <li>Запрещено кемперить.</li>
-        </ul>
-      </details>
+      <div class="acc reveal-scale">
+        <button class="acc-head" type="button"><span>🟣</span> SCP-объекты <span class="acc-arrow">▶</span></button>
+        <div class="acc-body"><div class="acc-inner">
+          <ul>
+            <li>Обязаны отыгрывать свою роль.</li>
+            <li>Запрещено фармить убийства.</li>
+            <li>SCP-049 обязан лечить.</li>
+            <li>Запрещено кемперить.</li>
+          </ul>
+        </div></div>
+      </div>
     </div>
 
     <hr class="divider">
 
     <!-- SCP -->
-    <h2 id="scp">🧬 Раздел XII. Правила SCP-объектов</h2>
-    <p>Подробная информация о каждом SCP: здоровье, разумность, способности, что можно и что нельзя.</p>
+    <h2 id="scp" class="reveal">🧬 Раздел XII. Правила SCP-объектов</h2>
+    <p class="reveal">Подробная информация о каждом SCP: здоровье, разумность, способности, что можно и что нельзя.</p>
 
     <div class="two-col-grid">
-      <div class="scp-card">
+      <div class="scp-card reveal-scale">
         <h4>🧱 SCP-173 — Статуя</h4>
         <div class="hp-badge">❤️ 10 000 HP</div>
         <p><strong>Разумность:</strong> ❌ Нет (автомат, не мыслит)</p>
@@ -1439,7 +1651,7 @@
         <p><strong>Наказание за нарушение:</strong> бан 7-30 дней.</p>
       </div>
 
-      <div class="scp-card">
+      <div class="scp-card reveal-scale">
         <h4>🩺 SCP-049 — Чумной Доктор</h4>
         <div class="hp-badge">❤️ 5 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (имеет интеллект, общается)</p>
@@ -1453,7 +1665,7 @@
         <p><strong>Наказание за нарушение:</strong> бан 3-7 дней.</p>
       </div>
 
-      <div class="scp-card">
+      <div class="scp-card reveal-scale">
         <h4>👴 SCP-106 — Старик</h4>
         <div class="hp-badge">❤️ 7 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (имеет интеллект)</p>
@@ -1468,7 +1680,7 @@
         <p><strong>Наказание за нарушение:</strong> бан 3-7 дней.</p>
       </div>
 
-      <div class="scp-card" style="border-color: #ffaa00;">
+      <div class="scp-card reveal-scale" style="border-color: #ffaa00;">
         <h4>😢 SCP-096 — Застенчивый</h4>
         <div class="evacuated-badge">🚨 ЭВАКУИРОВАН ИЗ УЧАСТКА 11</div>
         <p style="color:#ffcc66;"><strong>Статус:</strong> SCP-096 был <strong>эвакуирован из Участка 11</strong> и переведён в другой объект Фонда. На данном Участке не содержится и не появляется.</p>
@@ -1476,7 +1688,7 @@
         <p style="color:#ff8888;"><strong>Внимание:</strong> Если вы заметили SCP-096 на территории Участка — немедленно сообщите администрации. Это может быть баг или ивент.</p>
       </div>
 
-      <div class="scp-card">
+      <div class="scp-card reveal-scale">
         <h4>👄 SCP-939 — Многоголосый</h4>
         <div class="hp-badge">❤️ 7 000 HP</div>
         <p><strong>Разумность:</strong> ⚠️ Полуразумный (умеет охотиться, но не мыслит)</p>
@@ -1498,7 +1710,7 @@
         <p><strong>Наказание за нарушение:</strong> предупреждение / бан 1 день.</p>
       </div>
 
-      <div class="scp-card">
+      <div class="scp-card reveal-scale">
         <h4>💀 SCP-3114 — Скелет</h4>
         <div class="hp-badge">❤️ 6 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (маскируется под человека)</p>
@@ -1513,7 +1725,7 @@
         <p><strong>Наказание за нарушение:</strong> бан 1-3 дня.</p>
       </div>
 
-      <div class="scp-card">
+      <div class="scp-card reveal-scale">
         <h4>💻 SCP-079 — Старый ИИ</h4>
         <div class="hp-badge">❤️ 0 HP (уязвим к перегрузке)</div>
         <p><strong>Разумность:</strong> ✅ Да (искусственный интеллект)</p>
@@ -1528,7 +1740,7 @@
         <p><strong>Наказание за нарушение:</strong> предупреждение / бан 1 день.</p>
       </div>
 
-      <div class="scp-card" id="scp953">
+      <div class="scp-card reveal-scale" id="scp953">
         <h4>🦊 SCP-953 — Полиморфная рептилия</h4>
         <div class="hp-badge">❤️ 1 600 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (лис-оборотень)</p>
@@ -1547,9 +1759,9 @@
     <hr class="divider">
 
     <!-- SCP-914 -->
-    <h2 id="scp914">⚙️ Раздел XIII. Правила SCP-914</h2>
+    <h2 id="scp914" class="reveal">⚙️ Раздел XIII. Правила SCP-914</h2>
     <div class="two-col-grid">
-      <div class="section" style="margin:0;">
+      <div class="section reveal-left" style="margin:0;">
         <h3>Правила использования</h3>
         <ul>
           <li>Запрещено использование 914 без RP-причины.</li>
@@ -1560,25 +1772,27 @@
         </ul>
       </div>
 
-      <div>
+      <div class="reveal-right">
         <h3>Режимы 914</h3>
-        <table class="data-table">
-          <tr><th>Режим</th><th>Эффект</th><th>ОК?</th></tr>
-          <tr><td><strong>Rough</strong></td><td>Ломает предметы</td><td>Да</td></tr>
-          <tr><td><strong>Coarse</strong></td><td>Может ухудшить</td><td>Да</td></tr>
-          <tr><td><strong>1:1</strong></td><td>Обмен</td><td>Да</td></tr>
-          <tr><td><strong>Fine</strong></td><td>Улучшение</td><td>Да</td></tr>
-          <tr><td><strong>Very Fine</strong></td><td>SCP-049-2</td><td>Только по RP</td></tr>
-        </table>
+        <div class="table-wrap">
+          <table class="data-table">
+            <tr><th>Режим</th><th>Эффект</th><th>ОК?</th></tr>
+            <tr><td><strong>Rough</strong></td><td>Ломает предметы</td><td>Да</td></tr>
+            <tr><td><strong>Coarse</strong></td><td>Может ухудшить</td><td>Да</td></tr>
+            <tr><td><strong>1:1</strong></td><td>Обмен</td><td>Да</td></tr>
+            <tr><td><strong>Fine</strong></td><td>Улучшение</td><td>Да</td></tr>
+            <tr><td><strong>Very Fine</strong></td><td>SCP-049-2</td><td>Только по RP</td></tr>
+          </table>
+        </div>
       </div>
     </div>
 
     <hr class="divider">
 
     <!-- ИНТЕРКОМ -->
-    <h2 id="intercom">📢 Раздел XIV. Правила интеркома и чата</h2>
+    <h2 id="intercom" class="reveal">📢 Раздел XIV. Правила интеркома и чата</h2>
 
-    <div class="alert alert-info">
+    <div class="alert alert-info reveal">
       <strong>📢 Формат сообщения в интеркоме:</strong>
       <p>«[Имя/Позывной], [Уровень допуска], [Класс персонала], [Что требуется]».</p>
       <ul>
@@ -1589,7 +1803,7 @@
     </div>
 
     <div class="two-col-grid">
-      <div>
+      <div class="reveal-left">
         <h3>Запрещено в интеркоме</h3>
         <div class="alert alert-danger">
           <ul>
@@ -1603,21 +1817,23 @@
         </div>
       </div>
 
-      <div>
+      <div class="reveal-right">
         <h3>Наказания за интерком</h3>
-        <table class="data-table">
-          <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
-          <tr><td>Спам</td><td>Мут 1 ч</td><td>Мут 6 ч</td><td>Бан 1 день</td></tr>
-          <tr><td>Музыка</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
-          <tr><td>Ложный код</td><td colspan="3">Повод для РП (НЕ бан)</td></tr>
-          <tr><td>Оскорбления</td><td>Мут 6 ч</td><td>Бан 1 день</td><td>Бан 7 дней</td></tr>
-        </table>
+        <div class="table-wrap">
+          <table class="data-table">
+            <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
+            <tr><td>Спам</td><td>Мут 1 ч</td><td>Мут 6 ч</td><td>Бан 1 день</td></tr>
+            <tr><td>Музыка</td><td>Мут 2 ч</td><td>Мут 12 ч</td><td>Бан 1 день</td></tr>
+            <tr><td>Ложный код</td><td colspan="3">Повод для РП (НЕ бан)</td></tr>
+            <tr><td>Оскорбления</td><td>Мут 6 ч</td><td>Бан 1 день</td><td>Бан 7 дней</td></tr>
+          </table>
+        </div>
       </div>
     </div>
 
-    <h3 id="chat">Правила чата</h3>
+    <h3 id="chat" class="reveal">Правила чата</h3>
     <div class="two-col-grid">
-      <div class="section" style="margin:0;">
+      <div class="section reveal-left" style="margin:0;">
         <h4>Текстовый чат</h4>
         <ul>
           <li>Запрещён спам (более 3 сообщений).</li>
@@ -1629,7 +1845,7 @@
         </ul>
       </div>
 
-      <div class="section" style="margin:0;">
+      <div class="section reveal-right" style="margin:0;">
         <h4>Голосовой чат</h4>
         <ul>
           <li>Запрещены громкие звуки.</li>
@@ -1644,8 +1860,8 @@
     <hr class="divider">
 
     <!-- БАНЫ -->
-    <h2 id="bans">⏱️ Раздел XV. Сроки наказаний</h2>
-    <div class="table-wrap">
+    <h2 id="bans" class="reveal">⏱️ Раздел XV. Сроки наказаний</h2>
+    <div class="table-wrap reveal">
       <table class="data-table">
         <tr><th>Нарушение</th><th>1-е</th><th>2-е</th><th>3-е</th></tr>
         <tr><td>Спам в чате</td><td>Мут 30 мин</td><td>Мут 2 ч</td><td>Мут 12 ч</td></tr>
@@ -1672,16 +1888,16 @@
       </table>
     </div>
 
-    <div class="alert alert-warning">
+    <div class="alert alert-warning reveal">
       <strong>⚠️ Примечание:</strong> Рецидивы = удвоение срока.
     </div>
 
     <hr class="divider">
 
     <!-- АПЕЛЛЯЦИЯ -->
-    <h2 id="appeal">📩 Раздел XVI. Процедура апелляции</h2>
+    <h2 id="appeal" class="reveal">📩 Раздел XVI. Процедура апелляции</h2>
     <div class="two-col-grid">
-      <div class="section" style="margin:0;">
+      <div class="section reveal-left" style="margin:0;">
         <h3>Как подать апелляцию</h3>
         <ol>
           <li>Зайди на Discord-сервер.</li>
@@ -1702,7 +1918,7 @@
         <p style="color:#ffcc66;">Не пишите в личные сообщения — там ваши обращения могут быть проигнорированы.</p>
       </div>
 
-      <div>
+      <div class="reveal-right">
         <h3>Правила апелляции</h3>
         <div class="alert alert-danger">
           <ul>
@@ -1727,11 +1943,11 @@
 
     <hr class="divider">
 
-    <div class="alert alert-info">
+    <div class="alert alert-info reveal">
       <strong>💡 Помни:</strong> Соблюдение правил — залог комфортной игры для всех.
     </div>
 
-    <div class="center">
+    <div class="center reveal">
       <a href="https://discord.gg/ZCGAhTH6ep" class="discord">💬 ВСТУПИТЬ В DISCORD</a>
       <a href="https://t.me/mvprojectru" class="telegram">📢 TELEGRAM-КАНАЛ</a>
       <a href="https://www.youtube.com/@mebnes" class="youtube">▶ YOUTUBE-КАНАЛ</a>
@@ -1745,7 +1961,10 @@
 
   </main>
 
+  <button class="to-top" id="toTop" aria-label="Наверх">↑</button>
+
   <script>
+    /* ============ БОКОВОЕ МЕНЮ ============ */
     function toggleSection(el) {
       el.classList.toggle('open');
       const sub = el.nextElementSibling;
@@ -1760,26 +1979,90 @@
       });
     });
 
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('h2[id], h3[id]');
-      const links = document.querySelectorAll('.nav-sub a');
+    /* ============ АКТИВНЫЙ ПУНКТ МЕНЮ ============ */
+    const navLinks = document.querySelectorAll('.nav-sub a');
+    const sections = document.querySelectorAll('h2[id], h3[id]');
+
+    function updateActiveLink() {
       let current = '';
       sections.forEach(sec => {
         const top = sec.offsetTop - 150;
         if (window.scrollY >= top) current = sec.getAttribute('id');
       });
-      links.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('active');
-        }
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    }
+
+    /* ============ ПРОГРЕСС + КНОПКА НАВЕРХ ============ */
+    const progressBar = document.getElementById('scrollProgress');
+    const toTop = document.getElementById('toTop');
+
+    function onScroll() {
+      const doc = document.documentElement;
+      const scrolled = doc.scrollTop;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const pct = max > 0 ? (scrolled / max) * 100 : 0;
+      progressBar.style.width = pct + '%';
+      toTop.classList.toggle('show', scrolled > 400);
+      updateActiveLink();
+    }
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => { onScroll(); ticking = false; });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    toTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ============ REVEAL НА СКРОЛЛЕ ============ */
+    (function initReveal() {
+      const items = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(i => i.classList.add('in'));
+        return;
+      }
+
+      // Сгруппируем по сеткам для stagger-задержки
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const parent = el.parentElement;
+          let delay = 0;
+          if (parent) {
+            const siblings = Array.from(parent.children).filter(c =>
+              c.classList.contains('reveal') || c.classList.contains('reveal-left') ||
+              c.classList.contains('reveal-right') || c.classList.contains('reveal-scale')
+            );
+            const idx = siblings.indexOf(el);
+            if (idx > 0) delay = Math.min(idx * 70, 420);
+          }
+          setTimeout(() => el.classList.add('in'), delay);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      items.forEach(i => observer.observe(i));
+    })();
+
+    /* ============ АНИМИРОВАННЫЙ АККОРДЕОН ============ */
+    document.querySelectorAll('.acc-head').forEach(head => {
+      head.addEventListener('click', () => {
+        const acc = head.parentElement;
+        acc.classList.toggle('open');
       });
     });
 
+    /* ============ ВОДЯНЫЕ ЗНАКИ ============ */
     (function createWatermarks() {
       const overlay = document.getElementById('watermark-overlay');
-      const cols = 6;
-      const rows = 10;
+      const cols = 6, rows = 10;
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
           const wm = document.createElement('div');
@@ -1794,6 +2077,7 @@
       }
     })();
 
+    /* ============ ПАРАЛЛАКС-СЛОИ ============ */
     (function fillParallaxLayers() {
       const backEl = document.getElementById('layer-back');
       const middleEl = document.getElementById('layer-middle');
@@ -1804,10 +2088,7 @@
       const frontText = 'LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5';
 
       const linesCount = 80;
-
-      let backHTML = '';
-      let middleHTML = '';
-      let frontHTML = '';
+      let backHTML = '', middleHTML = '', frontHTML = '';
       for (let i = 0; i < linesCount; i++) {
         backHTML += '<div class="parallax-line">' + backText + '</div>';
         middleHTML += '<div class="parallax-line">' + middleText + '</div>';
@@ -1823,26 +2104,25 @@
       const middleEl = document.getElementById('layer-middle');
       const frontEl = document.getElementById('layer-front');
 
-      let currentBack = 0;
-      let currentMiddle = 0;
-      let currentFront = 0;
+      let currentBack = 0, currentMiddle = 0, currentFront = 0;
 
       function animate() {
         const targetScroll = window.scrollY;
-
-        currentBack += (targetScroll * 0.15 - currentBack) * 0.08;
+        currentBack   += (targetScroll * 0.15  - currentBack)   * 0.08;
         currentMiddle += (targetScroll * -0.10 - currentMiddle) * 0.08;
-        currentFront += (targetScroll * 0.25 - currentFront) * 0.08;
+        currentFront  += (targetScroll * 0.25  - currentFront)  * 0.08;
 
-        backEl.style.transform = 'translateY(' + (-currentBack) + 'px)';
+        backEl.style.transform   = 'translateY(' + (-currentBack)   + 'px)';
         middleEl.style.transform = 'translateY(' + (-currentMiddle) + 'px)';
-        frontEl.style.transform = 'translateY(' + (-currentFront) + 'px)';
+        frontEl.style.transform  = 'translateY(' + (-currentFront)  + 'px)';
 
         requestAnimationFrame(animate);
       }
-
       animate();
     })();
+
+    /* Первичный запуск */
+    onScroll();
   </script>
 
 </body>

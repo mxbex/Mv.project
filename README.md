@@ -35,7 +35,6 @@ html[data-bgfx="noise"] body::before{opacity:.5;background-image:url("data:image
 html[data-bgfx="gradient"] body::before{opacity:.9;background:radial-gradient(circle at 20% 20%,rgba(var(--accent-rgb),.12),transparent 55%),radial-gradient(circle at 80% 70%,rgba(var(--accent-rgb),.09),transparent 55%);}
 html[data-bgfx="space"] body::before{opacity:.7;background:radial-gradient(1px 1px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 70% 60%,#fff,transparent),radial-gradient(1.5px 1.5px at 40% 80%,var(--accent),transparent);}
 
-/* ВИДИМАЯ КНОПКА АДМИНКИ */
 .admin-open-btn{position:fixed;top:20px;right:380px;width:44px;height:44px;border-radius:50%;background:rgba(8,8,8,.92);border:2px solid var(--accent);color:var(--accent);font-size:1.2em;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:1350;backdrop-filter:blur(10px);box-shadow:0 0 20px rgba(var(--accent-rgb),.25);transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .4s;padding:0;}
 html[data-theme="light"] .admin-open-btn{background:rgba(255,255,255,.95);}
 .admin-open-btn:hover{transform:rotate(15deg) scale(1.1);box-shadow:0 0 32px rgba(var(--accent-rgb),.6);}
@@ -208,7 +207,6 @@ html[data-theme="light"] .priv-card,html[data-theme="light"] .item-card,html[dat
 .to-top.show{opacity:1;transform:none;pointer-events:auto;}
 .to-top:hover{transform:translateY(-4px) scale(1.08);}
 
-/* АДМИН-ПАНЕЛИ */
 .admin-toolbar{position:fixed;top:0;left:0;right:0;background:linear-gradient(180deg,rgba(10,10,10,.99),rgba(15,15,15,.99));border-bottom:2px solid var(--accent);z-index:4500;display:none;flex-wrap:wrap;align-items:center;padding:6px 10px;gap:4px;box-shadow:0 6px 30px rgba(0,0,0,.85);backdrop-filter:blur(14px);}
 html[data-theme="light"] .admin-toolbar{background:linear-gradient(180deg,rgba(255,255,255,.99),rgba(248,248,248,.99));}
 .admin-toolbar.show{display:flex;}
@@ -354,13 +352,6 @@ html[data-theme="light"] .admin-ctx .ctx-item{color:#555;}
 .admin-ctx .ctx-sep{height:1px;background:var(--border);margin:3px 0;}
 .admin-ctx .ctx-hdr{color:#555;font-size:.68em;letter-spacing:2px;text-transform:uppercase;padding:6px 12px 3px;font-weight:bold;}
 
-.sel-info{position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(80px);background:linear-gradient(135deg,#0d0d0d,#080808);border:2px solid var(--accent);border-radius:12px;padding:10px 20px;z-index:4700;display:flex;align-items:center;gap:14px;box-shadow:0 15px 50px rgba(0,0,0,.9),0 0 30px rgba(var(--accent-rgb),.3);transition:transform .35s var(--ease);pointer-events:none;white-space:nowrap;}
-.sel-info.show{transform:translateX(-50%) translateY(0);pointer-events:auto;}
-.sel-info b{color:var(--accent);font-size:1.1em;}
-.sel-info span{color:#888;font-size:.8em;letter-spacing:1px;}
-.sel-info button{background:var(--accent);color:#000;border:none;border-radius:6px;padding:6px 12px;cursor:pointer;font-family:inherit;font-weight:bold;font-size:.75em;letter-spacing:1px;}
-.sel-info button.ghost{background:rgba(255,255,255,.05);color:#888;border:1px solid var(--border);}
-
 .modal-backdrop{position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
 .modal-backdrop.show{display:flex;}
 .modal{background:linear-gradient(180deg,#0d0d0d,#080808);border:2px solid var(--accent);border-radius:14px;padding:32px 28px;width:90%;max-width:380px;box-shadow:0 0 60px rgba(var(--accent-rgb),.35);text-align:center;}
@@ -393,10 +384,8 @@ body.admin-mode.props-open .to-top{right:360px;}
 </div>
 <div class="watermark-overlay" id="watermark-overlay"></div>
 
-<!-- ВИДИМАЯ КНОПКА АДМИНКИ -->
 <button class="admin-open-btn" id="adminOpenBtn" title="Админ-панель" aria-label="Админ-панель">🔐</button>
 
-<!-- МОДАЛКА ВХОДА -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal">
     <h3>🔐 Админ-панель</h3>
@@ -410,7 +399,6 @@ body.admin-mode.props-open .to-top{right:360px;}
   </div>
 </div>
 
-<!-- ВЕРХНИЙ ТУЛБАР -->
 <div class="admin-toolbar" id="adminToolbar">
   <span class="atb-logo">⚙ MV.ADMIN</span>
   <button class="atb-btn" id="tbBlocks" title="Менеджер блоков (Ctrl+B)">📋 Блоки</button>
@@ -441,7 +429,6 @@ body.admin-mode.props-open .to-top{right:360px;}
   <button class="atb-btn danger" id="tbExit" title="Выйти">✕</button>
 </div>
 
-<!-- МЕНЕДЖЕР БЛОКОВ -->
 <aside class="admin-blocks" id="adminBlocks">
   <div class="abl-head">
     <h4>📋 Блоки (<span id="ablCount">0</span>)</h4>
@@ -467,7 +454,6 @@ body.admin-mode.props-open .to-top{right:360px;}
   <div class="abl-list" id="ablList"></div>
 </aside>
 
-<!-- ПАНЕЛЬ СВОЙСТВ -->
 <aside class="admin-props" id="adminProps">
   <div class="ap-head">
     <h4>🎛 Свойства</h4>
@@ -483,7 +469,6 @@ body.admin-mode.props-open .to-top{right:360px;}
   <div class="ap-body">
     <div id="apEmpty" class="ap-empty">Выдели блок на странице или в списке слева</div>
     <div id="apContent" style="display:none;">
-
       <div class="ap-pane active" data-pane="size">
         <div class="ap-group">
           <h5>Ширина и высота <button class="reset-prop" data-reset="width,height">сброс</button></h5>
@@ -507,7 +492,6 @@ body.admin-mode.props-open .to-top{right:360px;}
           </div>
         </div>
       </div>
-
       <div class="ap-pane" data-pane="box">
         <div class="ap-group">
           <h5>Padding <button class="reset-prop" data-reset="padding,padding-top,padding-right,padding-bottom,padding-left">сброс</button></h5>
@@ -533,7 +517,6 @@ body.admin-mode.props-open .to-top{right:360px;}
           <div class="ap-row"><label>Радиус</label><input type="text" id="apRadius" placeholder="12px"></div>
         </div>
       </div>
-
       <div class="ap-pane" data-pane="style">
         <div class="ap-group">
           <h5>Фон</h5>
@@ -552,7 +535,6 @@ body.admin-mode.props-open .to-top{right:360px;}
           <div class="ap-row"><label>Трансформ</label><input type="text" id="apTransform" placeholder="rotate(0deg)"></div>
         </div>
       </div>
-
       <div class="ap-pane" data-pane="text">
         <div class="ap-group">
           <h5>Шрифт</h5>
@@ -571,7 +553,6 @@ body.admin-mode.props-open .to-top{right:360px;}
           <div class="ap-row"><label>Трансформ</label><select id="apTextTransform"><option value="">—</option><option value="none">Нет</option><option value="uppercase">ВЕРХНИЙ</option><option value="lowercase">нижний</option><option value="capitalize">С Заглавной</option></select></div>
         </div>
       </div>
-
       <div class="ap-pane" data-pane="layout">
         <div class="ap-group">
           <h5>Display / Flex / Grid</h5>
@@ -610,12 +591,10 @@ body.admin-mode.props-open .to-top{right:360px;}
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </aside>
 
-<!-- НИЖНЯЯ ПАНЕЛЬ -->
 <div class="admin-bottom" id="adminBottom">
   <span class="ab-label">Ширина:</span>
   <button class="ab-preset" data-w="25%">25%</button><button class="ab-preset" data-w="50%">50%</button><button class="ab-preset" data-w="75%">75%</button><button class="ab-preset" data-w="100%">100%</button><button class="ab-preset" data-w="125%">125%</button><button class="ab-preset" data-w="150%">150%</button><button class="ab-preset" data-w="200%">200%</button><button class="ab-preset" data-w="250%">250%</button><button class="ab-preset" data-w="300%">300%</button><button class="ab-preset" data-w="350%">350%</button><button class="ab-preset" data-w="500%">500%</button>
@@ -638,7 +617,6 @@ body.admin-mode.props-open .to-top{right:360px;}
   <button class="ab-preset" id="abResetSize">↺ Размер</button>
 </div>
 
-<!-- КОНТЕКСТНОЕ МЕНЮ -->
 <div class="admin-ctx" id="adminCtx">
   <div class="ctx-hdr">Блок</div>
   <div class="ctx-item" data-action="edit">✏ Редактировать текст</div>
@@ -659,14 +637,6 @@ body.admin-mode.props-open .to-top{right:360px;}
   <div class="ctx-item" data-action="reset">✕ Очистить стили</div>
   <div class="ctx-sep"></div>
   <div class="ctx-item danger" data-action="delete">🗑 Удалить</div>
-</div>
-
-<!-- ПЛАШКА ВЫДЕЛЕНИЯ -->
-<div class="sel-info" id="selInfo">
-  <span>Выделено: <b id="selCount">0</b></span>
-  <button id="selProps">Свойства</button>
-  <button id="selApplyFirst">Размер 1-го → всем</button>
-  <button class="ghost" id="selClear">Снять</button>
 </div>
 
 <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
@@ -833,7 +803,6 @@ body.admin-mode.props-open .to-top{right:360px;}
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
         <tr><td><strong>Альфа-1</strong></td><td>«Багряная десница»</td><td>Охрана Совета О5.</td></tr>
         <tr><td><strong>Альфа-9</strong></td><td>«Последняя надежда»</td><td>Сдерживание SCP.</td></tr>
-        <tr><td><strong>Альфа-40</strong></td><td>«Мятежники»</td><td>Ликвидация неавторизованных.</td></tr>
         <tr><td><strong>Гамма-5</strong></td><td>«Ложный след»</td><td>Дезинформация.</td></tr>
         <tr><td><strong>Гамма-13</strong></td><td>«Законники Азимова»</td><td>ИИ-аномалии.</td></tr>
         <tr><td><strong>Лямбда-12</strong></td><td>«Санстанция»</td><td>Паразиты.</td></tr>
@@ -1069,7 +1038,7 @@ body.admin-mode.props-open .to-top{right:360px;}
 
 <script>
 const ADMIN_PASSWORD = 'MV-Admin-2026';
-const STORAGE_KEY = 'mvp-admin-v4';
+const STORAGE_KEY = 'mvp-admin-v5';
 const html = document.documentElement;
 const state = {
   accent:'green', theme:'dark', font:'mono', bgfx:'default',
@@ -1096,7 +1065,6 @@ function toast(msg,type){
   setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},2000);
 }
 
-/* ВИДИМАЯ КНОПКА */
 const adminOpenBtn = qs('#adminOpenBtn');
 adminOpenBtn.addEventListener('click',()=>{
   if(document.body.classList.contains('admin-mode')){
@@ -1107,7 +1075,6 @@ adminOpenBtn.addEventListener('click',()=>{
   openLoginModal();
 });
 
-/* МОДАЛКА */
 const modalBackdrop=qs('#modalBackdrop');
 const adminPasswordInput=qs('#adminPasswordInput');
 const modalError=qs('#modalError');
@@ -1122,7 +1089,6 @@ function tryLogin(){
   else{modalError.textContent='Неверный пароль';adminPasswordInput.value='';adminPasswordInput.focus();}
 }
 
-/* АКТИВАЦИЯ */
 function activateAdmin(){
   document.body.classList.add('admin-mode');
   qs('#adminToolbar').classList.add('show');
@@ -1154,7 +1120,6 @@ function deactivateAdmin(){
 function markEditable(){qsa(EDITABLE_SELECTOR,qs('.main-inner')).forEach(el=>{if(!el.hasAttribute('data-editable-block')){el.setAttribute('data-editable-block','1');el.style.position=el.style.position||'relative';}});}
 function unmarkEditable(){qsa('[data-editable-block]').forEach(el=>el.removeAttribute('data-editable-block'));qsa('.block-toolbar, .resize-handle').forEach(el=>el.remove());}
 
-/* UI БЛОКОВ */
 function bindBlockEvents(){qsa('[data-editable-block]').forEach(el=>{if(el.querySelector(':scope > .block-toolbar'))return;attachBlockUI(el);});}
 function attachBlockUI(el){
   const tb=document.createElement('div');
@@ -1212,7 +1177,6 @@ function attachBlockUI(el){
   if(state.moveMode)el.setAttribute('draggable','true');
 }
 
-/* ВЫДЕЛЕНИЕ */
 function handleBlockClick(el,e){
   if(e.shiftKey||e.ctrlKey||e.metaKey){
     if(state.selected.includes(el))removeSelection(el);else addSelection(el);
@@ -1224,20 +1188,16 @@ function clearSelection(){state.selected.forEach(el=>el.classList.remove('block-
 function selectSingle(el){clearSelection();addSelection(el);}
 function updateSelectionUI(){
   const n=state.selected.length;
-  qs('#selCount').textContent=n;
   qs('#atbInfo').innerHTML=`Выделено: <b>${n}</b>`;
-  qs('#selInfo').classList.toggle('show',n>0);
   if(n===1){qs('#apEmpty').style.display='none';qs('#apContent').style.display='block';fillPropsPanel(state.selected[0]);}
   else if(n>1){qs('#apEmpty').style.display='none';qs('#apContent').style.display='block';clearPropsPanel();}
   else{qs('#apEmpty').style.display='block';qs('#apContent').style.display='none';}
   qsa('.abl-item').forEach(item=>{const id=item.dataset.blockId;const el=findBlockById(id);item.classList.toggle('selected',el&&state.selected.includes(el));});
 }
 
-/* ID СИСТЕМА */
 function findBlockById(id){return qsa('[data-editable-block]').find(el=>el.dataset.blockId===id);}
 function ensureBlockId(el){if(!el.dataset.blockId){el.dataset.blockId='b_'+Math.random().toString(36).slice(2,9);}return el.dataset.blockId;}
 
-/* СПИСОК БЛОКОВ */
 function buildBlockList(){
   const list=qs('#ablList');
   list.innerHTML='';
@@ -1273,7 +1233,6 @@ function getBlockIcon(el){
   if(el.matches('.section'))return'📄';return'▪';
 }
 
-/* RESIZE */
 function startResize(e,el,dir){
   e.preventDefault();e.stopPropagation();
   if(el.classList.contains('block-locked')){toast('Заблокировано','error');return;}
@@ -1298,7 +1257,6 @@ function startResize(e,el,dir){
   document.addEventListener('mouseup',onUp);
 }
 
-/* DRAG & DROP */
 function startDrag(el){
   state.dragSrc=el;el.classList.add('block-dragging');
   function onMove(e){
@@ -1326,7 +1284,6 @@ function startDrag(el){
   document.addEventListener('mouseup',onUp);
 }
 
-/* ДЕЙСТВИЯ */
 function deleteBlock(el){if(!el||el.classList.contains('block-locked')){toast('Заблокировано','error');return;}el.remove();removeSelection(el);pushHistory();buildBlockList();toast('Удалено');}
 function duplicateBlock(el){
   if(!el)return;
@@ -1347,7 +1304,6 @@ function moveBlock(el,dir){
 function toggleLock(el){el.classList.toggle('block-locked');pushHistory();}
 function toggleHide(el){el.classList.toggle('block-hidden');pushHistory();}
 
-/* КОПИРОВАНИЕ */
 function copySize(){
   if(state.selected.length!==1){toast('Нужен 1 блок','error');return;}
   const el=state.selected[0];
@@ -1365,7 +1321,6 @@ function pasteStyle(){if(!state.clipboardStyle){toast('Буфер пуст','err
 function copyFull(){if(state.selected.length!==1){toast('Нужен 1 блок','error');return;}state.clipboardFull=state.selected[0].cloneNode(true);toast('📋 Блок скопирован');}
 function applyToAll(){if(state.selected.length<2){toast('Нужно 2+ блока','error');return;}const cssText=state.selected[0].style.cssText;state.selected.slice(1).forEach(el=>{el.style.cssText+=';'+cssText;});pushHistory();toast(`🌐 Применено к ${state.selected.length} блокам`);}
 
-/* ПАНЕЛЬ СВОЙСТВ */
 function fillPropsPanel(el){
   const cs=el.style;
   const wM=(cs.width||'').match(/^([\d.]+)(%|px|vw|vh|em|rem)?$/);
@@ -1502,7 +1457,6 @@ qsa('.reset-prop[data-reset]').forEach(btn=>{
   });
 });
 
-/* РЕЖИМ ТЕКСТА */
 function setEditMode(on){
   state.editMode=on;
   document.body.classList.toggle('edit-mode',on);
@@ -1517,7 +1471,6 @@ function toggleBlockEditMode(el){
   toast('Правка текста включена');
 }
 
-/* КОНТЕКСТНОЕ МЕНЮ */
 const adminCtx=qs('#adminCtx');
 function openContextMenu(x,y){
   adminCtx.style.left=Math.min(x,window.innerWidth-240)+'px';
@@ -1548,12 +1501,10 @@ adminCtx.addEventListener('click',e=>{
 });
 document.addEventListener('click',e=>{if(!e.target.closest('#adminCtx'))closeContextMenu();});
 
-/* ВЫБОР */
 function selectAllBlocks(){clearSelection();qsa('[data-editable-block]',qs('.main-inner')).forEach(el=>addSelection(el));toast('Выделено всё');}
 function selectNone(){clearSelection();toast('Снято');}
 function invertSelection(){qsa('[data-editable-block]',qs('.main-inner')).forEach(el=>{if(state.selected.includes(el))removeSelection(el);else addSelection(el);});toast('Инвертировано');}
 
-/* НИЖНЯЯ ПАНЕЛЬ */
 qsa('.ab-preset[data-w]').forEach(btn=>{
   btn.addEventListener('click',()=>{
     if(!state.selected.length){toast('Ничего не выделено','error');return;}
@@ -1612,7 +1563,6 @@ qs('#abResetSize').addEventListener('click',()=>{
   pushHistory();toast('Размер сброшен');
 });
 
-/* ВЕРХНИЙ ТУЛБАР */
 qs('#tbBlocks').addEventListener('click',()=>{
   state.blocksPanel=!state.blocksPanel;
   qs('#adminBlocks').classList.toggle('show',state.blocksPanel);
@@ -1710,12 +1660,6 @@ qsa('.abl-action[data-select]').forEach(btn=>{
   });
 });
 
-/* ПЛАШКА */
-qs('#selClear').addEventListener('click',clearSelection);
-qs('#selProps').addEventListener('click',()=>{if(!state.propsPanel)qs('#tbProps').click();});
-qs('#selApplyFirst').addEventListener('click',()=>qs('#abMatchFirst').click());
-
-/* UNDO / REDO */
 function pushHistory(){
   const clone=qs('.main-inner').cloneNode(true);
   clone.querySelectorAll('.block-toolbar, .resize-handle').forEach(el=>el.remove());
@@ -1740,10 +1684,9 @@ function applyHistory(){
   },20);
 }
 
-/* СОХРАНЕНИЕ HTML */
 function saveHTML(){
   const clone=document.documentElement.cloneNode(true);
-  clone.querySelectorAll('#adminToolbar, #adminBlocks, #adminProps, #adminCtx, #selInfo, #modalBackdrop, #adminOpenBtn, #searchResults, #adminBottom').forEach(el=>el.remove());
+  clone.querySelectorAll('#adminToolbar, #adminBlocks, #adminProps, #adminCtx, #modalBackdrop, #adminOpenBtn, #searchResults, #adminBottom').forEach(el=>el.remove());
   clone.querySelectorAll('.block-toolbar, .resize-handle').forEach(el=>el.remove());
   clone.querySelectorAll('[data-editable-block]').forEach(el=>el.removeAttribute('data-editable-block'));
   clone.querySelectorAll('[data-block-id]').forEach(el=>el.removeAttribute('data-block-id'));
@@ -1764,7 +1707,6 @@ function saveHTML(){
   toast('✅ index.html скачан — залей в репозиторий');
 }
 
-/* LOCALSTORAGE */
 function saveLocal(){
   try{localStorage.setItem(STORAGE_KEY,JSON.stringify({accent:state.accent,theme:state.theme,font:state.font,bgfx:state.bgfx}));}catch(e){}
 }
@@ -1785,13 +1727,12 @@ function applyStateToUI(){
   qs('#tbBgLbl').textContent=state.bgfx==='default'?'Пусто':state.bgfx;
 }
 
-/* ГЛОБАЛЬНЫЕ СОБЫТИЯ */
 let globalBound=false;
 function bindGlobalEvents(){
   if(globalBound)return;
   globalBound=true;
   document.addEventListener('mousedown',e=>{
-    if(e.target.closest('[data-editable-block], .admin-toolbar, .admin-blocks, .admin-props, .admin-ctx, .sel-info, .modal-backdrop, .admin-bottom'))return;
+    if(e.target.closest('[data-editable-block], .admin-toolbar, .admin-blocks, .admin-props, .admin-ctx, .modal-backdrop, .admin-bottom'))return;
     if(e.target.closest('a, button, input, select, textarea'))return;
     if(state.editMode&&e.target.isContentEditable)return;
     clearSelection();
@@ -1830,7 +1771,6 @@ function bindGlobalEvents(){
   });
 }
 
-/* БАЗОВЫЙ САЙТ */
 const navLinks=qsa('.nav-sub a');
 const sections=qsa('h2[id], h3[id]');
 function updateActiveLink(){
@@ -1920,7 +1860,6 @@ qsa('.acc-head').forEach(h=>h.addEventListener('click',()=>h.parentElement.class
   document.addEventListener('click',e=>{if(!box.contains(e.target))res.classList.remove('show');});
 })();
 
-/* ИНИЦИАЛИЗАЦИЯ */
 loadLocal();
 applyStateToUI();
 if(localStorage.getItem(STORAGE_KEY+'-unlocked')==='1'){

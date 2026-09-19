@@ -24,27 +24,32 @@
   }
   .parallax-layer {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Consolas', monospace;
-    font-weight: bold;
-    color: rgba(0, 255, 136, 0.025);
-    white-space: nowrap;
+    top: 0; left: 0;
+    width: 100%;
     user-select: none;
     pointer-events: none;
-    letter-spacing: 20px;
+    will-change: transform;
   }
-  .parallax-layer.back {
-    font-size: 8em;
-    color: rgba(0, 255, 136, 0.018);
+  .parallax-line {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: bold;
+    white-space: nowrap;
+    letter-spacing: 25px;
+    padding: 40px 0;
+    text-align: center;
+    user-select: none;
   }
-  .parallax-layer.front {
-    font-size: 12em;
-    color: rgba(255, 255, 255, 0.012);
+  .parallax-layer.back .parallax-line {
+    font-size: 5em;
+    color: rgba(0, 255, 136, 0.028);
   }
-  .parallax-layer.middle {
-    font-size: 6em;
-    color: rgba(255, 0, 0, 0.015);
+  .parallax-layer.middle .parallax-line {
+    font-size: 7em;
+    color: rgba(255, 0, 0, 0.022);
+  }
+  .parallax-layer.front .parallax-line {
+    font-size: 4em;
+    color: rgba(255, 255, 255, 0.018);
   }
 
   /* ВОДЯНЫЕ ЗНАКИ */
@@ -152,6 +157,7 @@
     width: calc(100% - 290px);
     position: relative;
     z-index: 10;
+    background: rgba(5, 5, 5, 0.65);
   }
 
   .menu-toggle {
@@ -437,19 +443,27 @@
   .scp-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
   .scp-card p { font-size: 0.9em; color: #999; }
   .scp-card ul { margin-top: 10px; font-size: 0.9em; }
-
-  /* Запрет выделения для защиты от копирования */
-  .main-content { user-select: text; }
-  .watermark-overlay, .parallax-bg { user-select: none; }
+  .hp-badge {
+    display: inline-block;
+    background: rgba(255, 0, 0, 0.15);
+    border: 1px solid #ff4444;
+    color: #ff8888;
+    padding: 4px 12px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
 </style>
 </head>
 <body>
 
   <!-- ПАРАЛЛАКС ФОН -->
   <div class="parallax-bg">
-    <div class="parallax-layer back" id="layer-back">MV.PROJECT MV.PROJECT MV.PROJECT</div>
-    <div class="parallax-layer middle" id="layer-middle">SCP FOUNDATION SCP FOUNDATION SCP FOUNDATION</div>
-    <div class="parallax-layer front" id="layer-front">LEVEL 5 LEVEL 5 LEVEL 5</div>
+    <div class="parallax-layer back" id="layer-back"></div>
+    <div class="parallax-layer middle" id="layer-middle"></div>
+    <div class="parallax-layer front" id="layer-front"></div>
   </div>
 
   <!-- ВОДЯНЫЕ ЗНАКИ -->
@@ -754,7 +768,7 @@
           <li>Инженер</li>
         </ul>
         <p style="margin-top:10px; color:#ff6666;">Доступ: Лёгкая зона, подсобные помещения.</p>
-        <p><strong>Протоколы:</strong> P-L-1, P-L-3, P-S-1.</p>
+        <p><strong>Протоколы:</strong> P-S-1.</p>
       </div>
       <div class="clearance-card level-3">
         <h4>УРОВЕНЬ 3</h4>
@@ -914,13 +928,13 @@
     <h2 id="protocols">📋 Раздел V. Протоколы и изоляционные коды</h2>
     <p>Использование протоколов разрешено только персоналу с соответствующим уровнем допуска.</p>
 
-    <h3 id="prot-p-l">Протоколы P-L (блокировка) — УД 2+</h3>
+    <h3 id="prot-p-l">Протоколы P-L (блокировка) — УД 3+</h3>
     <div class="table-wrap">
       <table class="data-table">
         <tr><th>Протокол</th><th>Описание</th><th>УД</th></tr>
-        <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td><td>2+</td></tr>
+        <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td><td>3+</td></tr>
         <tr><td><strong>P-L-2</strong></td><td>Блокировка всех КПП.</td><td>3+</td></tr>
-        <tr><td><strong>P-L-3</strong></td><td>Блокировка всех дверей.</td><td>2+</td></tr>
+        <tr><td><strong>P-L-3</strong></td><td>Блокировка всех дверей.</td><td>3+</td></tr>
       </table>
     </div>
 
@@ -1477,13 +1491,13 @@
 
     <!-- SCP -->
     <h2 id="scp">🧬 Раздел XII. Правила SCP-объектов</h2>
-    <p>Подробная информация о каждом SCP: разумность, способности, что можно и что нельзя.</p>
+    <p>Подробная информация о каждом SCP: здоровье, разумность, способности, что можно и что нельзя.</p>
 
     <div class="two-col-grid">
       <div class="scp-card">
         <h4>🧱 SCP-173 — Статуя</h4>
+        <div class="hp-badge">❤️ 10 000 HP</div>
         <p><strong>Разумность:</strong> ❌ Нет (автомат, не мыслит)</p>
-        <p><strong>Здоровье:</strong> 4000 HP + 750 AHP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Скачок</strong> — телепорт до 8 м при зрительном контакте. Убивает ближайшего человека.</li>
@@ -1497,8 +1511,8 @@
 
       <div class="scp-card">
         <h4>🩺 SCP-049 — Чумной Доктор</h4>
+        <div class="hp-badge">❤️ 5 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (имеет интеллект, общается)</p>
-        <p><strong>Здоровье:</strong> 2300 HP + 300 AHP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Сердечный приступ</strong> — атака наносит продолжительный урон.</li>
@@ -1511,8 +1525,8 @@
 
       <div class="scp-card">
         <h4>👴 SCP-106 — Старик</h4>
+        <div class="hp-badge">❤️ 7 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (имеет интеллект)</p>
-        <p><strong>Здоровье:</strong> 2500 HP + 300 AHP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Захват</strong> — отправляет человека в карманное измерение.</li>
@@ -1526,8 +1540,8 @@
 
       <div class="scp-card">
         <h4>😢 SCP-096 — Застенчивый</h4>
+        <div class="hp-badge">❤️ 2 500 HP (стандарт)</div>
         <p><strong>Разумность:</strong> ❌ Нет (реагирует инстинктивно)</p>
-        <p><strong>Здоровье:</strong> 2500 HP + 400 AHP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Размашистый удар</strong> — мгновенно убивает цель.</li>
@@ -1541,8 +1555,8 @@
 
       <div class="scp-card">
         <h4>👄 SCP-939 — Многоголосый</h4>
+        <div class="hp-badge">❤️ 7 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (мимикрирует голоса)</p>
-        <p><strong>Здоровье:</strong> 2000 HP + 400 AHP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Мимикрия</strong> — имитирует голоса людей.</li>
@@ -1556,8 +1570,8 @@
 
       <div class="scp-card">
         <h4>💀 SCP-3114 — Скелет</h4>
+        <div class="hp-badge">❤️ 6 000 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (маскируется под человека)</p>
-        <p><strong>Здоровье:</strong> 1250 HP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Скелеты в шкафу</strong> — снимает кожу с трупов, маскируется.</li>
@@ -1571,8 +1585,8 @@
 
       <div class="scp-card">
         <h4>💻 SCP-079 — Старый ИИ</h4>
+        <div class="hp-badge">❤️ 0 HP (уязвим к перегрузке)</div>
         <p><strong>Разумность:</strong> ✅ Да (искусственный интеллект)</p>
-        <p><strong>Здоровье:</strong> 0 HP (уязвим только к перегрузке)</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li>Управление дверями, лифтами, тесла-воротами.</li>
@@ -1584,26 +1598,10 @@
         <p><strong>Наказание за нарушение:</strong> предупреждение / бан 1 день.</p>
       </div>
 
-      <div class="scp-card">
-        <h4>🧡 SCP-999 — Щекотный монстр</h4>
-        <p><strong>Разумность:</strong> ✅ Да (дружелюбный)</p>
-        <p><strong>Здоровье:</strong> 2000 HP</p>
-        <p><strong>Способности:</strong></p>
-        <ul>
-          <li><strong>Yippee</strong> — звук, слышимый всем.</li>
-          <li><strong>Hello</strong> — приветствие игроков.</li>
-          <li><strong>Heal</strong> — восстанавливает здоровье в радиусе.</li>
-          <li><strong>Анимации</strong> — случайные забавные движения.</li>
-        </ul>
-        <p style="color:#88ffbb;"><strong>Можно:</strong> лечить, танцевать, общаться.</p>
-        <p style="color:#ff6666;"><strong>Нельзя:</strong> атаковать (SCP-999 мирный).</p>
-        <p><strong>Наказание за нарушение:</strong> предупреждение.</p>
-      </div>
-
       <div class="scp-card" id="scp953">
         <h4>🦊 SCP-953 — Полиморфная рептилия</h4>
+        <div class="hp-badge">❤️ 1 600 HP</div>
         <p><strong>Разумность:</strong> ✅ Да (лис-оборотень)</p>
-        <p><strong>Здоровье:</strong> 1600 HP</p>
         <p><strong>Способности:</strong></p>
         <ul>
           <li>Принимает облик человека.</li>
@@ -1806,7 +1804,7 @@
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.7 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.8 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
     </div>
 
@@ -1865,13 +1863,38 @@
       }
     })();
 
-    // ПАРАЛЛАКС АНИМАЦИЯ ФОНА
-    (function parallaxScroll() {
-      const layerBack = document.getElementById('layer-back');
-      const layerMiddle = document.getElementById('layer-middle');
-      const layerFront = document.getElementById('layer-front');
+    // ЗАПОЛНЕНИЕ СЛОЁВ ПАРАЛЛАКСА (много строк, чтобы не кончались при прокрутке)
+    (function fillParallaxLayers() {
+      const backEl = document.getElementById('layer-back');
+      const middleEl = document.getElementById('layer-middle');
+      const frontEl = document.getElementById('layer-front');
 
-      let lastScroll = 0;
+      // Многострочный текст: повторяем "MV.PROJECT" через ДВА пробела
+      const backText = 'MV.PROJECT  MV.PROJECT  MV.PROJECT  MV.PROJECT';
+      const middleText = 'SCP FOUNDATION  SCP FOUNDATION  SCP FOUNDATION';
+      const frontText = 'LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5';
+
+      const linesCount = 80; // Очень много строк, чтобы покрыть длинную прокрутку
+
+      let backHTML = '';
+      let middleHTML = '';
+      let frontHTML = '';
+      for (let i = 0; i < linesCount; i++) {
+        backHTML += '<div class="parallax-line">' + backText + '</div>';
+        middleHTML += '<div class="parallax-line">' + middleText + '</div>';
+        frontHTML += '<div class="parallax-line">' + frontText + '</div>';
+      }
+      backEl.innerHTML = backHTML;
+      middleEl.innerHTML = middleHTML;
+      frontEl.innerHTML = frontHTML;
+    })();
+
+    // ПАРАЛЛАКС АНИМАЦИЯ ФОНА (слои двигаются в разные стороны)
+    (function parallaxScroll() {
+      const backEl = document.getElementById('layer-back');
+      const middleEl = document.getElementById('layer-middle');
+      const frontEl = document.getElementById('layer-front');
+
       let currentBack = 0;
       let currentMiddle = 0;
       let currentFront = 0;
@@ -1879,15 +1902,15 @@
       function animate() {
         const targetScroll = window.scrollY;
 
-        // Плавная интерполяция для эффекта замедления
-        currentBack += (targetScroll * 0.08 - currentBack) * 0.06;
-        currentMiddle += (targetScroll * -0.05 - currentMiddle) * 0.06;
-        currentFront += (targetScroll * 0.12 - currentFront) * 0.06;
+        // Плавная интерполяция
+        currentBack += (targetScroll * 0.15 - currentBack) * 0.08;
+        currentMiddle += (targetScroll * -0.10 - currentMiddle) * 0.08;
+        currentFront += (targetScroll * 0.25 - currentFront) * 0.08;
 
-        // Слои двигаются в разные стороны
-        layerBack.style.transform = 'translate(-50%, calc(-50% + ' + currentBack + 'px))';
-        layerMiddle.style.transform = 'translate(-50%, calc(-50% + ' + currentMiddle + 'px))';
-        layerFront.style.transform = 'translate(-50%, calc(-50% + ' + currentFront + 'px))';
+        // Слои двигаются в разные стороны — эффект "один вперёд, другой назад"
+        backEl.style.transform = 'translateY(' + (-currentBack) + 'px)';
+        middleEl.style.transform = 'translateY(' + (-currentMiddle) + 'px)';
+        frontEl.style.transform = 'translateY(' + (-currentFront) + 'px)';
 
         requestAnimationFrame(animate);
       }

@@ -10,58 +10,165 @@
   body {
     font-family: 'Consolas', 'Courier New', monospace;
     background: #050505; color: #c0c0c0; line-height: 1.9;
-    background-image: 
-      radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.05) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
+    overflow-x: hidden;
   }
 
-  /* ВЕРХНЯЯ ПАНЕЛЬ */
-  .top-bar {
-    position: sticky; top: 0; z-index: 1000;
-    background: rgba(8,8,8,0.98); border-bottom: 2px solid #00ff88;
-    padding: 15px 30px; display: flex; align-items: center; justify-content: space-between;
-    backdrop-filter: blur(15px); box-shadow: 0 5px 30px rgba(0,0,0,0.8);
-    flex-wrap: wrap; gap: 15px;
+  /* ПАРАЛЛАКС ФОН */
+  .parallax-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
   }
-  .top-bar .logo {
-    color: #00ff88; font-weight: bold; font-size: 1.3em; letter-spacing: 3px;
+  .parallax-layer {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Consolas', monospace;
+    font-weight: bold;
+    color: rgba(0, 255, 136, 0.025);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+    letter-spacing: 20px;
+  }
+  .parallax-layer.back {
+    font-size: 8em;
+    color: rgba(0, 255, 136, 0.018);
+  }
+  .parallax-layer.front {
+    font-size: 12em;
+    color: rgba(255, 255, 255, 0.012);
+  }
+  .parallax-layer.middle {
+    font-size: 6em;
+    color: rgba(255, 0, 0, 0.015);
+  }
+
+  /* ВОДЯНЫЕ ЗНАКИ */
+  .watermark-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .watermark-overlay .wm {
+    position: absolute;
+    color: rgba(0, 255, 136, 0.04);
+    font-family: 'Consolas', monospace;
+    font-weight: bold;
+    font-size: 1.5em;
+    letter-spacing: 5px;
+    white-space: nowrap;
+    transform: rotate(-35deg);
+    user-select: none;
+    pointer-events: none;
+    text-transform: uppercase;
+  }
+
+  /* ЛЕВОЕ МЕНЮ */
+  .sidebar {
+    position: fixed; top: 0; left: 0;
+    width: 290px; height: 100vh;
+    background: #080808; border-right: 2px solid #00ff88;
+    padding: 25px 0; overflow-y: auto; z-index: 1000;
+    box-shadow: 5px 0 30px rgba(0,0,0,0.8);
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-track { background: #0a0a0a; }
+  .sidebar::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 3px; }
+
+  .sidebar-logo {
+    padding: 0 25px 25px;
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 20px;
+  }
+  .sidebar-logo .name {
+    font-size: 1.5em; font-weight: bold; letter-spacing: 3px;
     background: linear-gradient(90deg, #00ff88, #00cc66);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block; margin-bottom: 8px;
   }
-  .top-bar .classif {
-    background: #ff0000; color: #fff; padding: 5px 15px;
-    font-size: 0.75em; letter-spacing: 3px; font-weight: bold;
-    animation: blink 2s infinite;
+  .sidebar-logo .classif {
+    display: inline-block; background: #ff0000; color: #fff;
+    padding: 3px 10px; font-size: 0.65em; letter-spacing: 2px;
+    font-weight: bold; animation: blink 2s infinite;
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  /* НАВИГАЦИЯ */
-  .top-nav {
-    position: sticky; top: 72px; z-index: 999;
-    background: rgba(10,10,10,0.98); padding: 12px 30px;
-    border-bottom: 1px solid #1a1a1a;
-    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-    font-size: 0.85em; backdrop-filter: blur(10px);
+  .sidebar-nav { padding: 0 12px; }
+  .nav-section { margin-bottom: 3px; }
+  .nav-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    color: #00ff88; text-decoration: none;
+    padding: 10px 14px; margin: 2px 0; border-radius: 6px;
+    font-size: 0.88em; letter-spacing: 1px; transition: 0.2s;
+    border-left: 3px solid transparent;
+    cursor: pointer; user-select: none;
   }
-  .top-nav a {
-    color: #00ff88; text-decoration: none; padding: 6px 14px;
-    border-radius: 4px; transition: 0.2s; border: 1px solid transparent;
+  .nav-section-header:hover {
+    background: rgba(0,255,136,0.08);
+    border-left-color: #00ff88;
   }
-  .top-nav a:hover { background: rgba(0,255,136,0.1); border-color: #00ff88; }
+  .nav-section-header .arrow {
+    font-size: 0.7em; transition: transform 0.2s; color: #00ff88;
+  }
+  .nav-section-header.open .arrow { transform: rotate(90deg); }
+  .nav-section-header .label { flex: 1; margin-left: 8px; }
+
+  .nav-sub {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 10px;
+    border-left: 1px dashed #1f1f1f;
+    margin-left: 15px;
+  }
+  .nav-sub.open { max-height: 1000px; }
+  .nav-sub a {
+    display: block; color: #88bbaa; text-decoration: none;
+    padding: 7px 14px; margin: 2px 0; border-radius: 5px;
+    font-size: 0.78em; letter-spacing: 0.5px;
+    transition: 0.2s; border-left: 2px solid transparent;
+  }
+  .nav-sub a:hover {
+    background: rgba(0,255,136,0.06);
+    color: #00ff88; border-left-color: #00cc66;
+    padding-left: 18px;
+  }
+  .nav-sub a.active {
+    background: rgba(0,255,136,0.1);
+    color: #00ff88; border-left-color: #00ff88;
+  }
 
   /* КОНТЕНТ */
   .main-content {
-    width: 100%; max-width: 1400px;
-    margin: 0 auto;
-    padding: 50px 60px;
-  }
-  @media (max-width: 900px) {
-    .main-content { padding: 30px 20px; }
-    .top-bar, .top-nav { padding: 12px 15px; }
-    .top-nav { top: 100px; }
+    margin-left: 290px;
+    padding: 45px 40px;
+    min-height: 100vh;
+    width: calc(100% - 290px);
+    position: relative;
+    z-index: 10;
   }
 
-  /* Шапка */
+  .menu-toggle {
+    display: none; position: fixed;
+    top: 15px; left: 15px; z-index: 1100;
+    background: #00ff88; color: #000;
+    border: none; padding: 10px 15px;
+    border-radius: 6px; font-weight: bold;
+    cursor: pointer; font-size: 1.2em;
+  }
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); transition: 0.3s; }
+    .sidebar.open { transform: translateX(0); }
+    .main-content { margin-left: 0; padding: 70px 15px 30px; width: 100%; }
+    .menu-toggle { display: block; }
+  }
+
   .header { text-align: center; padding-bottom: 40px; border-bottom: 3px solid #00ff88; margin-bottom: 50px; }
   .classification {
     display: inline-block; background: #ff0000; color: #fff;
@@ -83,13 +190,13 @@
     border-left: 6px solid #00ff88;
     background: linear-gradient(90deg, rgba(0,255,136,0.12), transparent);
     letter-spacing: 2px; text-transform: uppercase;
-    scroll-margin-top: 100px;
+    scroll-margin-top: 20px;
   }
   h3 {
     color: #66ffaa; font-size: clamp(1.05em, 2.2vw, 1.35em);
     margin: 35px 0 18px; padding-left: 18px;
     border-left: 4px solid #00cc66; letter-spacing: 1px;
-    scroll-margin-top: 100px;
+    scroll-margin-top: 20px;
   }
   h4 { color: #88ffbb; font-size: 1.1em; margin: 25px 0 12px; letter-spacing: 1px; }
 
@@ -100,7 +207,6 @@
   li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; }
   li:hover { color: #e0e0e0; }
 
-  /* СЕТКИ */
   .two-col-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -146,7 +252,6 @@
     width: 100%;
   }
 
-  /* Цветные коды */
   .code-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -332,35 +437,192 @@
   .scp-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
   .scp-card p { font-size: 0.9em; color: #999; }
   .scp-card ul { margin-top: 10px; font-size: 0.9em; }
+
+  /* Запрет выделения для защиты от копирования */
+  .main-content { user-select: text; }
+  .watermark-overlay, .parallax-bg { user-select: none; }
 </style>
 </head>
 <body>
 
-  <div class="top-bar">
-    <div class="logo">MV.PROJECT</div>
-    <div class="classif">⚠ LEVEL 5 ⚠</div>
+  <!-- ПАРАЛЛАКС ФОН -->
+  <div class="parallax-bg">
+    <div class="parallax-layer back" id="layer-back">MV.PROJECT MV.PROJECT MV.PROJECT</div>
+    <div class="parallax-layer middle" id="layer-middle">SCP FOUNDATION SCP FOUNDATION SCP FOUNDATION</div>
+    <div class="parallax-layer front" id="layer-front">LEVEL 5 LEVEL 5 LEVEL 5</div>
   </div>
 
-  <div class="top-nav">
-    <a href="#codes">🚨 КОДЫ</a>
-    <a href="#clearance">🔐 ДОПУСК</a>
-    <a href="#classes-personnel">👤 КЛАССЫ ПЕРСОНАЛА</a>
-    <a href="#mtf">🛡️ МОГ</a>
-    <a href="#protocols">📋 ПРОТОКОЛЫ</a>
-    <a href="#privileges">⭐ ПРИВИЛЕГИИ</a>
-    <a href="#uniform">👔 ФОРМА</a>
-    <a href="#items">🎒 ПРЕДМЕТЫ И АРЕСТ</a>
-    <a href="#general">📜 ОБЩИЕ</a>
-    <a href="#rp">🎭 RP</a>
-    <a href="#classes">👥 КЛАССЫ</a>
-    <a href="#scp">🧬 SCP</a>
-    <a href="#scp914">⚙️ SCP-914</a>
-    <a href="#intercom">📢 ИНТЕРКОМ</a>
-    <a href="#bans">⏱️ БАНЫ</a>
-    <a href="#appeal">📩 АПЕЛЛЯЦИЯ</a>
-  </div>
+  <!-- ВОДЯНЫЕ ЗНАКИ -->
+  <div class="watermark-overlay" id="watermark-overlay"></div>
 
-  <div class="main-content">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="name">MV.PROJECT</span>
+      <span class="classif">⚠ LEVEL 5 ⚠</span>
+    </div>
+    <nav class="sidebar-nav">
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🚨</span><span class="label">КОДЫ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#codes">Все коды угроз</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🔐</span><span class="label">ДОПУСК</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#clearance">Уровни 1-5</a>
+          <a href="#classes-personnel">Классы A-E</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🛡️</span><span class="label">МОГ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#mtf">Основные МОГ</a>
+          <a href="#mtf-dop">Дополнительные МОГ</a>
+          <a href="#mtf-tg">Тактические группы</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📋</span><span class="label">ПРОТОКОЛЫ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#prot-p-l">Протоколы P-L</a>
+          <a href="#prot-p-s">Протоколы P-S</a>
+          <a href="#prot-p-b">Протоколы P-B</a>
+          <a href="#prot-p-i">Протоколы P-I</a>
+          <a href="#prot-p-e">Протоколы P-E</a>
+          <a href="#prot-kir">Изоляционные коды</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>⭐</span><span class="label">ПРИВИЛЕГИИ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#priv-obligations">Обязанности админа</a>
+          <a href="#priv-forbidden">Запреты</a>
+          <a href="#priv-lies">Наказания за враньё</a>
+          <a href="#priv-confidential">Конфиденциальность</a>
+          <a href="#priv-others">Админство на других</a>
+          <a href="#priv-hierarchy">Иерархия</a>
+          <a href="#priv-punish">Виды взысканий</a>
+          <a href="#priv-rights">Права админов</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>👔</span><span class="label">ФОРМА</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#uniform">Что можно носить</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🎒</span><span class="label">ПРЕДМЕТЫ И АРЕСТ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#items-can">Что можно носить</a>
+          <a href="#items-cant">Что нельзя носить</a>
+          <a href="#items-arrest">Арест персонала</a>
+          <a href="#items-execute">Расстрел класса D</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📜</span><span class="label">ОБЩИЕ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#general">Принципы и возраст</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🎭</span><span class="label">RP</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#rp">Все RP-правила</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>👥</span><span class="label">КЛАССЫ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#classes">Игровые классы</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🧬</span><span class="label">SCP</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#scp">Основные SCP</a>
+          <a href="#scp953">SCP-953</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>⚙️</span><span class="label">SCP-914</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#scp914">Правила 914</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📢</span><span class="label">ИНТЕРКОМ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#intercom">Правила интеркома</a>
+          <a href="#chat">Правила чата</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>⏱️</span><span class="label">БАНЫ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#bans">Сроки наказаний</a>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📩</span><span class="label">АПЕЛЛЯЦИЯ</span><span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#appeal">Процедура апелляции</a>
+        </div>
+      </div>
+
+    </nav>
+  </aside>
+
+  <main class="main-content">
 
     <div class="header">
       <div class="classification">⚠ CLASSIFIED — LEVEL 5 CLEARANCE ⚠</div>
@@ -1338,7 +1600,7 @@
         <p><strong>Наказание за нарушение:</strong> предупреждение.</p>
       </div>
 
-      <div class="scp-card">
+      <div class="scp-card" id="scp953">
         <h4>🦊 SCP-953 — Полиморфная рептилия</h4>
         <p><strong>Разумность:</strong> ✅ Да (лис-оборотень)</p>
         <p><strong>Здоровье:</strong> 1600 HP</p>
@@ -1544,18 +1806,94 @@
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.6 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.7 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
     </div>
 
-  </div>
+  </main>
 
   <script>
-    document.querySelectorAll('.top-nav a').forEach(link => {
+    // РАСКРЫТИЕ ПОДРАЗДЕЛОВ МЕНЮ
+    function toggleSection(el) {
+      el.classList.toggle('open');
+      const sub = el.nextElementSibling;
+      if (sub) sub.classList.toggle('open');
+    }
+
+    // АВТОЗАКРЫТИЕ МЕНЮ НА ТЕЛЕФОНЕ
+    document.querySelectorAll('.nav-sub a').forEach(link => {
       link.addEventListener('click', () => {
-        // Просто переход по якорю
+        if (window.innerWidth <= 900) {
+          document.querySelector('.sidebar').classList.remove('open');
+        }
       });
     });
+
+    // ПОДСВЕТКА АКТИВНОГО ПОДРАЗДЕЛА
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('h2[id], h3[id]');
+      const links = document.querySelectorAll('.nav-sub a');
+      let current = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 150;
+        if (window.scrollY >= top) current = sec.getAttribute('id');
+      });
+      links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ГЕНЕРАЦИЯ ВОДЯНЫХ ЗНАКОВ
+    (function createWatermarks() {
+      const overlay = document.getElementById('watermark-overlay');
+      const cols = 6;
+      const rows = 10;
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+          const wm = document.createElement('div');
+          wm.className = 'wm';
+          wm.textContent = 'MV.PROJECT';
+          const offsetX = (i % 2 === 0) ? 0 : 150;
+          wm.style.left = (j * 18) + '%';
+          wm.style.top = (i * 10) + '%';
+          wm.style.marginLeft = offsetX + 'px';
+          overlay.appendChild(wm);
+        }
+      }
+    })();
+
+    // ПАРАЛЛАКС АНИМАЦИЯ ФОНА
+    (function parallaxScroll() {
+      const layerBack = document.getElementById('layer-back');
+      const layerMiddle = document.getElementById('layer-middle');
+      const layerFront = document.getElementById('layer-front');
+
+      let lastScroll = 0;
+      let currentBack = 0;
+      let currentMiddle = 0;
+      let currentFront = 0;
+
+      function animate() {
+        const targetScroll = window.scrollY;
+
+        // Плавная интерполяция для эффекта замедления
+        currentBack += (targetScroll * 0.08 - currentBack) * 0.06;
+        currentMiddle += (targetScroll * -0.05 - currentMiddle) * 0.06;
+        currentFront += (targetScroll * 0.12 - currentFront) * 0.06;
+
+        // Слои двигаются в разные стороны
+        layerBack.style.transform = 'translate(-50%, calc(-50% + ' + currentBack + 'px))';
+        layerMiddle.style.transform = 'translate(-50%, calc(-50% + ' + currentMiddle + 'px))';
+        layerFront.style.transform = 'translate(-50%, calc(-50% + ' + currentFront + 'px))';
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
   </script>
 
 </body>

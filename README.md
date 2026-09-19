@@ -74,14 +74,14 @@
   .parallax-layer.middle .parallax-line { font-size: 7em; color: rgba(255, 0, 0, 0.022); }
   .parallax-layer.front .parallax-line { font-size: 4em; color: rgba(255, 255, 255, 0.018); }
 
-  /* ============ ВОДЯНЫЕ ЗНАКИ (с отступами между словами) ============ */
+  /* ============ ВОДЯНЫЕ ЗНАКИ (отдельные MV.PROJECT, сетка с отступами) ============ */
   .watermark-overlay {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
     pointer-events: none; z-index: 1; overflow: hidden;
   }
   .watermark-overlay .wm {
-    position: absolute; color: rgba(0, 255, 136, 0.04);
+    position: absolute; color: rgba(0, 255, 136, 0.045);
     font-family: 'Consolas', monospace;
     font-weight: bold; font-size: 1.5em;
     letter-spacing: 5px; white-space: nowrap;
@@ -2208,27 +2208,36 @@
       });
     });
 
-    /* ============ ВОДЯНЫЕ ЗНАКИ (с отступами между словами) ============ */
+    /* ============ ВОДЯНЫЕ ЗНАКИ ============
+       Каждое MV.PROJECT — отдельный элемент.
+       Отступы и по горизонтали, и по вертикали.
+       Шахматное смещение нечётных рядов — чтобы не сливались. */
     (function createWatermarks() {
       const overlay = document.getElementById('watermark-overlay');
-      const cols = 6, rows = 10;
-      const gap = '\u00A0\u00A0\u00A0\u00A0'; // 4 неразрывных пробела между словами
-      const label = 'MV.PROJECT' + gap + 'MV.PROJECT' + gap + 'MV.PROJECT';
+      const cols = 5;     // количество по горизонтали
+      const rows = 9;     // количество по вертикали
+      const text = 'MV.PROJECT';
+
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
           const wm = document.createElement('div');
           wm.className = 'wm';
-          wm.textContent = label;
-          const offsetX = (i % 2 === 0) ? 0 : 150;
-          wm.style.left = (j * 18) + '%';
-          wm.style.top = (i * 10) + '%';
-          wm.style.marginLeft = offsetX + 'px';
+          wm.textContent = text;
+
+          // шахматное смещение нечётных рядов вправо на полшага
+          const rowOffset = (i % 2 === 0) ? 0 : 10;
+
+          // 5% отступ от левого края + шаг 20% по X + смещение
+          wm.style.left = (5 + j * 20 + rowOffset) + '%';
+          // 6% отступ от верхнего края + шаг 11% по Y
+          wm.style.top  = (6 + i * 11) + '%';
+
           overlay.appendChild(wm);
         }
       }
     })();
 
-    /* ============ ПАРАЛЛАКС-СЛОИ (LEVEL 5 убран) ============ */
+    /* ============ ПАРАЛЛАКС-СЛОИ (LEVEL 5 убран с фона) ============ */
     (function fillParallaxLayers() {
       const backEl = document.getElementById('layer-back');
       const middleEl = document.getElementById('layer-middle');
@@ -2236,7 +2245,7 @@
 
       const backText = 'MV.PROJECT  MV.PROJECT  MV.PROJECT  MV.PROJECT';
       const middleText = 'SCP FOUNDATION  SCP FOUNDATION  SCP FOUNDATION';
-      const frontText = ''; // передний слой пустой — «LEVEL 5» убран
+      const frontText = ''; // передний слой пустой
 
       const linesCount = 80;
       let backHTML = '', middleHTML = '', frontHTML = '';

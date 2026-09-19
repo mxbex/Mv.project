@@ -18,11 +18,15 @@
   /* ЛЕВОЕ МЕНЮ */
   .sidebar {
     position: fixed; top: 0; left: 0;
-    width: 280px; height: 100vh;
+    width: 290px; height: 100vh;
     background: #080808; border-right: 2px solid #00ff88;
     padding: 25px 0; overflow-y: auto; z-index: 1000;
     box-shadow: 5px 0 30px rgba(0,0,0,0.8);
   }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-track { background: #0a0a0a; }
+  .sidebar::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 3px; }
+
   .sidebar-logo {
     padding: 0 25px 25px;
     border-bottom: 1px solid #1a1a1a;
@@ -41,28 +45,73 @@
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  .sidebar-nav { padding: 0 15px; }
-  .sidebar-nav a {
-    display: block; color: #00ff88; text-decoration: none;
-    padding: 12px 18px; margin: 4px 0; border-radius: 6px;
-    font-size: 0.9em; letter-spacing: 1px; transition: 0.2s;
+  /* НАВИГАЦИЯ С ПОДРАЗДЕЛАМИ */
+  .sidebar-nav { padding: 0 12px; }
+  .nav-section { margin-bottom: 3px; }
+  .nav-section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    color: #00ff88; text-decoration: none;
+    padding: 10px 14px; margin: 2px 0; border-radius: 6px;
+    font-size: 0.88em; letter-spacing: 1px; transition: 0.2s;
     border-left: 3px solid transparent;
+    cursor: pointer;
+    user-select: none;
   }
-  .sidebar-nav a:hover {
+  .nav-section-header:hover {
     background: rgba(0,255,136,0.08);
-    border-left-color: #00ff88; transform: translateX(4px);
+    border-left-color: #00ff88;
   }
-  .sidebar-nav a.active {
-    background: rgba(0,255,136,0.12);
+  .nav-section-header .arrow {
+    font-size: 0.7em;
+    transition: transform 0.2s;
+    color: #00ff88;
+  }
+  .nav-section-header.open .arrow {
+    transform: rotate(90deg);
+  }
+  .nav-section-header .label {
+    flex: 1;
+    margin-left: 8px;
+  }
+
+  .nav-sub {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 10px;
+    border-left: 1px dashed #1f1f1f;
+    margin-left: 15px;
+  }
+  .nav-sub.open {
+    max-height: 1000px;
+  }
+  .nav-sub a {
+    display: block;
+    color: #88bbaa; text-decoration: none;
+    padding: 7px 14px; margin: 2px 0;
+    border-radius: 5px;
+    font-size: 0.78em;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+    border-left: 2px solid transparent;
+  }
+  .nav-sub a:hover {
+    background: rgba(0,255,136,0.06);
+    color: #00ff88;
+    border-left-color: #00cc66;
+    padding-left: 18px;
+  }
+  .nav-sub a.active {
+    background: rgba(0,255,136,0.1);
+    color: #00ff88;
     border-left-color: #00ff88;
   }
 
   /* КОНТЕНТ */
   .main-content {
-    margin-left: 280px;
-    padding: 50px 60px;
+    margin-left: 290px;
+    padding: 50px 80px;
     min-height: 100vh;
-    max-width: calc(100vw - 280px);
   }
 
   .menu-toggle {
@@ -76,7 +125,7 @@
   @media (max-width: 900px) {
     .sidebar { transform: translateX(-100%); transition: 0.3s; }
     .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 70px 20px 30px; max-width: 100%; }
+    .main-content { margin-left: 0; padding: 70px 20px 30px; }
     .menu-toggle { display: block; }
   }
 
@@ -109,6 +158,7 @@
     color: #66ffaa; font-size: clamp(1.05em, 2.2vw, 1.35em);
     margin: 35px 0 18px; padding-left: 18px;
     border-left: 4px solid #00cc66; letter-spacing: 1px;
+    scroll-margin-top: 20px;
   }
   h4 { color: #88ffbb; font-size: 1.1em; margin: 25px 0 12px; letter-spacing: 1px; }
 
@@ -122,28 +172,28 @@
   /* СЕТКА 2 В РЯД */
   .two-col-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
     margin: 25px 0;
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .two-col-grid { grid-template-columns: 1fr; }
   }
 
-  /* Таблицы */
+  /* Таблицы — шире */
   .data-table {
     width: 100%; border-collapse: collapse;
     background: #0a0a0a; border: 1px solid #1a1a1a;
-    font-size: 0.88em;
+    font-size: 0.9em;
   }
   .data-table th {
-    background: #0f1a12; color: #00ff88; padding: 14px;
+    background: #0f1a12; color: #00ff88; padding: 16px 18px;
     text-align: left; font-weight: bold; letter-spacing: 1px;
     border-bottom: 2px solid #00ff88;
     text-transform: uppercase; font-size: 0.85em;
   }
   .data-table td {
-    padding: 12px 14px;
+    padding: 14px 18px;
     border-bottom: 1px solid #1a1a1a;
     color: #c0c0c0; vertical-align: top;
     background: #0a0a0a;
@@ -155,19 +205,24 @@
     background: #0f0f0f; color: #e0e0e0;
   }
   .data-table strong { color: #00ff88; }
-  .table-wrap { background: #0a0a0a; }
+  .table-wrap {
+    background: #0a0a0a;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
 
   /* Цветные коды */
   .code-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px; margin: 35px 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px; margin: 35px 0;
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .code-grid { grid-template-columns: 1fr; }
   }
   .code-card {
-    padding: 25px; border-radius: 10px; background: #0f0f0f;
+    padding: 28px; border-radius: 10px; background: #0f0f0f;
     border: 2px solid; transition: 0.3s;
     position: relative; overflow: hidden;
   }
@@ -175,7 +230,7 @@
   .code-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
   .code-card h4 { font-size: 1.4em; margin-bottom: 15px; letter-spacing: 3px; }
   .code-card p { font-size: 0.92em; color: #999; margin-bottom: 12px; }
-  .code-card ul { margin-top: 10px; font-size: 0.85em; }
+  .code-card ul { margin-top: 10px; font-size: 0.88em; }
   .code-card li { border-bottom: 1px dotted rgba(255,255,255,0.05); }
   .code-red { border-color: #ff0000; background: linear-gradient(135deg, #0f0f0f, rgba(255,0,0,0.08)); }
   .code-red::before { background: #ff0000; }
@@ -218,13 +273,18 @@
   .code-silver h4 { color: #c0c0c0; text-shadow: 0 0 15px rgba(192,192,192,0.5); }
 
   .alert {
-    padding: 20px 25px; border-radius: 8px; margin: 25px 0;
+    padding: 22px 28px; border-radius: 8px; margin: 25px 0;
     border-left: 6px solid; font-size: 0.95em;
   }
   .alert-danger { background: rgba(255, 0, 0, 0.08); border-color: #ff0000; color: #ff8888; }
   .alert-warning { background: rgba(255, 170, 0, 0.08); border-color: #ffaa00; color: #ffcc66; }
   .alert-info { background: rgba(0, 255, 136, 0.05); border-color: #00ff88; color: #88ffbb; }
-  .section { margin: 40px 0; padding: 30px; background: #0d0d0d; border-radius: 10px; border: 1px solid #1a1a1a; }
+
+  .section {
+    margin: 40px 0; padding: 32px;
+    background: #0d0d0d; border-radius: 10px;
+    border: 1px solid #1a1a1a;
+  }
 
   .footer {
     text-align: center; margin-top: 70px; padding: 40px 20px;
@@ -262,14 +322,14 @@
 
   .clearance-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px; margin: 30px 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px; margin: 30px 0;
   }
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     .clearance-grid { grid-template-columns: 1fr; }
   }
   .clearance-card {
-    padding: 25px; border-radius: 10px; border: 2px solid;
+    padding: 28px; border-radius: 10px; border: 2px solid;
     background: #0f0f0f; transition: 0.3s;
   }
   .clearance-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
@@ -297,9 +357,8 @@
   .level-e { border-color: #9013fe; }
   .level-e h4 { color: #9013fe; }
 
-  /* Привилегии */
   .priv-card {
-    padding: 25px; border-radius: 10px;
+    padding: 28px; border-radius: 10px;
     background: #0f0f0f;
     border: 2px solid #00ff88;
     transition: 0.3s;
@@ -320,21 +379,192 @@
       <span class="classif">⚠ LEVEL 5 ⚠</span>
     </div>
     <nav class="sidebar-nav">
-      <a href="#codes">🚨 КОДЫ</a>
-      <a href="#clearance">🔐 ДОПУСК</a>
-      <a href="#classes-personnel">👤 КЛАССЫ ПЕРСОНАЛА</a>
-      <a href="#mtf">🛡️ МОГ</a>
-      <a href="#protocols">📋 ПРОТОКОЛЫ</a>
-      <a href="#privileges">⭐ ПРИВИЛЕГИИ</a>
-      <a href="#uniform">👔 ФОРМА</a>
-      <a href="#general">📜 ОБЩИЕ</a>
-      <a href="#rp">🎭 RP</a>
-      <a href="#classes">👥 КЛАССЫ</a>
-      <a href="#scp">🧬 SCP</a>
-      <a href="#scp914">⚙️ SCP-914</a>
-      <a href="#intercom">📢 ИНТЕРКОМ</a>
-      <a href="#bans">⏱️ БАНЫ</a>
-      <a href="#appeal">📩 АПЕЛЛЯЦИЯ</a>
+
+      <!-- КОДЫ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🚨</span>
+          <span class="label">КОДЫ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#codes">Все коды угроз</a>
+        </div>
+      </div>
+
+      <!-- ДОПУСК -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🔐</span>
+          <span class="label">ДОПУСК</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#clearance">Уровни 1-5</a>
+          <a href="#classes-personnel">Классы A-E</a>
+        </div>
+      </div>
+
+      <!-- МОГ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🛡️</span>
+          <span class="label">МОГ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#mtf">Основные МОГ</a>
+          <a href="#mtf-dop">Дополнительные МОГ</a>
+          <a href="#mtf-tg">Тактические группы</a>
+        </div>
+      </div>
+
+      <!-- ПРОТОКОЛЫ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📋</span>
+          <span class="label">ПРОТОКОЛЫ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#prot-p-l">Протоколы P-L</a>
+          <a href="#prot-p-s">Протоколы P-S</a>
+          <a href="#prot-p-b">Протоколы P-B</a>
+          <a href="#prot-p-i">Протоколы P-I</a>
+          <a href="#prot-p-e">Протоколы P-E</a>
+          <a href="#prot-kir">Изоляционные коды</a>
+        </div>
+      </div>
+
+      <!-- ПРИВИЛЕГИИ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>⭐</span>
+          <span class="label">ПРИВИЛЕГИИ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#priv-obligations">Обязанности админа</a>
+          <a href="#priv-forbidden">Запреты</a>
+          <a href="#priv-lies">Наказания за враньё</a>
+          <a href="#priv-confidential">Конфиденциальность</a>
+          <a href="#priv-others">Админство на других</a>
+          <a href="#priv-hierarchy">Иерархия</a>
+          <a href="#priv-punish">Виды взысканий</a>
+          <a href="#priv-rights">Права админов</a>
+        </div>
+      </div>
+
+      <!-- ФОРМА -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>👔</span>
+          <span class="label">ФОРМА</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#uniform">Что можно носить</a>
+        </div>
+      </div>
+
+      <!-- ОБЩИЕ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📜</span>
+          <span class="label">ОБЩИЕ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#general">Принципы и возраст</a>
+        </div>
+      </div>
+
+      <!-- RP -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🎭</span>
+          <span class="label">RP</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#rp">Все RP-правила</a>
+        </div>
+      </div>
+
+      <!-- КЛАССЫ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>👥</span>
+          <span class="label">КЛАССЫ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#classes">Игровые классы</a>
+        </div>
+      </div>
+
+      <!-- SCP -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>🧬</span>
+          <span class="label">SCP</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#scp">Основные SCP</a>
+          <a href="#scp953">SCP-953</a>
+        </div>
+      </div>
+
+      <!-- SCP-914 -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>⚙️</span>
+          <span class="label">SCP-914</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#scp914">Правила 914</a>
+        </div>
+      </div>
+
+      <!-- ИНТЕРКОМ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📢</span>
+          <span class="label">ИНТЕРКОМ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#intercom">Правила интеркома</a>
+          <a href="#chat">Правила чата</a>
+        </div>
+      </div>
+
+      <!-- БАНЫ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>⏱️</span>
+          <span class="label">БАНЫ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#bans">Сроки наказаний</a>
+        </div>
+      </div>
+
+      <!-- АПЕЛЛЯЦИЯ -->
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📩</span>
+          <span class="label">АПЕЛЛЯЦИЯ</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div class="nav-sub">
+          <a href="#appeal">Процедура апелляции</a>
+        </div>
+      </div>
+
     </nav>
   </aside>
 
@@ -576,7 +806,7 @@
     <h2 id="mtf">🛡️ Раздел IV. Мобильные Оперативные Группы (МОГ)</h2>
     <p>МОГ — элитные подразделения Фонда, специализирующиеся на решении конкретных угроз.</p>
 
-    <h3>Основные МОГ</h3>
+    <h3 id="mtf-dop">Основные МОГ</h3>
     <div class="table-wrap">
       <table class="data-table">
         <tr><th>Отряд</th><th>Позывной</th><th>Специализация</th></tr>
@@ -610,7 +840,7 @@
       </table>
     </div>
 
-    <h3>Тактические группы (ТГ)</h3>
+    <h3 id="mtf-tg">Тактические группы (ТГ)</h3>
     <div class="table-wrap">
       <table class="data-table">
         <tr><th>Группа</th><th>Позывной</th><th>Специализация</th></tr>
@@ -627,87 +857,85 @@
     <!-- ПРОТОКОЛЫ -->
     <h2 id="protocols">📋 Раздел V. Протоколы и изоляционные коды</h2>
 
-    <div class="two-col-grid">
-      <div>
-        <h3>Протоколы P-L (блокировка)</h3>
-        <table class="data-table">
-          <tr><th>Протокол</th><th>Описание</th></tr>
-          <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td></tr>
-          <tr><td><strong>P-L-2</strong></td><td>Блокировка всех КПП.</td></tr>
-          <tr><td><strong>P-L-3</strong></td><td>Блокировка всех дверей.</td></tr>
-        </table>
-      </div>
+    <h3 id="prot-p-l">Протоколы P-L (блокировка)</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Протокол</th><th>Описание</th></tr>
+        <tr><td><strong>P-L-1</strong></td><td>Блокировка гермо-ворот A и B.</td></tr>
+        <tr><td><strong>P-L-2</strong></td><td>Блокировка всех КПП.</td></tr>
+        <tr><td><strong>P-L-3</strong></td><td>Блокировка всех дверей.</td></tr>
+      </table>
+    </div>
 
-      <div>
-        <h3>Протоколы P-S (SCP)</h3>
-        <table class="data-table">
-          <tr><th>Протокол</th><th>Описание</th></tr>
-          <tr><td><strong>P-S-1</strong></td><td>Отслеживание SCP-объектов.</td></tr>
-          <tr><td><strong>P-S-2</strong></td><td>Отслеживание статуса SCP-объектов.</td></tr>
-          <tr><td><strong>P-S-3</strong></td><td>Активация тесла-ворот.</td></tr>
-          <tr><td><strong>P-S-4</strong></td><td>Сканирование комплекса.</td></tr>
-          <tr><td><strong>P-S-5</strong></td><td>Полный блэкаут комплекса.</td></tr>
-        </table>
-      </div>
+    <h3 id="prot-p-s">Протоколы P-S (SCP)</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Протокол</th><th>Описание</th></tr>
+        <tr><td><strong>P-S-1</strong></td><td>Отслеживание SCP-объектов.</td></tr>
+        <tr><td><strong>P-S-2</strong></td><td>Отслеживание статуса SCP-объектов.</td></tr>
+        <tr><td><strong>P-S-3</strong></td><td>Активация тесла-ворот.</td></tr>
+        <tr><td><strong>P-S-4</strong></td><td>Сканирование комплекса.</td></tr>
+        <tr><td><strong>P-S-5</strong></td><td>Полный блэкаут комплекса.</td></tr>
+      </table>
+    </div>
 
-      <div>
-        <h3>Протоколы P-B (био-безопасность)</h3>
-        <table class="data-table">
-          <tr><th>Протокол</th><th>Описание</th></tr>
-          <tr><td><strong>P-B-1</strong></td><td>Запечатывание заражённых комнат.</td></tr>
-          <tr><td><strong>P-B-2</strong></td><td>Запечатывание камер содержания SCP.</td></tr>
-          <tr><td><strong>P-B-3</strong></td><td>Деконтаминация ЛЗС.</td></tr>
-          <tr><td><strong>P-B-4</strong></td><td>Деконтаминация ТЗС.</td></tr>
-          <tr><td><strong>P-B-5</strong></td><td>Подрыв комплекса.</td></tr>
-          <tr><td><strong>P-B-6</strong></td><td>Подрыв комплекса и внешнего периметра.</td></tr>
-        </table>
-      </div>
+    <h3 id="prot-p-b">Протоколы P-B (био-безопасность)</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Протокол</th><th>Описание</th></tr>
+        <tr><td><strong>P-B-1</strong></td><td>Запечатывание заражённых комнат.</td></tr>
+        <tr><td><strong>P-B-2</strong></td><td>Запечатывание камер содержания SCP.</td></tr>
+        <tr><td><strong>P-B-3</strong></td><td>Деконтаминация Лёгкой зоны содержания.</td></tr>
+        <tr><td><strong>P-B-4</strong></td><td>Деконтаминация Тяжёлой зоны содержания.</td></tr>
+        <tr><td><strong>P-B-5</strong></td><td>Подрыв комплекса.</td></tr>
+        <tr><td><strong>P-B-6</strong></td><td>Подрыв комплекса и внешнего периметра.</td></tr>
+      </table>
+    </div>
 
-      <div>
-        <h3>Протоколы P-I (вторжение)</h3>
-        <table class="data-table">
-          <tr><th>Протокол</th><th>Описание</th></tr>
-          <tr><td><strong>P-I-1</strong></td><td>Уничтожение техники у комплекса.</td></tr>
-          <tr><td><strong>P-I-2</strong></td><td>Блокировка мест взлома и оповещение.</td></tr>
-          <tr><td><strong>P-I-3</strong></td><td>Уничтожение всего персонала в зоне.</td></tr>
-        </table>
-      </div>
+    <h3 id="prot-p-i">Протоколы P-I (вторжение)</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Протокол</th><th>Описание</th></tr>
+        <tr><td><strong>P-I-1</strong></td><td>Уничтожение техники у комплекса.</td></tr>
+        <tr><td><strong>P-I-2</strong></td><td>Блокировка мест взлома и оповещение.</td></tr>
+        <tr><td><strong>P-I-3</strong></td><td>Уничтожение всего персонала в зоне.</td></tr>
+      </table>
+    </div>
 
-      <div>
-        <h3>Протоколы P-E (пожаротушение)</h3>
-        <table class="data-table">
-          <tr><th>Протокол</th><th>Описание</th></tr>
-          <tr><td><strong>P-E-1</strong></td><td>Тушение в одной комнате; нет угрозы жизни.</td></tr>
-          <tr><td><strong>P-E-2</strong></td><td>Тушение в одной комнате; есть угроза жизни.</td></tr>
-          <tr><td><strong>P-E-3</strong></td><td>Тушение в одной комнате; угроза взрыва.</td></tr>
-          <tr><td><strong>P-E-4</strong></td><td>Тушение в нескольких комнатах; нет угрозы.</td></tr>
-          <tr><td><strong>P-E-5</strong></td><td>Тушение в нескольких комнатах; есть угроза.</td></tr>
-          <tr><td><strong>P-E-6</strong></td><td>Тушение в целой зоне; большая угроза жизни.</td></tr>
-          <tr><td><strong>P-E-7</strong></td><td>Тушение в КС SCP класса «Безопасный».</td></tr>
-          <tr><td><strong>P-E-8</strong></td><td>Тушение в КС SCP класса «Евклид».</td></tr>
-          <tr><td><strong>P-E-9</strong></td><td>Тушение в КС SCP класса «Кетер».</td></tr>
-        </table>
-      </div>
+    <h3 id="prot-p-e">Протоколы P-E (пожаротушение)</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Протокол</th><th>Описание</th></tr>
+        <tr><td><strong>P-E-1</strong></td><td>Тушение в одной комнате; нет угрозы жизни.</td></tr>
+        <tr><td><strong>P-E-2</strong></td><td>Тушение в одной комнате; есть угроза жизни.</td></tr>
+        <tr><td><strong>P-E-3</strong></td><td>Тушение в одной комнате; угроза взрыва.</td></tr>
+        <tr><td><strong>P-E-4</strong></td><td>Тушение в нескольких комнатах; нет угрозы.</td></tr>
+        <tr><td><strong>P-E-5</strong></td><td>Тушение в нескольких комнатах; есть угроза.</td></tr>
+        <tr><td><strong>P-E-6</strong></td><td>Тушение в целой зоне; большая угроза жизни.</td></tr>
+        <tr><td><strong>P-E-7</strong></td><td>Тушение в КС SCP класса «Безопасный».</td></tr>
+        <tr><td><strong>P-E-8</strong></td><td>Тушение в КС SCP класса «Евклид».</td></tr>
+        <tr><td><strong>P-E-9</strong></td><td>Тушение в КС SCP класса «Кетер».</td></tr>
+      </table>
+    </div>
 
-      <div>
-        <h3>Изоляционные коды (КИР)</h3>
-        <table class="data-table">
-          <tr><th>Код</th><th>Значение</th></tr>
-          <tr><td><strong>Чёрный</strong></td><td>Полная изоляция комплекса.</td></tr>
-          <tr><td><strong>Серый</strong></td><td>Внутренняя угроза.</td></tr>
-          <tr><td><strong>Белый</strong></td><td>Внешнее вторжение.</td></tr>
-          <tr><td><strong>Суперсиний</strong></td><td>Побег разумного SCP (высокий интеллект).</td></tr>
-          <tr><td><strong>Синий</strong></td><td>Побег разумного SCP.</td></tr>
-          <tr><td><strong>Красный</strong></td><td>Агрессивная сущность.</td></tr>
-          <tr><td><strong>Зелёный</strong></td><td>Био-угроза.</td></tr>
-          <tr><td><strong>Пурпурный</strong></td><td>Экстрамерная угроза.</td></tr>
-          <tr><td><strong>Жёлтый</strong></td><td>Меметическая угроза.</td></tr>
-          <tr><td><strong>Чистый</strong></td><td>Неизвестная угроза.</td></tr>
-          <tr><td><strong>Суперчистый</strong></td><td>Неописуемая угроза.</td></tr>
-          <tr><td><strong>Хладное серебро</strong></td><td>Фатальный сбой Фонда.</td></tr>
-          <tr><td><strong>Розовый</strong></td><td>Дополнительный код.</td></tr>
-        </table>
-      </div>
+    <h3 id="prot-kir">Изоляционные коды (КИР)</h3>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Код</th><th>Значение</th></tr>
+        <tr><td><strong>Чёрный</strong></td><td>Полная изоляция комплекса.</td></tr>
+        <tr><td><strong>Серый</strong></td><td>Внутренняя угроза.</td></tr>
+        <tr><td><strong>Белый</strong></td><td>Внешнее вторжение.</td></tr>
+        <tr><td><strong>Суперсиний</strong></td><td>Побег разумного SCP (высокий интеллект).</td></tr>
+        <tr><td><strong>Синий</strong></td><td>Побег разумного SCP.</td></tr>
+        <tr><td><strong>Красный</strong></td><td>Агрессивная сущность.</td></tr>
+        <tr><td><strong>Зелёный</strong></td><td>Био-угроза.</td></tr>
+        <tr><td><strong>Пурпурный</strong></td><td>Экстрамерная угроза.</td></tr>
+        <tr><td><strong>Жёлтый</strong></td><td>Меметическая угроза.</td></tr>
+        <tr><td><strong>Чистый</strong></td><td>Неизвестная угроза.</td></tr>
+        <tr><td><strong>Суперчистый</strong></td><td>Неописуемая угроза.</td></tr>
+        <tr><td><strong>Хладное серебро</strong></td><td>Фатальный сбой Фонда.</td></tr>
+        <tr><td><strong>Розовый</strong></td><td>Дополнительный код.</td></tr>
+      </table>
     </div>
 
     <hr class="divider">
@@ -720,9 +948,8 @@
       <strong>⛔ ВАЖНО:</strong> Нарушение правил привилегий = понижение, ЧСА или полное снятие с должности.
     </div>
 
-    <h3>Основные правила для администрации</h3>
     <div class="two-col-grid">
-      <div class="priv-card">
+      <div class="priv-card" id="priv-obligations">
         <h4>✅ Что ОБЯЗАН делать админ</h4>
         <ul>
           <li>Быть активным (заходить минимум 3–4 раза в неделю).</li>
@@ -736,7 +963,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" style="border-color:#ff0000;">
+      <div class="priv-card" id="priv-forbidden" style="border-color:#ff0000;">
         <h4 style="color:#ff6666;">❌ Что ЗАПРЕЩЕНО админу</h4>
         <ul>
           <li>Оскорблять игроков или коллег.</li>
@@ -751,7 +978,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" style="border-color:#ffaa00;">
+      <div class="priv-card" id="priv-lies" style="border-color:#ffaa00;">
         <h4 style="color:#ffaa00;">⚠️ Наказания за враньё</h4>
         <ul>
           <li><strong>1-е враньё:</strong> строгий выговор.</li>
@@ -761,7 +988,7 @@
         <p style="margin-top:10px; color:#999;">Враньё подрывает доверие внутри команды.</p>
       </div>
 
-      <div class="priv-card" style="border-color:#ff0000;">
+      <div class="priv-card" id="priv-confidential" style="border-color:#ff0000;">
         <h4 style="color:#ff6666;">🚫 Конфиденциальность переписок</h4>
         <ul>
           <li>Запрещено публиковать скриншоты админ-чата.</li>
@@ -772,7 +999,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" style="border-color:#9013fe;">
+      <div class="priv-card" id="priv-others" style="border-color:#9013fe;">
         <h4 style="color:#c07aff;">🛡️ Администрирование на других серверах</h4>
         <ul>
           <li>Запрещено быть админом на других серверах SCP:SL.</li>
@@ -782,7 +1009,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" style="border-color:#00ff88;">
+      <div class="priv-card" id="priv-hierarchy" style="border-color:#00ff88;">
         <h4>👑 Иерархия должностей</h4>
         <ul>
           <li><strong>Высший состав:</strong> Владелец, Со-владелец, Гл. Админ, Зам., HR, Dev.</li>
@@ -795,7 +1022,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" style="border-color:#f5a623;">
+      <div class="priv-card" id="priv-punish" style="border-color:#f5a623;">
         <h4 style="color:#f5a623;">⚖️ Виды взысканий</h4>
         <ul>
           <li><strong>Выговор устный</strong> — мелкие нарушения.</li>
@@ -806,7 +1033,7 @@
         </ul>
       </div>
 
-      <div class="priv-card" style="border-color:#00ccff;">
+      <div class="priv-card" id="priv-rights" style="border-color:#00ccff;">
         <h4 style="color:#00ccff;">📋 Права администрации</h4>
         <ul>
           <li>Право на ошибку, если админ готов её признать.</li>
@@ -1042,7 +1269,7 @@
         </table>
       </div>
 
-      <div>
+      <div id="scp953">
         <h3>SCP-953 — Полиморфная рептилия</h3>
         <p><strong>SCP-953</strong> — опасный SCP, способный принимать облик человека. Класс: <span class="highlight">Кетер</span>.</p>
         <table class="data-table">
@@ -1130,7 +1357,7 @@
       </div>
     </div>
 
-    <h3>Правила чата</h3>
+    <h3 id="chat">Правила чата</h3>
     <div class="two-col-grid">
       <div class="section" style="margin:0;">
         <h4>Текстовый чат</h4>
@@ -1250,14 +1477,22 @@
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.1 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.2 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
     </div>
 
   </main>
 
   <script>
-    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+    // Раскрытие подразделов в меню
+    function toggleSection(el) {
+      el.classList.toggle('open');
+      const sub = el.nextElementSibling;
+      if (sub) sub.classList.toggle('open');
+    }
+
+    // Автоматическое закрытие меню на телефоне при клике на ссылку
+    document.querySelectorAll('.nav-sub a').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 900) {
           document.querySelector('.sidebar').classList.remove('open');
@@ -1265,12 +1500,13 @@
       });
     });
 
+    // Подсветка активного подраздела при прокрутке
     window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('h2[id]');
-      const links = document.querySelectorAll('.sidebar-nav a');
+      const sections = document.querySelectorAll('h2[id], h3[id]');
+      const links = document.querySelectorAll('.nav-sub a');
       let current = '';
       sections.forEach(sec => {
-        const top = sec.offsetTop - 100;
+        const top = sec.offsetTop - 150;
         if (window.scrollY >= top) current = sec.getAttribute('id');
       });
       links.forEach(link => {

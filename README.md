@@ -31,7 +31,6 @@
 
   ::selection { background: rgba(0,255,136,.3); color: #fff; }
 
-  /* Кастомный скроллбар страницы */
   ::-webkit-scrollbar { width: 10px; }
   ::-webkit-scrollbar-track { background: #060606; }
   ::-webkit-scrollbar-thumb {
@@ -75,6 +74,7 @@
   .parallax-layer.middle .parallax-line { font-size: 7em; color: rgba(255, 0, 0, 0.022); }
   .parallax-layer.front .parallax-line { font-size: 4em; color: rgba(255, 255, 255, 0.018); }
 
+  /* ============ ВОДЯНЫЕ ЗНАКИ (с отступами между словами) ============ */
   .watermark-overlay {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
@@ -116,10 +116,39 @@
   .sidebar-logo .classif {
     display: inline-block; background: var(--red); color: #fff;
     padding: 3px 10px; font-size: 0.65em; letter-spacing: 2px;
-    font-weight: bold; animation: blink 2s infinite;
+    font-weight: bold;
     border-radius: 3px;
+    animation: blink 2s infinite, levelGlitch 5s infinite;
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+  /* ============ ГЛИТЧ LEVEL 5 ============ */
+  @keyframes levelGlitch {
+    0%, 86%, 100% {
+      text-shadow: 0 0 30px rgba(255,0,0,.45);
+      transform: translate(0, 0);
+    }
+    87% {
+      text-shadow: -2px 0 #00ff88, 2px 0 #00ccff, 0 0 30px rgba(255,0,0,.9);
+      transform: translate(-1px, 0);
+    }
+    89% {
+      text-shadow: 2px 0 #ff0000, -2px 0 #00ff88, 0 0 30px rgba(255,0,0,.9);
+      transform: translate(1px, 1px);
+    }
+    91% {
+      text-shadow: -2px 0 #00ccff, 2px 0 #ff0000, 0 0 30px rgba(255,0,0,.9);
+      transform: translate(-1px, -1px);
+    }
+    93% {
+      text-shadow: 2px 0 #00ff88, -2px 0 #00ccff, 0 0 30px rgba(255,0,0,.9);
+      transform: translate(1px, 0);
+    }
+    95%, 97% {
+      text-shadow: 0 0 30px rgba(255,0,0,.45);
+      transform: translate(0, 0);
+    }
+  }
 
   .sidebar-nav { padding: 0 12px; }
   .nav-section { margin-bottom: 3px; }
@@ -189,6 +218,120 @@
     .menu-toggle { display: block; }
   }
 
+  /* ============ ПОИСК ============ */
+  .search-box {
+    position: fixed; top: 20px; right: 24px;
+    width: 340px; z-index: 1300;
+  }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: .95em; pointer-events: none;
+    opacity: .55; z-index: 2; transition: .3s var(--ease);
+  }
+  .search-box:focus-within .search-icon { opacity: 1; transform: translateY(-50%) scale(1.1); }
+
+  .search-box input {
+    width: 100%; padding: 12px 42px 12px 44px;
+    background: rgba(8,8,8,.92);
+    border: 2px solid #1a1a1a;
+    border-radius: 10px;
+    color: var(--green);
+    font-family: inherit; font-size: .85em;
+    letter-spacing: 1px; outline: none;
+    transition: .3s var(--ease);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .search-box input::placeholder { color: #446; letter-spacing: 1px; }
+  .search-box input:focus {
+    border-color: var(--green);
+    background: rgba(10,15,12,.95);
+    box-shadow: 0 0 0 3px rgba(0,255,136,.12), 0 10px 30px rgba(0,0,0,.6);
+    transform: translateY(-1px);
+  }
+
+  .search-clear {
+    position: absolute; right: 10px; top: 50%;
+    transform: translateY(-50%);
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(0,255,136,.15); color: var(--green);
+    border: none; cursor: pointer;
+    font-size: .8em; line-height: 1;
+    display: none; align-items: center; justify-content: center;
+    transition: .2s;
+  }
+  .search-clear:hover { background: rgba(0,255,136,.3); transform: translateY(-50%) scale(1.1); }
+  .search-box.has-value .search-clear { display: flex; }
+
+  .search-results {
+    position: absolute; top: calc(100% + 10px); left: 0; right: 0;
+    background: rgba(8,8,8,.98);
+    border: 1px solid #1f1f1f;
+    border-radius: 10px;
+    max-height: 420px; overflow-y: auto;
+    display: none; opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity .22s var(--ease), transform .22s var(--ease);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.85), 0 0 40px rgba(0,255,136,.05);
+    overflow-x: hidden;
+  }
+  .search-results.show { display: block; opacity: 1; transform: none; }
+  .search-results::-webkit-scrollbar { width: 5px; }
+  .search-results::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+  .search-results::-webkit-scrollbar-track { background: #0a0a0a; }
+
+  .search-item {
+    display: block; padding: 11px 16px 11px 26px;
+    color: #b0b0b0; text-decoration: none;
+    border-bottom: 1px solid #131313;
+    font-size: .82em; line-height: 1.5;
+    transition: .2s var(--ease);
+    cursor: pointer; position: relative;
+  }
+  .search-item:last-child { border-bottom: none; }
+  .search-item::before {
+    content: '▸'; position: absolute;
+    left: 10px; top: 50%; transform: translateY(-50%);
+    color: var(--green); font-size: .9em;
+    opacity: 0; transition: .2s;
+  }
+  .search-item:hover, .search-item.active {
+    background: rgba(0,255,136,.09);
+    color: #e8e8e8; padding-left: 32px;
+  }
+  .search-item:hover::before, .search-item.active::before { opacity: 1; }
+
+  .search-tag {
+    display: inline-block;
+    color: var(--green-dim); font-size: .72em;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-right: 8px; padding: 1px 6px;
+    background: rgba(0,255,136,.08);
+    border-radius: 3px; font-weight: bold;
+  }
+  .search-item mark {
+    background: rgba(0,255,136,.28);
+    color: var(--green); padding: 1px 3px;
+    border-radius: 3px; font-weight: bold;
+  }
+  .search-empty {
+    padding: 22px 16px; text-align: center;
+    color: #555; font-size: .82em; letter-spacing: 1px;
+  }
+  .search-empty strong { color: var(--green); }
+
+  @media (max-width: 900px) {
+    .search-box {
+      top: 15px; right: 15px;
+      width: calc(100% - 90px);
+      max-width: 340px;
+    }
+    .search-box input { padding: 10px 38px 10px 38px; font-size: .78em; }
+  }
+
   /* ============ ЗАГОЛОВОК ============ */
   .header {
     text-align: center; padding-bottom: 40px;
@@ -209,9 +352,10 @@
   .classification {
     display: inline-block; background: var(--red); color: #fff;
     padding: 8px 25px; font-weight: bold; letter-spacing: 4px;
-    font-size: .9em; margin-bottom: 25px; animation: blink 2s infinite;
+    font-size: .9em; margin-bottom: 25px;
     border-radius: 4px;
     box-shadow: 0 0 30px rgba(255,0,0,.45);
+    animation: blink 2s infinite, levelGlitch 5s infinite;
   }
   h1 {
     font-size: clamp(2em, 6vw, 4em);
@@ -426,7 +570,7 @@
   .youtube:hover { background: #cc0000; transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(255,0,0,.55); }
   .center { text-align: center; }
 
-  /* ============ АККОРДЕОН (замена details) ============ */
+  /* ============ АККОРДЕОН ============ */
   .acc {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -467,9 +611,8 @@
   .acc-inner > *:first-child { padding-top: 18px; }
   .acc-inner > *:last-child { padding-bottom: 18px; }
   .acc-inner ul { padding-left: 46px; }
-  .acc-inner p { padding-left: 22px; }
 
-  /* ============ БЕЙДЖИ / МЕЛОЧИ ============ */
+  /* ============ УТИЛИТЫ ============ */
   .highlight { background: rgba(0,255,136,.1); padding: 2px 8px; border-radius: 4px; color: var(--green); }
   .critical { background: rgba(255,0,0,.15); padding: 2px 8px; border-radius: 4px; color: #ff6666; font-weight: bold; }
   .evacuated { background: rgba(255,170,0,.15); padding: 2px 8px; border-radius: 4px; color: #ffcc66; font-weight: bold; }
@@ -508,7 +651,7 @@
   .level-d { border-color: #666; } .level-d h4 { color: #999; }
   .level-e { border-color: #9013fe; } .level-e h4 { color: #9013fe; }
 
-  /* ============ ПРИВИЛЕГИИ / ПРЕДМЕТЫ / SCP ============ */
+  /* ============ КАРТОЧКИ ============ */
   .priv-card, .item-card, .scp-card {
     padding: 28px; border-radius: 12px;
     background: var(--panel-2); border: 2px solid var(--green);
@@ -554,10 +697,9 @@
     animation: blink 2.4s infinite;
   }
 
-  /* ============ REVEAL-АНИМАЦИИ ============ */
+  /* ============ REVEAL ============ */
   .reveal {
-    opacity: 0;
-    transform: translateY(34px);
+    opacity: 0; transform: translateY(34px);
     transition: opacity .8s var(--ease), transform .8s var(--ease);
     will-change: opacity, transform;
   }
@@ -612,6 +754,14 @@
   </div>
 
   <div class="watermark-overlay" id="watermark-overlay"></div>
+
+  <!-- ПОИСК -->
+  <div class="search-box" id="searchBox">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Поиск по уставу..." autocomplete="off" spellcheck="false">
+    <button class="search-clear" id="searchClear" type="button" aria-label="Очистить">✕</button>
+    <div class="search-results" id="searchResults"></div>
+  </div>
 
   <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
 
@@ -2028,7 +2178,6 @@
         return;
       }
 
-      // Сгруппируем по сеткам для stagger-задержки
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
@@ -2051,7 +2200,7 @@
       items.forEach(i => observer.observe(i));
     })();
 
-    /* ============ АНИМИРОВАННЫЙ АККОРДЕОН ============ */
+    /* ============ АККОРДЕОН ============ */
     document.querySelectorAll('.acc-head').forEach(head => {
       head.addEventListener('click', () => {
         const acc = head.parentElement;
@@ -2059,15 +2208,17 @@
       });
     });
 
-    /* ============ ВОДЯНЫЕ ЗНАКИ ============ */
+    /* ============ ВОДЯНЫЕ ЗНАКИ (с отступами между словами) ============ */
     (function createWatermarks() {
       const overlay = document.getElementById('watermark-overlay');
       const cols = 6, rows = 10;
+      const gap = '\u00A0\u00A0\u00A0\u00A0'; // 4 неразрывных пробела между словами
+      const label = 'MV.PROJECT' + gap + 'MV.PROJECT' + gap + 'MV.PROJECT';
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
           const wm = document.createElement('div');
           wm.className = 'wm';
-          wm.textContent = 'MV.PROJECT';
+          wm.textContent = label;
           const offsetX = (i % 2 === 0) ? 0 : 150;
           wm.style.left = (j * 18) + '%';
           wm.style.top = (i * 10) + '%';
@@ -2077,7 +2228,7 @@
       }
     })();
 
-    /* ============ ПАРАЛЛАКС-СЛОИ ============ */
+    /* ============ ПАРАЛЛАКС-СЛОИ (LEVEL 5 убран) ============ */
     (function fillParallaxLayers() {
       const backEl = document.getElementById('layer-back');
       const middleEl = document.getElementById('layer-middle');
@@ -2085,7 +2236,7 @@
 
       const backText = 'MV.PROJECT  MV.PROJECT  MV.PROJECT  MV.PROJECT';
       const middleText = 'SCP FOUNDATION  SCP FOUNDATION  SCP FOUNDATION';
-      const frontText = 'LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5';
+      const frontText = ''; // передний слой пустой — «LEVEL 5» убран
 
       const linesCount = 80;
       let backHTML = '', middleHTML = '', frontHTML = '';
@@ -2119,6 +2270,128 @@
         requestAnimationFrame(animate);
       }
       animate();
+    })();
+
+    /* ============ ПОИСК ============ */
+    (function initSearch() {
+      const searchBox = document.getElementById('searchBox');
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+      const searchClear = document.getElementById('searchClear');
+      if (!searchBox || !searchInput) return;
+
+      const index = [];
+      document.querySelectorAll('h2[id], h3[id], h4').forEach(el => {
+        const raw = el.textContent.trim().replace(/\s+/g, ' ');
+        if (raw.length < 2) return;
+        index.push({ el, raw, lower: raw.toLowerCase(), isSub: el.tagName !== 'H2' });
+      });
+
+      let activeIdx = -1;
+
+      const escapeHTML = s => s.replace(/[&<>"']/g,
+        c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+      function highlight(raw, q) {
+        const idx = raw.toLowerCase().indexOf(q);
+        if (idx === -1) return escapeHTML(raw);
+        return escapeHTML(raw.slice(0, idx)) +
+               '<mark>' + escapeHTML(raw.slice(idx, idx + q.length)) + '</mark>' +
+               escapeHTML(raw.slice(idx + q.length));
+      }
+
+      function render(query) {
+        const q = query.toLowerCase().trim();
+        searchResults.innerHTML = '';
+        activeIdx = -1;
+
+        if (q.length < 2) { searchResults.classList.remove('show'); return; }
+
+        const matches = index.filter(it => it.lower.includes(q)).slice(0, 30);
+
+        if (matches.length === 0) {
+          const empty = document.createElement('div');
+          empty.className = 'search-empty';
+          empty.innerHTML = 'Ничего не найдено по запросу <strong>' + escapeHTML(query) + '</strong>';
+          searchResults.appendChild(empty);
+          searchResults.classList.add('show');
+          return;
+        }
+
+        matches.forEach((item, i) => {
+          const a = document.createElement('div');
+          a.className = 'search-item';
+          a.dataset.idx = i;
+          const tag = item.isSub ? 'Подраздел' : 'Раздел';
+          a.innerHTML = '<span class="search-tag">' + tag + '</span>' + highlight(item.raw, q);
+          a.addEventListener('click', () => { goTo(item.el); closeSearch(); });
+          searchResults.appendChild(a);
+        });
+        searchResults.classList.add('show');
+      }
+
+      function goTo(el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.style.transition = 'background-color .4s, box-shadow .4s';
+        el.style.backgroundColor = 'rgba(0,255,136,.15)';
+        el.style.boxShadow = '0 0 30px rgba(0,255,136,.4)';
+        setTimeout(() => {
+          el.style.backgroundColor = '';
+          el.style.boxShadow = '';
+        }, 1400);
+      }
+
+      function closeSearch() {
+        searchResults.classList.remove('show');
+        searchInput.blur();
+      }
+
+      function updateActive() {
+        const items = searchResults.querySelectorAll('.search-item');
+        items.forEach((it, i) => it.classList.toggle('active', i === activeIdx));
+        if (items[activeIdx]) items[activeIdx].scrollIntoView({ block: 'nearest' });
+      }
+
+      searchInput.addEventListener('input', () => {
+        searchBox.classList.toggle('has-value', searchInput.value.length > 0);
+        render(searchInput.value);
+      });
+
+      searchInput.addEventListener('keydown', e => {
+        const items = searchResults.querySelectorAll('.search-item');
+        if (e.key === 'Escape') { closeSearch(); return; }
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (!items.length) return;
+          activeIdx = (activeIdx + 1) % items.length; updateActive(); return;
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (!items.length) return;
+          activeIdx = activeIdx <= 0 ? items.length - 1 : activeIdx - 1;
+          updateActive(); return;
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const t = activeIdx >= 0 ? items[activeIdx] : items[0];
+          if (t) t.click();
+        }
+      });
+
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchBox.classList.remove('has-value');
+        searchResults.classList.remove('show');
+        searchInput.focus();
+      });
+
+      document.addEventListener('click', e => {
+        if (!searchBox.contains(e.target)) searchResults.classList.remove('show');
+      });
+
+      searchInput.addEventListener('focus', () => {
+        if (searchInput.value.length >= 2) render(searchInput.value);
+      });
     })();
 
     /* Первичный запуск */

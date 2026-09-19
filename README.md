@@ -15,101 +15,53 @@
       radial-gradient(circle at 80% 70%, rgba(0, 255, 136, 0.05) 0%, transparent 40%);
   }
 
-  .sidebar {
-    position: fixed; top: 0; left: 0;
-    width: 290px; height: 100vh;
-    background: #080808; border-right: 2px solid #00ff88;
-    padding: 25px 0; overflow-y: auto; z-index: 1000;
-    box-shadow: 5px 0 30px rgba(0,0,0,0.8);
+  /* ВЕРХНЯЯ ПАНЕЛЬ */
+  .top-bar {
+    position: sticky; top: 0; z-index: 1000;
+    background: rgba(8,8,8,0.98); border-bottom: 2px solid #00ff88;
+    padding: 15px 30px; display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(15px); box-shadow: 0 5px 30px rgba(0,0,0,0.8);
+    flex-wrap: wrap; gap: 15px;
   }
-  .sidebar::-webkit-scrollbar { width: 6px; }
-  .sidebar::-webkit-scrollbar-track { background: #0a0a0a; }
-  .sidebar::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 3px; }
-
-  .sidebar-logo {
-    padding: 0 25px 25px;
-    border-bottom: 1px solid #1a1a1a;
-    margin-bottom: 20px;
-  }
-  .sidebar-logo .name {
-    font-size: 1.5em; font-weight: bold; letter-spacing: 3px;
+  .top-bar .logo {
+    color: #00ff88; font-weight: bold; font-size: 1.3em; letter-spacing: 3px;
     background: linear-gradient(90deg, #00ff88, #00cc66);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    display: block; margin-bottom: 8px;
   }
-  .sidebar-logo .classif {
-    display: inline-block; background: #ff0000; color: #fff;
-    padding: 3px 10px; font-size: 0.65em; letter-spacing: 2px;
-    font-weight: bold; animation: blink 2s infinite;
+  .top-bar .classif {
+    background: #ff0000; color: #fff; padding: 5px 15px;
+    font-size: 0.75em; letter-spacing: 3px; font-weight: bold;
+    animation: blink 2s infinite;
   }
   @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-  .sidebar-nav { padding: 0 12px; }
-  .nav-section { margin-bottom: 3px; }
-  .nav-section-header {
-    display: flex; align-items: center; justify-content: space-between;
-    color: #00ff88; text-decoration: none;
-    padding: 10px 14px; margin: 2px 0; border-radius: 6px;
-    font-size: 0.88em; letter-spacing: 1px; transition: 0.2s;
-    border-left: 3px solid transparent;
-    cursor: pointer; user-select: none;
+  /* НАВИГАЦИЯ */
+  .top-nav {
+    position: sticky; top: 72px; z-index: 999;
+    background: rgba(10,10,10,0.98); padding: 12px 30px;
+    border-bottom: 1px solid #1a1a1a;
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    font-size: 0.85em; backdrop-filter: blur(10px);
   }
-  .nav-section-header:hover {
-    background: rgba(0,255,136,0.08);
-    border-left-color: #00ff88;
+  .top-nav a {
+    color: #00ff88; text-decoration: none; padding: 6px 14px;
+    border-radius: 4px; transition: 0.2s; border: 1px solid transparent;
   }
-  .nav-section-header .arrow {
-    font-size: 0.7em; transition: transform 0.2s; color: #00ff88;
-  }
-  .nav-section-header.open .arrow { transform: rotate(90deg); }
-  .nav-section-header .label { flex: 1; margin-left: 8px; }
+  .top-nav a:hover { background: rgba(0,255,136,0.1); border-color: #00ff88; }
 
-  .nav-sub {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding-left: 10px;
-    border-left: 1px dashed #1f1f1f;
-    margin-left: 15px;
-  }
-  .nav-sub.open { max-height: 1000px; }
-  .nav-sub a {
-    display: block; color: #88bbaa; text-decoration: none;
-    padding: 7px 14px; margin: 2px 0; border-radius: 5px;
-    font-size: 0.78em; letter-spacing: 0.5px;
-    transition: 0.2s; border-left: 2px solid transparent;
-  }
-  .nav-sub a:hover {
-    background: rgba(0,255,136,0.06);
-    color: #00ff88; border-left-color: #00cc66;
-    padding-left: 18px;
-  }
-  .nav-sub a.active {
-    background: rgba(0,255,136,0.1);
-    color: #00ff88; border-left-color: #00ff88;
-  }
-
+  /* КОНТЕНТ */
   .main-content {
-    margin-left: 290px;
-    padding: 45px 40px;
-    min-height: 100vh;
-    width: calc(100% - 290px);
-  }
-
-  .menu-toggle {
-    display: none; position: fixed;
-    top: 15px; left: 15px; z-index: 1100;
-    background: #00ff88; color: #000;
-    border: none; padding: 10px 15px;
-    border-radius: 6px; font-weight: bold;
-    cursor: pointer; font-size: 1.2em;
+    width: 100%; max-width: 1400px;
+    margin: 0 auto;
+    padding: 50px 60px;
   }
   @media (max-width: 900px) {
-    .sidebar { transform: translateX(-100%); transition: 0.3s; }
-    .sidebar.open { transform: translateX(0); }
-    .main-content { margin-left: 0; padding: 70px 15px 30px; width: 100%; }
-    .menu-toggle { display: block; }
+    .main-content { padding: 30px 20px; }
+    .top-bar, .top-nav { padding: 12px 15px; }
+    .top-nav { top: 100px; }
   }
 
+  /* Шапка */
   .header { text-align: center; padding-bottom: 40px; border-bottom: 3px solid #00ff88; margin-bottom: 50px; }
   .classification {
     display: inline-block; background: #ff0000; color: #fff;
@@ -131,23 +83,24 @@
     border-left: 6px solid #00ff88;
     background: linear-gradient(90deg, rgba(0,255,136,0.12), transparent);
     letter-spacing: 2px; text-transform: uppercase;
-    scroll-margin-top: 20px;
+    scroll-margin-top: 100px;
   }
   h3 {
     color: #66ffaa; font-size: clamp(1.05em, 2.2vw, 1.35em);
     margin: 35px 0 18px; padding-left: 18px;
     border-left: 4px solid #00cc66; letter-spacing: 1px;
-    scroll-margin-top: 20px;
+    scroll-margin-top: 100px;
   }
   h4 { color: #88ffbb; font-size: 1.1em; margin: 25px 0 12px; letter-spacing: 1px; }
 
-  p { margin: 12px 0; color: #b0b0b0; max-width: 65ch; }
+  p { margin: 12px 0; color: #b0b0b0; }
   strong { color: #00ff88; }
 
   ul, ol { padding-left: 30px; margin: 18px 0; }
-  li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; max-width: 70ch; }
+  li { padding: 8px 0 8px 10px; color: #b0b0b0; border-bottom: 1px dotted #1a1a1a; }
   li:hover { color: #e0e0e0; }
 
+  /* СЕТКИ */
   .two-col-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -177,7 +130,6 @@
     color: #c0c0c0; vertical-align: top;
     background: #0a0a0a;
     line-height: 1.7;
-    max-width: 340px;
   }
   .data-table tr { background: #0a0a0a; }
   .data-table tr:hover,
@@ -194,6 +146,7 @@
     width: 100%;
   }
 
+  /* Цветные коды */
   .code-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -211,9 +164,9 @@
   .code-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
   .code-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
   .code-card h4 { font-size: 1.4em; margin-bottom: 15px; letter-spacing: 3px; }
-  .code-card p { font-size: 0.92em; color: #999; margin-bottom: 12px; max-width: 50ch; }
+  .code-card p { font-size: 0.92em; color: #999; margin-bottom: 12px; }
   .code-card ul { margin-top: 10px; font-size: 0.88em; }
-  .code-card li { border-bottom: 1px dotted rgba(255,255,255,0.05); max-width: 50ch; }
+  .code-card li { border-bottom: 1px dotted rgba(255,255,255,0.05); }
   .code-red { border-color: #ff0000; background: linear-gradient(135deg, #0f0f0f, rgba(255,0,0,0.08)); }
   .code-red::before { background: #ff0000; }
   .code-red h4 { color: #ff0000; text-shadow: 0 0 15px rgba(255,0,0,0.5); }
@@ -258,7 +211,6 @@
     padding: 22px 28px; border-radius: 8px; margin: 25px 0;
     border-left: 6px solid; font-size: 0.95em;
   }
-  .alert p, .alert li { max-width: 65ch; }
   .alert-danger { background: rgba(255, 0, 0, 0.08); border-color: #ff0000; color: #ff8888; }
   .alert-warning { background: rgba(255, 170, 0, 0.08); border-color: #ffaa00; color: #ffcc66; }
   .alert-info { background: rgba(0, 255, 136, 0.05); border-color: #00ff88; color: #88ffbb; }
@@ -268,7 +220,6 @@
     background: #0d0d0d; border-radius: 10px;
     border: 1px solid #1a1a1a;
   }
-  .section p, .section li { max-width: 60ch; }
 
   .footer {
     text-align: center; margin-top: 70px; padding: 40px 20px;
@@ -319,9 +270,8 @@
   }
   .clearance-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
   .clearance-card h4 { font-size: 1.5em; margin-bottom: 15px; letter-spacing: 2px; }
-  .clearance-card p { font-size: 0.9em; color: #999; max-width: 45ch; }
+  .clearance-card p { font-size: 0.9em; color: #999; }
   .clearance-card ul { margin-top: 10px; font-size: 0.9em; }
-  .clearance-card li { max-width: 45ch; }
   .level-1 { border-color: #666; }
   .level-1 h4 { color: #999; }
   .level-2 { border-color: #f5a623; }
@@ -351,9 +301,8 @@
   }
   .priv-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
   .priv-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
-  .priv-card p { font-size: 0.9em; color: #999; max-width: 45ch; }
+  .priv-card p { font-size: 0.9em; color: #999; }
   .priv-card ul { margin-top: 10px; font-size: 0.9em; }
-  .priv-card li { max-width: 45ch; }
 
   .item-card {
     padding: 28px; border-radius: 10px;
@@ -364,7 +313,6 @@
   .item-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
   .item-card h4 { font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
   .item-card ul { margin-top: 10px; font-size: 0.9em; }
-  .item-card li { max-width: 45ch; }
   .item-yes { border-color: #00ff88; }
   .item-yes h4 { color: #00ff88; }
   .item-no { border-color: #ff0000; }
@@ -373,178 +321,46 @@
   .item-arrest h4 { color: #ffaa00; }
   .item-execute { border-color: #d0021b; }
   .item-execute h4 { color: #ff3333; }
+
+  .scp-card {
+    padding: 28px; border-radius: 10px;
+    background: #0f0f0f;
+    border: 2px solid #00ff88;
+    transition: 0.3s;
+  }
+  .scp-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
+  .scp-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
+  .scp-card p { font-size: 0.9em; color: #999; }
+  .scp-card ul { margin-top: 10px; font-size: 0.9em; }
 </style>
 </head>
 <body>
 
-  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+  <div class="top-bar">
+    <div class="logo">MV.PROJECT</div>
+    <div class="classif">⚠ LEVEL 5 ⚠</div>
+  </div>
 
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="name">MV.PROJECT</span>
-      <span class="classif">⚠ LEVEL 5 ⚠</span>
-    </div>
-    <nav class="sidebar-nav">
+  <div class="top-nav">
+    <a href="#codes">🚨 КОДЫ</a>
+    <a href="#clearance">🔐 ДОПУСК</a>
+    <a href="#classes-personnel">👤 КЛАССЫ ПЕРСОНАЛА</a>
+    <a href="#mtf">🛡️ МОГ</a>
+    <a href="#protocols">📋 ПРОТОКОЛЫ</a>
+    <a href="#privileges">⭐ ПРИВИЛЕГИИ</a>
+    <a href="#uniform">👔 ФОРМА</a>
+    <a href="#items">🎒 ПРЕДМЕТЫ И АРЕСТ</a>
+    <a href="#general">📜 ОБЩИЕ</a>
+    <a href="#rp">🎭 RP</a>
+    <a href="#classes">👥 КЛАССЫ</a>
+    <a href="#scp">🧬 SCP</a>
+    <a href="#scp914">⚙️ SCP-914</a>
+    <a href="#intercom">📢 ИНТЕРКОМ</a>
+    <a href="#bans">⏱️ БАНЫ</a>
+    <a href="#appeal">📩 АПЕЛЛЯЦИЯ</a>
+  </div>
 
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🚨</span><span class="label">КОДЫ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#codes">Все коды угроз</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🔐</span><span class="label">ДОПУСК</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#clearance">Уровни 1-5</a>
-          <a href="#classes-personnel">Классы A-E</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🛡️</span><span class="label">МОГ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#mtf">Основные МОГ</a>
-          <a href="#mtf-dop">Дополнительные МОГ</a>
-          <a href="#mtf-tg">Тактические группы</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📋</span><span class="label">ПРОТОКОЛЫ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#prot-p-l">Протоколы P-L</a>
-          <a href="#prot-p-s">Протоколы P-S</a>
-          <a href="#prot-p-b">Протоколы P-B</a>
-          <a href="#prot-p-i">Протоколы P-I</a>
-          <a href="#prot-p-e">Протоколы P-E</a>
-          <a href="#prot-kir">Изоляционные коды</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>⭐</span><span class="label">ПРИВИЛЕГИИ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#priv-obligations">Обязанности админа</a>
-          <a href="#priv-forbidden">Запреты</a>
-          <a href="#priv-lies">Наказания за враньё</a>
-          <a href="#priv-confidential">Конфиденциальность</a>
-          <a href="#priv-others">Админство на других</a>
-          <a href="#priv-hierarchy">Иерархия</a>
-          <a href="#priv-punish">Виды взысканий</a>
-          <a href="#priv-rights">Права админов</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>👔</span><span class="label">ФОРМА</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#uniform">Что можно носить</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🎒</span><span class="label">ПРЕДМЕТЫ И АРЕСТ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#items-can">Что можно носить</a>
-          <a href="#items-cant">Что нельзя носить</a>
-          <a href="#items-arrest">Арест персонала</a>
-          <a href="#items-execute">Расстрел класса D</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📜</span><span class="label">ОБЩИЕ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#general">Принципы и возраст</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🎭</span><span class="label">RP</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#rp">Все RP-правила</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>👥</span><span class="label">КЛАССЫ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#classes">Игровые классы</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>🧬</span><span class="label">SCP</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#scp">Основные SCP</a>
-          <a href="#scp953">SCP-953</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>⚙️</span><span class="label">SCP-914</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#scp914">Правила 914</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📢</span><span class="label">ИНТЕРКОМ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#intercom">Правила интеркома</a>
-          <a href="#chat">Правила чата</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>⏱️</span><span class="label">БАНЫ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#bans">Сроки наказаний</a>
-        </div>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-section-header" onclick="toggleSection(this)">
-          <span>📩</span><span class="label">АПЕЛЛЯЦИЯ</span><span class="arrow">▶</span>
-        </div>
-        <div class="nav-sub">
-          <a href="#appeal">Процедура апелляции</a>
-        </div>
-      </div>
-
-    </nav>
-  </aside>
-
-  <main class="main-content">
+  <div class="main-content">
 
     <div class="header">
       <div class="classification">⚠ CLASSIFIED — LEVEL 5 CLEARANCE ⚠</div>
@@ -1033,13 +849,13 @@
         <table class="data-table">
           <tr><th>Должность</th><th>Разрешено</th></tr>
           <tr><td><strong>Уборщики</strong></td><td>Спецодежда, перчатки, фонарь, пропуск 1 УД</td></tr>
-          <tr><td><strong>Капрал СБ</strong></td><td>Форма СБ, дубинка, пистолет, бронежилет</td></tr>
+          <tr><td><strong>Капрал СБ</strong></td><td>Форма СБ, дубинка, FSP-9, бронежилет</td></tr>
           <tr><td><strong>Мл. НС / Инженер</strong></td><td>Халат, очки, планшет, инструменты</td></tr>
-          <tr><td><strong>Сержант / Лейтенант СБ</strong></td><td>Форма СБ, ПП, бронежилет, наручники</td></tr>
+          <tr><td><strong>Сержант / Лейтенант СБ</strong></td><td>Форма СБ, CrossVec, бронежилет, наручники</td></tr>
           <tr><td><strong>Ст. НС / НС</strong></td><td>Халат, очки, планшет, пропуск 3 УД</td></tr>
-          <tr><td><strong>Директор / ГСБ / ГНС</strong></td><td>Официальная форма, пистолет, пропуск 4 УД</td></tr>
-          <tr><td><strong>Совет О5 / КпЭ</strong></td><td>Официальная форма, пистолет, полный допуск</td></tr>
-          <tr><td><strong>Капитан МОГ</strong></td><td>Тактическая форма, винтовка, пропуск 4 УД</td></tr>
+          <tr><td><strong>Директор / ГСБ / ГНС</strong></td><td>Официальная форма, Revolver, пропуск 4 УД</td></tr>
+          <tr><td><strong>Совет О5 / КпЭ</strong></td><td>Официальная форма, Revolver, полный допуск</td></tr>
+          <tr><td><strong>Капитан МОГ</strong></td><td>Тактическая форма, MTF E-11 SR, пропуск 4 УД</td></tr>
         </table>
       </div>
 
@@ -1071,7 +887,6 @@
         <ul>
           <li>Аптечки (Medkit)</li>
           <li>Обезболивающие (Painkillers)</li>
-          <li>SCP-500 (только с разрешения ГНС)</li>
           <li>Рация</li>
           <li>Ключ-карта строго своего УД</li>
           <li>Фонарь, планшет, очки</li>
@@ -1081,7 +896,7 @@
       <div class="item-card item-yes">
         <h4>🛡️ Охрана и МОГ (УД 2-4)</h4>
         <ul>
-          <li>Штатное оружие (P90, E11, MP7)</li>
+          <li>Штатное оружие (MTF E-11 SR, CrossVec, FSP-9, FR-MG-0, AK, Logicer)</li>
           <li>Дубинка/шокер</li>
           <li>Бронежилет</li>
           <li>Рация</li>
@@ -1122,7 +937,7 @@
           <li>Компоненты боеголовки</li>
           <li>SCP-предметы без допуска</li>
           <li>SCP-018 (мяч)</li>
-          <li>MicroHID (кроме МОГ и офицеров)</li>
+          <li>Micro H.I.D. и 3-X Particle Disruptor (кроме МОГ и офицеров)</li>
           <li>Маски, скрывающие лицо</li>
         </ul>
       </div>
@@ -1143,11 +958,13 @@
       <div class="item-card item-no">
         <h4>🚫 Для учёных</h4>
         <ul>
-          <li>Тяжёлое оружие (E11, Logicer)</li>
+          <li>Тяжёлое оружие (MTF E-11 SR, Logicer, FR-MG-0, AK)</li>
           <li>Гранаты (кроме успокоительных)</li>
           <li>Карты 5 УД</li>
           <li>Бронежилеты МОГ</li>
           <li>Компоненты боеголовки</li>
+          <li><strong>SCP-500</strong></li>
+          <li>SCP-268</li>
         </ul>
       </div>
 
@@ -1398,33 +1215,142 @@
 
     <!-- SCP -->
     <h2 id="scp">🧬 Раздел XII. Правила SCP-объектов</h2>
+    <p>Подробная информация о каждом SCP: разумность, способности, что можно и что нельзя.</p>
 
     <div class="two-col-grid">
-      <div>
-        <h3>Основные SCP</h3>
-        <table class="data-table">
-          <tr><th>SCP</th><th>Правило</th></tr>
-          <tr><td><strong>173</strong></td><td>Двигается только при отсутствии зрительного контакта. Запрещён телепорт при 3+ наблюдателях.</td></tr>
-          <tr><td><strong>049</strong></td><td>Обязан лечить. Поднимает зомби только по RP-причине.</td></tr>
-          <tr><td><strong>106</strong></td><td>Запрещено отправлять игроков в карманное измерение без RP-причины.</td></tr>
-          <tr><td><strong>096</strong></td><td>Запрещено намеренно смотреть на 096.</td></tr>
-          <tr><td><strong>939</strong></td><td>Обязан использовать звук для охоты.</td></tr>
-          <tr><td><strong>3114</strong></td><td>Обязан маскироваться. Запрещено быстрое раскрытие.</td></tr>
-          <tr><td><strong>079</strong></td><td>Обязан сотрудничать с SCP.</td></tr>
-        </table>
+      <div class="scp-card">
+        <h4>🧱 SCP-173 — Статуя</h4>
+        <p><strong>Разумность:</strong> ❌ Нет (автомат, не мыслит)</p>
+        <p><strong>Здоровье:</strong> 4000 HP + 750 AHP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Скачок</strong> — телепорт до 8 м при зрительном контакте. Убивает ближайшего человека.</li>
+          <li><strong>Лужа грязи</strong> — замедляет людей (F).</li>
+          <li>Сопротивление пулям (кроме Micro H.I.D.).</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> двигаться при отсутствии зрительного контакта, оставлять лужи.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> телепортироваться при 3+ наблюдателях, убивать без RP-причины.</p>
+        <p><strong>Наказание за нарушение:</strong> бан 7-30 дней.</p>
       </div>
 
-      <div id="scp953">
-        <h3>SCP-953 — Полиморфная рептилия</h3>
-        <p><strong>SCP-953</strong> — опасный SCP, способный принимать облик человека. Класс: <span class="highlight">Кетер</span>.</p>
-        <table class="data-table">
-          <tr><th>Правило</th></tr>
-          <tr><td>Запрещено использование облика для нарушения RP.</td></tr>
-          <tr><td>Запрещено заманивание игроков в ловушки.</td></tr>
-          <tr><td>Запрещено использование невидимости для атак без RP-причины.</td></tr>
-          <tr><td>Обязан отыгрывать роль согласно лору.</td></tr>
-          <tr><td>Запрещено убивать без RP-причины даже в облике.</td></tr>
-        </table>
+      <div class="scp-card">
+        <h4>🩺 SCP-049 — Чумной Доктор</h4>
+        <p><strong>Разумность:</strong> ✅ Да (имеет интеллект, общается)</p>
+        <p><strong>Здоровье:</strong> 2300 HP + 300 AHP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Сердечный приступ</strong> — атака наносит продолжительный урон.</li>
+          <li><strong>Воскрешение</strong> — поднимает мёртвых как SCP-049-2 (зомби).</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> лечить, воскрешать зомби по RP-причине.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> убивать всех подряд, воскрешать без RP-причины.</p>
+        <p><strong>Наказание за нарушение:</strong> бан 3-7 дней.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>👴 SCP-106 — Старик</h4>
+        <p><strong>Разумность:</strong> ✅ Да (имеет интеллект)</p>
+        <p><strong>Здоровье:</strong> 2500 HP + 300 AHP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Захват</strong> — отправляет человека в карманное измерение.</li>
+          <li><strong>Погружение</strong> — скрывается в полу (Shift).</li>
+          <li>Сопротивление пулям, слаб к другим источникам урона.</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> захватывать людей по RP-причине, скрываться.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> отправлять в карманное измерение без RP-причины.</p>
+        <p><strong>Наказание за нарушение:</strong> бан 3-7 дней.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>😢 SCP-096 — Застенчивый</h4>
+        <p><strong>Разумность:</strong> ❌ Нет (реагирует инстинктивно)</p>
+        <p><strong>Здоровье:</strong> 2500 HP + 400 AHP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Размашистый удар</strong> — мгновенно убивает цель.</li>
+          <li><strong>Ярость</strong> — активируется при уроне или взгляде.</li>
+          <li><strong>Рывок</strong> — открывает двери на пути.</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> впадать в ярость при взгляде.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> намеренно смотреть на 096 для провокации.</p>
+        <p><strong>Наказание за нарушение:</strong> бан 1-3 дня.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>👄 SCP-939 — Многоголосый</h4>
+        <p><strong>Разумность:</strong> ✅ Да (мимикрирует голоса)</p>
+        <p><strong>Здоровье:</strong> 2000 HP + 400 AHP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Мимикрия</strong> — имитирует голоса людей.</li>
+          <li><strong>Укус</strong> — 65 урона + амнезия (нельзя перезарядиться).</li>
+          <li>Чувствительность к звуку (видит сквозь стены).</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> использовать звук для охоты, имитировать голоса.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> игнорировать правила, кемперить.</p>
+        <p><strong>Наказание за нарушение:</strong> предупреждение / бан 1 день.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>💀 SCP-3114 — Скелет</h4>
+        <p><strong>Разумность:</strong> ✅ Да (маскируется под человека)</p>
+        <p><strong>Здоровье:</strong> 1250 HP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Скелеты в шкафу</strong> — снимает кожу с трупов, маскируется.</li>
+          <li><strong>Удушение</strong> — захват человека.</li>
+          <li>Может использовать предметы в облике.</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> маскироваться, общаться с людьми в облике.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> быстро раскрываться, убивать без RP-причины.</p>
+        <p><strong>Наказание за нарушение:</strong> бан 1-3 дня.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>💻 SCP-079 — Старый ИИ</h4>
+        <p><strong>Разумность:</strong> ✅ Да (искусственный интеллект)</p>
+        <p><strong>Здоровье:</strong> 0 HP (уязвим только к перегрузке)</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li>Управление дверями, лифтами, тесла-воротами.</li>
+          <li>Громкоговоритель, блокировка дверей.</li>
+          <li>Видит людей с SCP-268.</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> помогать другим SCP, управлять системами.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> игнорировать просьбы других SCP.</p>
+        <p><strong>Наказание за нарушение:</strong> предупреждение / бан 1 день.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>🧡 SCP-999 — Щекотный монстр</h4>
+        <p><strong>Разумность:</strong> ✅ Да (дружелюбный)</p>
+        <p><strong>Здоровье:</strong> 2000 HP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li><strong>Yippee</strong> — звук, слышимый всем.</li>
+          <li><strong>Hello</strong> — приветствие игроков.</li>
+          <li><strong>Heal</strong> — восстанавливает здоровье в радиусе.</li>
+          <li><strong>Анимации</strong> — случайные забавные движения.</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> лечить, танцевать, общаться.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> атаковать (SCP-999 мирный).</p>
+        <p><strong>Наказание за нарушение:</strong> предупреждение.</p>
+      </div>
+
+      <div class="scp-card">
+        <h4>🦊 SCP-953 — Полиморфная рептилия</h4>
+        <p><strong>Разумность:</strong> ✅ Да (лис-оборотень)</p>
+        <p><strong>Здоровье:</strong> 1600 HP</p>
+        <p><strong>Способности:</strong></p>
+        <ul>
+          <li>Принимает облик человека.</li>
+          <li>Невидимость в облике.</li>
+          <li>Атаки в ближнем бою.</li>
+        </ul>
+        <p style="color:#88ffbb;"><strong>Можно:</strong> использовать облик для RP.</p>
+        <p style="color:#ff6666;"><strong>Нельзя:</strong> использовать облик для RDM, заманивать в ловушки.</p>
+        <p><strong>Наказание за нарушение:</strong> бан 7-14 дней.</p>
       </div>
     </div>
 
@@ -1618,40 +1544,16 @@
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.5 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.6 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
     </div>
 
-  </main>
+  </div>
 
   <script>
-    function toggleSection(el) {
-      el.classList.toggle('open');
-      const sub = el.nextElementSibling;
-      if (sub) sub.classList.toggle('open');
-    }
-
-    document.querySelectorAll('.nav-sub a').forEach(link => {
+    document.querySelectorAll('.top-nav a').forEach(link => {
       link.addEventListener('click', () => {
-        if (window.innerWidth <= 900) {
-          document.querySelector('.sidebar').classList.remove('open');
-        }
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      const sections = document.querySelectorAll('h2[id], h3[id]');
-      const links = document.querySelectorAll('.nav-sub a');
-      let current = '';
-      sections.forEach(sec => {
-        const top = sec.offsetTop - 150;
-        if (window.scrollY >= top) current = sec.getAttribute('id');
-      });
-      links.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('active');
-        }
+        // Просто переход по якорю
       });
     });
   </script>

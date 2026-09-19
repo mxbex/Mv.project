@@ -13,7 +13,6 @@
     overflow-x: hidden;
   }
 
-  /* ПАРАЛЛАКС ФОН */
   .parallax-bg {
     position: fixed;
     top: 0; left: 0;
@@ -39,27 +38,14 @@
     text-align: center;
     user-select: none;
   }
-  .parallax-layer.back .parallax-line {
-    font-size: 5em;
-    color: rgba(0, 255, 136, 0.028);
-  }
-  .parallax-layer.middle .parallax-line {
-    font-size: 7em;
-    color: rgba(255, 0, 0, 0.022);
-  }
-  .parallax-layer.front .parallax-line {
-    font-size: 4em;
-    color: rgba(255, 255, 255, 0.018);
-  }
+  .parallax-layer.back .parallax-line { font-size: 5em; color: rgba(0, 255, 136, 0.028); }
+  .parallax-layer.middle .parallax-line { font-size: 7em; color: rgba(255, 0, 0, 0.022); }
+  .parallax-layer.front .parallax-line { font-size: 4em; color: rgba(255, 255, 255, 0.018); }
 
-  /* ВОДЯНЫЕ ЗНАКИ */
   .watermark-overlay {
-    position: fixed;
-    top: 0; left: 0;
+    position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
+    pointer-events: none; z-index: 1; overflow: hidden;
   }
   .watermark-overlay .wm {
     position: absolute;
@@ -70,12 +56,10 @@
     letter-spacing: 5px;
     white-space: nowrap;
     transform: rotate(-35deg);
-    user-select: none;
-    pointer-events: none;
+    user-select: none; pointer-events: none;
     text-transform: uppercase;
   }
 
-  /* ЛЕВОЕ МЕНЮ */
   .sidebar {
     position: fixed; top: 0; left: 0;
     width: 290px; height: 100vh;
@@ -87,11 +71,7 @@
   .sidebar::-webkit-scrollbar-track { background: #0a0a0a; }
   .sidebar::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 3px; }
 
-  .sidebar-logo {
-    padding: 0 25px 25px;
-    border-bottom: 1px solid #1a1a1a;
-    margin-bottom: 20px;
-  }
+  .sidebar-logo { padding: 0 25px 25px; border-bottom: 1px solid #1a1a1a; margin-bottom: 20px; }
   .sidebar-logo .name {
     font-size: 1.5em; font-weight: bold; letter-spacing: 3px;
     background: linear-gradient(90deg, #00ff88, #00cc66);
@@ -115,22 +95,15 @@
     border-left: 3px solid transparent;
     cursor: pointer; user-select: none;
   }
-  .nav-section-header:hover {
-    background: rgba(0,255,136,0.08);
-    border-left-color: #00ff88;
-  }
-  .nav-section-header .arrow {
-    font-size: 0.7em; transition: transform 0.2s; color: #00ff88;
-  }
+  .nav-section-header:hover { background: rgba(0,255,136,0.08); border-left-color: #00ff88; }
+  .nav-section-header .arrow { font-size: 0.7em; transition: transform 0.2s; color: #00ff88; }
   .nav-section-header.open .arrow { transform: rotate(90deg); }
   .nav-section-header .label { flex: 1; margin-left: 8px; }
 
   .nav-sub {
     max-height: 0; overflow: hidden;
     transition: max-height 0.3s ease;
-    padding-left: 10px;
-    border-left: 1px dashed #1f1f1f;
-    margin-left: 15px;
+    padding-left: 10px; border-left: 1px dashed #1f1f1f; margin-left: 15px;
   }
   .nav-sub.open { max-height: 1000px; }
   .nav-sub a {
@@ -139,24 +112,13 @@
     font-size: 0.78em; letter-spacing: 0.5px;
     transition: 0.2s; border-left: 2px solid transparent;
   }
-  .nav-sub a:hover {
-    background: rgba(0,255,136,0.06);
-    color: #00ff88; border-left-color: #00cc66;
-    padding-left: 18px;
-  }
-  .nav-sub a.active {
-    background: rgba(0,255,136,0.1);
-    color: #00ff88; border-left-color: #00ff88;
-  }
+  .nav-sub a:hover { background: rgba(0,255,136,0.06); color: #00ff88; border-left-color: #00cc66; padding-left: 18px; }
+  .nav-sub a.active { background: rgba(0,255,136,0.1); color: #00ff88; border-left-color: #00ff88; }
 
-  /* КОНТЕНТ */
   .main-content {
-    margin-left: 290px;
-    padding: 45px 40px;
-    min-height: 100vh;
-    width: calc(100% - 290px);
-    position: relative;
-    z-index: 10;
+    margin-left: 290px; padding: 45px 40px;
+    min-height: 100vh; width: calc(100% - 290px);
+    position: relative; z-index: 10;
     background: rgba(5, 5, 5, 0.65);
   }
 
@@ -216,19 +178,14 @@
   .two-col-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px;
-    margin: 25px 0;
-    width: 100%;
+    gap: 30px; margin: 25px 0; width: 100%;
   }
-  @media (max-width: 1200px) {
-    .two-col-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 1200px) { .two-col-grid { grid-template-columns: 1fr; } }
 
   .data-table {
     width: 100%; border-collapse: collapse;
     background: #0a0a0a; border: 1px solid #1a1a1a;
-    font-size: 0.92em;
-    table-layout: auto;
+    font-size: 0.92em; table-layout: auto;
   }
   .data-table th {
     background: #0f1a12; color: #00ff88; padding: 16px 18px;
@@ -237,36 +194,22 @@
     text-transform: uppercase; font-size: 0.85em;
   }
   .data-table td {
-    padding: 14px 18px;
-    border-bottom: 1px solid #1a1a1a;
+    padding: 14px 18px; border-bottom: 1px solid #1a1a1a;
     color: #c0c0c0; vertical-align: top;
-    background: #0a0a0a;
-    line-height: 1.7;
+    background: #0a0a0a; line-height: 1.7;
   }
   .data-table tr { background: #0a0a0a; }
-  .data-table tr:hover,
-  .data-table tr:hover td,
-  .data-table tr:hover th {
+  .data-table tr:hover, .data-table tr:hover td, .data-table tr:hover th {
     background: #0f0f0f; color: #e0e0e0;
   }
   .data-table strong { color: #00ff88; }
-  .table-wrap {
-    background: #0a0a0a;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 20px 0;
-    width: 100%;
-  }
+  .table-wrap { background: #0a0a0a; border-radius: 8px; overflow: hidden; margin: 20px 0; width: 100%; }
 
   .code-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px; margin: 35px 0;
-    width: 100%;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px; margin: 35px 0; width: 100%;
   }
-  @media (max-width: 1200px) {
-    .code-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 1200px) { .code-grid { grid-template-columns: 1fr; } }
   .code-card {
     padding: 28px; border-radius: 10px; background: #0f0f0f;
     border: 2px solid; transition: 0.3s;
@@ -352,6 +295,13 @@
     letter-spacing: 2px; font-size: 1em;
   }
   .telegram:hover { background: #006699; transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 136, 204, 0.6); }
+  .youtube {
+    display: inline-block; background: #ff0000; color: white;
+    padding: 15px 40px; border-radius: 10px; text-decoration: none;
+    font-weight: bold; margin: 10px; transition: 0.3s;
+    letter-spacing: 2px; font-size: 1em;
+  }
+  .youtube:hover { background: #cc0000; transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 0, 0, 0.6); }
   .center { text-align: center; }
   details { background: #0d0d0d; border: 1px solid #1a1a1a; border-radius: 6px; margin: 12px 0; overflow: hidden; }
   details summary {
@@ -364,17 +314,14 @@
   details > *:not(summary) { padding: 18px 22px; }
   .highlight { background: rgba(0, 255, 136, 0.1); padding: 2px 8px; border-radius: 3px; color: #00ff88; }
   .critical { background: rgba(255, 0, 0, 0.15); padding: 2px 8px; border-radius: 3px; color: #ff6666; font-weight: bold; }
+  .evacuated { background: rgba(255, 170, 0, 0.15); padding: 2px 8px; border-radius: 3px; color: #ffcc66; font-weight: bold; }
   .divider { height: 2px; background: linear-gradient(90deg, transparent, #00ff88, transparent); margin: 50px 0; border: none; }
 
   .clearance-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px; margin: 30px 0;
-    width: 100%;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px; margin: 30px 0; width: 100%;
   }
-  @media (max-width: 1200px) {
-    .clearance-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 1200px) { .clearance-grid { grid-template-columns: 1fr; } }
   .clearance-card {
     padding: 28px; border-radius: 10px; border: 2px solid;
     background: #0f0f0f; transition: 0.3s;
@@ -406,9 +353,7 @@
 
   .priv-card {
     padding: 28px; border-radius: 10px;
-    background: #0f0f0f;
-    border: 2px solid #00ff88;
-    transition: 0.3s;
+    background: #0f0f0f; border: 2px solid #00ff88; transition: 0.3s;
   }
   .priv-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
   .priv-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
@@ -417,9 +362,7 @@
 
   .item-card {
     padding: 28px; border-radius: 10px;
-    background: #0f0f0f;
-    border: 2px solid;
-    transition: 0.3s;
+    background: #0f0f0f; border: 2px solid; transition: 0.3s;
   }
   .item-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.6); }
   .item-card h4 { font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
@@ -435,9 +378,7 @@
 
   .scp-card {
     padding: 28px; border-radius: 10px;
-    background: #0f0f0f;
-    border: 2px solid #00ff88;
-    transition: 0.3s;
+    background: #0f0f0f; border: 2px solid #00ff88; transition: 0.3s;
   }
   .scp-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,255,136,0.15); }
   .scp-card h4 { color: #00ff88; font-size: 1.3em; margin-bottom: 15px; letter-spacing: 2px; }
@@ -455,18 +396,108 @@
     margin-bottom: 10px;
     letter-spacing: 1px;
   }
+  .evacuated-badge {
+    display: inline-block;
+    background: rgba(255, 170, 0, 0.15);
+    border: 1px solid #ffaa00;
+    color: #ffcc66;
+    padding: 4px 12px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* СОГЛАШЕНИЕ */
+  .agreement-section {
+    margin-top: 80px;
+    padding: 40px;
+    background: #0a0a0a;
+    border: 2px solid #00ff88;
+    border-radius: 12px;
+    position: relative;
+  }
+  .agreement-section::before {
+    content: 'ЮРИДИЧЕСКИЙ ДОКУМЕНТ';
+    position: absolute;
+    top: -14px; left: 30px;
+    background: #050505;
+    padding: 0 15px;
+    color: #00ff88;
+    font-size: 0.85em;
+    letter-spacing: 3px;
+    font-weight: bold;
+  }
+  .agreement-title {
+    color: #00ff88;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .agreement-country {
+    margin: 30px 0;
+    padding: 25px;
+    background: #0d0d0d;
+    border-radius: 10px;
+    border-left: 5px solid #00ff88;
+  }
+  .agreement-country.rf { border-left-color: #ffffff; }
+  .agreement-country.rb { border-left-color: #ff0000; }
+  .agreement-country h3 {
+    margin-top: 0;
+    padding-left: 0;
+    border-left: none;
+    color: #00ff88;
+    font-size: 1.4em;
+    letter-spacing: 2px;
+  }
+  .agreement-country.rf h3 { color: #ffffff; }
+  .agreement-country.rb h3 { color: #ff4444; }
+  .agreement-country ol {
+    counter-reset: agreement-counter;
+    padding-left: 0;
+    list-style: none;
+  }
+  .agreement-country ol li {
+    counter-increment: agreement-counter;
+    padding: 12px 10px 12px 50px;
+    border-bottom: 1px solid #1a1a1a;
+    position: relative;
+    max-width: 100%;
+  }
+  .agreement-country ol li::before {
+    content: counter(agreement-counter) '.';
+    position: absolute;
+    left: 10px;
+    color: #00ff88;
+    font-weight: bold;
+  }
+  .agreement-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #1a1a1a;
+    color: #888;
+    font-size: 0.9em;
+  }
+  .flag-icon {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 1.3em;
+  }
 </style>
 </head>
 <body>
 
-  <!-- ПАРАЛЛАКС ФОН -->
   <div class="parallax-bg">
     <div class="parallax-layer back" id="layer-back"></div>
     <div class="parallax-layer middle" id="layer-middle"></div>
     <div class="parallax-layer front" id="layer-front"></div>
   </div>
 
-  <!-- ВОДЯНЫЕ ЗНАКИ -->
   <div class="watermark-overlay" id="watermark-overlay"></div>
 
   <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
@@ -482,9 +513,7 @@
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>🚨</span><span class="label">КОДЫ</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#codes">Все коды угроз</a>
-        </div>
+        <div class="nav-sub"><a href="#codes">Все коды угроз</a></div>
       </div>
 
       <div class="nav-section">
@@ -542,9 +571,7 @@
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>👔</span><span class="label">ФОРМА</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#uniform">Что можно носить</a>
-        </div>
+        <div class="nav-sub"><a href="#uniform">Что можно носить</a></div>
       </div>
 
       <div class="nav-section">
@@ -563,27 +590,21 @@
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>📜</span><span class="label">ОБЩИЕ</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#general">Принципы и возраст</a>
-        </div>
+        <div class="nav-sub"><a href="#general">Принципы и возраст</a></div>
       </div>
 
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>🎭</span><span class="label">RP</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#rp">Все RP-правила</a>
-        </div>
+        <div class="nav-sub"><a href="#rp">Все RP-правила</a></div>
       </div>
 
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>👥</span><span class="label">КЛАССЫ</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#classes">Игровые классы</a>
-        </div>
+        <div class="nav-sub"><a href="#classes">Игровые классы</a></div>
       </div>
 
       <div class="nav-section">
@@ -600,9 +621,7 @@
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>⚙️</span><span class="label">SCP-914</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#scp914">Правила 914</a>
-        </div>
+        <div class="nav-sub"><a href="#scp914">Правила 914</a></div>
       </div>
 
       <div class="nav-section">
@@ -619,17 +638,24 @@
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>⏱️</span><span class="label">БАНЫ</span><span class="arrow">▶</span>
         </div>
-        <div class="nav-sub">
-          <a href="#bans">Сроки наказаний</a>
-        </div>
+        <div class="nav-sub"><a href="#bans">Сроки наказаний</a></div>
       </div>
 
       <div class="nav-section">
         <div class="nav-section-header" onclick="toggleSection(this)">
           <span>📩</span><span class="label">АПЕЛЛЯЦИЯ</span><span class="arrow">▶</span>
         </div>
+        <div class="nav-sub"><a href="#appeal">Процедура апелляции</a></div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span>📄</span><span class="label">СОГЛАШЕНИЕ</span><span class="arrow">▶</span>
+        </div>
         <div class="nav-sub">
-          <a href="#appeal">Процедура апелляции</a>
+          <a href="#agreement">Пользовательское соглашение</a>
+          <a href="#agreement-rf">Для РФ</a>
+          <a href="#agreement-rb">Для Республики Беларусь</a>
         </div>
       </div>
 
@@ -1538,25 +1564,26 @@
         <p><strong>Наказание за нарушение:</strong> бан 3-7 дней.</p>
       </div>
 
-      <div class="scp-card">
+      <!-- 096 ЭВАКУИРОВАН -->
+      <div class="scp-card" style="border-color: #ffaa00;">
         <h4>😢 SCP-096 — Застенчивый</h4>
-        <div class="hp-badge">❤️ 2 500 HP (стандарт)</div>
-        <p><strong>Разумность:</strong> ❌ Нет (реагирует инстинктивно)</p>
-        <p><strong>Способности:</strong></p>
-        <ul>
-          <li><strong>Размашистый удар</strong> — мгновенно убивает цель.</li>
-          <li><strong>Ярость</strong> — активируется при уроне или взгляде.</li>
-          <li><strong>Рывок</strong> — открывает двери на пути.</li>
-        </ul>
-        <p style="color:#88ffbb;"><strong>Можно:</strong> впадать в ярость при взгляде.</p>
-        <p style="color:#ff6666;"><strong>Нельзя:</strong> намеренно смотреть на 096 для провокации.</p>
-        <p><strong>Наказание за нарушение:</strong> бан 1-3 дня.</p>
+        <div class="evacuated-badge">🚨 ЭВАКУИРОВАН ИЗ УЧАСТКА 11</div>
+        <p style="color:#ffcc66;"><strong>Статус:</strong> SCP-096 был <strong>эвакуирован из Участка 11</strong> и переведён в другой объект Фонда. На данном Участке не содержится и не появляется.</p>
+        <p style="color:#ffcc66;"><strong>Причина:</strong> Угроза признана слишком высокой для содержания на Участке 11. Все правила и механики, связанные с SCP-096, <strong>временно отключены</strong>.</p>
+        <p style="color:#ff8888;"><strong>Внимание:</strong> Если вы заметили SCP-096 на территории Участка — немедленно сообщите администрации. Это может быть баг или ивент.</p>
       </div>
 
       <div class="scp-card">
         <h4>👄 SCP-939 — Многоголосый</h4>
         <div class="hp-badge">❤️ 7 000 HP</div>
-        <p><strong>Разумность:</strong> ✅ Да (мимикрирует голоса)</p>
+        <p><strong>Разумность:</strong> ⚠️ Полуразумный (умеет охотиться, но не мыслит)</p>
+        <p><strong>Особенности:</strong></p>
+        <ul>
+          <li>Умеет <strong>охотиться</strong> на людей по звуку.</li>
+          <li><strong>Не умеет думать</strong> — действует на инстинктах.</li>
+          <li>Может <strong>только произносить звуки</strong> (имитирует голоса), но не понимает их смысла.</li>
+          <li>Не способен к RP-диалогу — издаёт звуки для приманки.</li>
+        </ul>
         <p><strong>Способности:</strong></p>
         <ul>
           <li><strong>Мимикрия</strong> — имитирует голоса людей.</li>
@@ -1766,6 +1793,10 @@
           <li>Сложная — до 72 часов.</li>
           <li>Перманентный бан — до 7 дней.</li>
         </ul>
+
+        <h3>Связь с администрацией</h3>
+        <p>Вся связь с администрацией осуществляется <strong>только через Discord-сервер</strong> проекта.</p>
+        <p style="color:#ffcc66;">Не пишите в личные сообщения — там ваши обращения могут быть проигнорированы.</p>
       </div>
 
       <div>
@@ -1800,25 +1831,157 @@
     <div class="center">
       <a href="https://discord.gg/ZCGAhTH6ep" class="discord">💬 ВСТУПИТЬ В DISCORD</a>
       <a href="https://t.me/mvprojectru" class="telegram">📢 TELEGRAM-КАНАЛ</a>
+      <a href="https://www.youtube.com/@mebnes" class="youtube">▶ YOUTUBE-КАНАЛ</a>
     </div>
 
     <div class="footer">
       <p>© 2026 MV.PROJECT | SCP FOUNDATION | MEDIUM ROLEPLAY</p>
-      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.8 | Обновлено: сентябрь 2026</p>
+      <p>Документ №SCP-RP-01 «ЗАСЛОН» | Версия 2.9 | Обновлено: сентябрь 2026</p>
       <p style="margin-top: 15px; color: #333;">CLASSIFIED — LEVEL 5 CLEARANCE REQUIRED</p>
+    </div>
+
+    <!-- ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ -->
+    <div class="agreement-section" id="agreement">
+      <h2 class="agreement-title" style="border:none; padding:0; margin:0 0 30px 0; text-align:center;">📄 Пользовательское соглашение</h2>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ ВАЖНО:</strong> Пользовательское соглашение является юридическим документом. 
+        Заходя на сервер <strong>MV.Project</strong>, вы автоматически подтверждаете своё согласие 
+        с условиями, изложенными ниже.
+      </div>
+
+      <p>Настоящее Пользовательское соглашение (далее — «Соглашение») регулирует отношения между 
+      администрацией игрового проекта <strong>MV.Project</strong> (далее — «Проект») и пользователями 
+      (далее — «Игрок») в отношении использования игрового сервера и сопутствующих сервисов.</p>
+
+      <p>Проект <strong>MV.Project</strong> создан для игроков из <strong>Российской Федерации</strong> и 
+      <strong>Республики Беларусь</strong>. Соглашение учитывает законодательство обеих стран.</p>
+
+      <!-- ДЛЯ РФ -->
+      <div class="agreement-country rf" id="agreement-rf">
+        <h3><span class="flag-icon">🇷🇺</span> Раздел 1. Соглашение для Российской Федерации</h3>
+
+        <ol>
+          <li><strong>Общие положения.</strong> Настоящее соглашение регулируется законодательством 
+          Российской Федерации, в том числе Федеральным законом № 152-ФЗ «О персональных данных» от 27.07.2006.</li>
+
+          <li><strong>Обработка персональных данных.</strong> Игрок даёт согласие на обработку 
+          следующих данных: SteamID, IP-адрес, никнейм, история игровых действий и чатов. 
+          Данные используются исключительно для обеспечения работы сервера и модерации.</li>
+
+          <li><strong>Хранение данных.</strong> Персональные данные хранятся на серверах проекта 
+          в течение срока, необходимого для целей обработки, но не более 3 лет с момента последней активности Игрока.</li>
+
+          <li><strong>Права Игрока.</strong> Игрок вправе запросить удаление своих персональных данных, 
+          направив обращение в Discord-сервер проекта. Запрос рассматривается в течение 30 дней.</li>
+
+          <li><strong>Возрастные ограничения.</strong> Игрок подтверждает, что достиг возраста 
+          13 лет, либо получил согласие законных представителей на использование сервера.</li>
+
+          <li><strong>Ответственность.</strong> Администрация проекта не несёт ответственности 
+          за действия Игроков, нарушающих законодательство Российской Федерации. Все спорные ситуации 
+          решаются в соответствии с действующим законодательством РФ.</li>
+
+          <li><strong>Реклама и контент.</strong> Запрещено размещение рекламы, противоречащей 
+          Федеральному закону № 38-ФЗ «О рекламе» от 13.03.2006.</li>
+
+          <li><strong>Изменение соглашения.</strong> Администрация вправе изменять условия соглашения. 
+          Актуальная версия всегда доступна на данном сайте.</li>
+
+          <li><strong>Право на отзыв согласия.</strong> Игрок вправе в любой момент отозвать 
+          своё согласие на обработку персональных данных, что влечёт за собой прекращение доступа к серверу.</li>
+
+          <li><strong>Юрисдикция.</strong> Все споры, не урегулированные путём переговоров, 
+          подлежат рассмотрению в соответствии с законодательством Российской Федерации.</li>
+        </ol>
+      </div>
+
+      <!-- ДЛЯ РБ -->
+      <div class="agreement-country rb" id="agreement-rb">
+        <h3><span class="flag-icon">🇧🇾</span> Раздел 2. Соглашение для Республики Беларусь</h3>
+
+        <ol>
+          <li><strong>Общие положения.</strong> Настоящее соглашение регулируется законодательством 
+          Республики Беларусь, в том числе Законом Республики Беларусь «О персональных данных» 
+          от 07.05.2021 № 99-З.</li>
+
+          <li><strong>Обработка персональных данных.</strong> Игрок даёт согласие на обработку 
+          следующих данных: SteamID, IP-адрес, никнейм, история игровых действий. Обработка 
+          осуществляется в целях обеспечения функционирования сервера.</li>
+
+          <li><strong>Хранение данных.</strong> Персональные данные хранятся на серверах проекта 
+          в течение срока, необходимого для целей обработки, но не более 3 лет с момента последней активности Игрока.</li>
+
+          <li><strong>Права Игрока.</strong> В соответствии с Законом № 99-З Игрок вправе:
+            <ul>
+              <li>получить информацию об обработке своих персональных данных;</li>
+              <li>требовать изменения или удаления недостоверных данных;</li>
+              <li>отозвать согласие на обработку персональных данных.</li>
+            </ul>
+          </li>
+
+          <li><strong>Трансграничная передача.</strong> Игрок соглашается на возможную передачу 
+          данных за пределы Республики Беларусь в целях обеспечения работы сервера.</li>
+
+          <li><strong>Возрастные ограничения.</strong> Игрок подтверждает, что достиг возраста 
+          13 лет, либо получил согласие законных представителей на использование сервера.</li>
+
+          <li><strong>Ответственность.</strong> Администрация проекта не несёт ответственности 
+          за действия Игроков, нарушающих законодательство Республики Беларусь.</li>
+
+          <li><strong>Защита данных.</strong> Администрация принимает все необходимые меры 
+          для защиты персональных данных Игроков от несанкционированного доступа.</li>
+
+          <li><strong>Изменение соглашения.</strong> Администрация вправе изменять условия соглашения. 
+          Актуальная версия всегда доступна на данном сайте.</li>
+
+          <li><strong>Юрисдикция.</strong> Все споры, не урегулированные путём переговоров, 
+          подлежат рассмотрению в соответствии с законодательством Республики Беларусь.</li>
+        </ol>
+      </div>
+
+      <!-- ОБЩИЕ УСЛОВИЯ -->
+      <div class="agreement-country">
+        <h3>🌐 Раздел 3. Общие условия для обеих стран</h3>
+        <ol>
+          <li><strong>Согласие с правилами.</strong> Игрок обязуется соблюдать правила сервера, 
+          изложенные на данной странице.</li>
+
+          <li><strong>Запрещённый контент.</strong> Запрещено распространение контента, 
+          противоречащего законодательству РФ и РБ, включая: экстремизм, терроризм, 
+          пропаганду насилия, наркотиков.</li>
+
+          <li><strong>Наказания.</strong> За нарушение правил администрация вправе применить 
+          меры от предупреждения до перманентного бана.</li>
+
+          <li><strong>Апелляция.</strong> Игрок вправе обжаловать решение администрации 
+          через Discord-сервер проекта.</li>
+
+          <li><strong>Связь с администрацией.</strong> Единственный официальный канал связи — 
+          <strong>Discord-сервер MV.Project</strong>. Обращения в личные сообщения не рассматриваются.</li>
+
+          <li><strong>Согласие на обработку данных.</strong> Регистрируясь на сервере, 
+          Игрок автоматически принимает условия обеих частей соглашения (для РФ и РБ) 
+          в зависимости от страны проживания.</li>
+        </ol>
+      </div>
+
+      <div class="agreement-footer">
+        <p>Дата последнего обновления соглашения: сентябрь 2026</p>
+        <p>Версия документа: 1.0</p>
+        <p style="margin-top:15px; color:#00ff88;">Все вопросы — через Discord-сервер проекта</p>
+      </div>
     </div>
 
   </main>
 
   <script>
-    // РАСКРЫТИЕ ПОДРАЗДЕЛОВ МЕНЮ
     function toggleSection(el) {
       el.classList.toggle('open');
       const sub = el.nextElementSibling;
       if (sub) sub.classList.toggle('open');
     }
 
-    // АВТОЗАКРЫТИЕ МЕНЮ НА ТЕЛЕФОНЕ
     document.querySelectorAll('.nav-sub a').forEach(link => {
       link.addEventListener('click', () => {
         if (window.innerWidth <= 900) {
@@ -1827,7 +1990,6 @@
       });
     });
 
-    // ПОДСВЕТКА АКТИВНОГО ПОДРАЗДЕЛА
     window.addEventListener('scroll', () => {
       const sections = document.querySelectorAll('h2[id], h3[id]');
       const links = document.querySelectorAll('.nav-sub a');
@@ -1844,7 +2006,6 @@
       });
     });
 
-    // ГЕНЕРАЦИЯ ВОДЯНЫХ ЗНАКОВ
     (function createWatermarks() {
       const overlay = document.getElementById('watermark-overlay');
       const cols = 6;
@@ -1863,18 +2024,16 @@
       }
     })();
 
-    // ЗАПОЛНЕНИЕ СЛОЁВ ПАРАЛЛАКСА (много строк, чтобы не кончались при прокрутке)
     (function fillParallaxLayers() {
       const backEl = document.getElementById('layer-back');
       const middleEl = document.getElementById('layer-middle');
       const frontEl = document.getElementById('layer-front');
 
-      // Многострочный текст: повторяем "MV.PROJECT" через ДВА пробела
       const backText = 'MV.PROJECT  MV.PROJECT  MV.PROJECT  MV.PROJECT';
       const middleText = 'SCP FOUNDATION  SCP FOUNDATION  SCP FOUNDATION';
       const frontText = 'LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5  LEVEL 5';
 
-      const linesCount = 80; // Очень много строк, чтобы покрыть длинную прокрутку
+      const linesCount = 80;
 
       let backHTML = '';
       let middleHTML = '';
@@ -1889,7 +2048,6 @@
       frontEl.innerHTML = frontHTML;
     })();
 
-    // ПАРАЛЛАКС АНИМАЦИЯ ФОНА (слои двигаются в разные стороны)
     (function parallaxScroll() {
       const backEl = document.getElementById('layer-back');
       const middleEl = document.getElementById('layer-middle');
@@ -1902,12 +2060,10 @@
       function animate() {
         const targetScroll = window.scrollY;
 
-        // Плавная интерполяция
         currentBack += (targetScroll * 0.15 - currentBack) * 0.08;
         currentMiddle += (targetScroll * -0.10 - currentMiddle) * 0.08;
         currentFront += (targetScroll * 0.25 - currentFront) * 0.08;
 
-        // Слои двигаются в разные стороны — эффект "один вперёд, другой назад"
         backEl.style.transform = 'translateY(' + (-currentBack) + 'px)';
         middleEl.style.transform = 'translateY(' + (-currentMiddle) + 'px)';
         frontEl.style.transform = 'translateY(' + (-currentFront) + 'px)';
